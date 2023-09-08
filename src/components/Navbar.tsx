@@ -1,6 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 
-const Navabr = () => {
+const Navbar = () => {
   const normalLink = "";
   const activeLink = "";
 
@@ -41,8 +41,9 @@ const Navabr = () => {
               ></path>
             </svg>
           </button>
-          <a
-            href="https://three-m.com"
+          <Link
+            to="https://three-m.com"
+            target="blank"
             className="flex items-center justify-between mr-4"
           >
             <img
@@ -51,9 +52,9 @@ const Navabr = () => {
               alt="Flowbite Logo"
             />
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-              ThreeM
+              M-Portal
             </span>
-          </a>
+          </Link>
           <form action="#" method="GET" className="hidden md:block md:pl-2">
             <div className="relative md:w-64 lg:w-96">
               <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
@@ -702,4 +703,4 @@ const Navabr = () => {
   );
 };
 
-export default Navabr;
+export default Navbar;

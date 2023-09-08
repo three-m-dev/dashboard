@@ -1,1 +1,1 @@
-export { default as Navabr } from "./Navabr";
+export { default as Layout } from "./Layout";

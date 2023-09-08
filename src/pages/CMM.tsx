@@ -1,9 +1,9 @@
-import { Navabr } from "../components";
+import { Layout } from "../components";
 
 const CMM = () => {
   return (
     <>
-      <Navabr />
+      <Layout />
     </>
   );
 };

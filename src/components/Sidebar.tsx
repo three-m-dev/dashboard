@@ -1,8 +1,8 @@
 import { Link, NavLink } from "react-router-dom";
 
 const Sidebar = () => {
-  const normalLink = "";
-  const activeLink = "";
+  // const normalLink = "";
+  // const activeLink = "";
 
   return (
     <aside

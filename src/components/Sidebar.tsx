@@ -1,6 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Sidebar = () => {
+  const normalLink = "";
+  const activeLink = "";
+
   return (
     <aside
       className="fixed top-0 left-0 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
@@ -36,8 +39,8 @@ const Sidebar = () => {
         </form>
         <ul className="space-y-2">
           <li>
-            <a
-              href="#"
+            <NavLink
+              to="/"
               className="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
             >
               <svg
@@ -51,7 +54,7 @@ const Sidebar = () => {
                 <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
               </svg>
               <span className="ml-3">Overview</span>
-            </a>
+            </NavLink>
           </li>
           <li>
             <button
@@ -94,8 +97,8 @@ const Sidebar = () => {
         </ul>
         <ul className="pt-5 mt-5 space-y-2 border-t border-gray-200 dark:border-gray-700">
           <li>
-            <a
-              href="#"
+            <NavLink
+              to="/org-chart"
               className="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group"
             >
               <svg
@@ -114,10 +117,10 @@ const Sidebar = () => {
               </svg>
 
               <span className="ml-3">Org Chart</span>
-            </a>
+            </NavLink>
           </li>
           <li>
-            <Link
+            <NavLink
               to="/cmm"
               className="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group"
             >
@@ -136,35 +139,15 @@ const Sidebar = () => {
                 />
               </svg>
               <span className="ml-3">CMM</span>
-            </Link>
-          </li>
-          <li>
-            <a
-              href="#"
-              className="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-                className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
-                />
-              </svg>
-
-              <span className="ml-3">Help</span>
-            </a>
+            </NavLink>
           </li>
         </ul>
       </div>
       <div className="hidden absolute bottom-0 left-0 justify-center p-4 space-x-4 w-full lg:flex bg-white dark:bg-gray-800 z-20">
-        <button className="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-600">
+        <Link
+          to="/help"
+          className="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-600"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -176,10 +159,10 @@ const Sidebar = () => {
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
-              d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
+              d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
             />
           </svg>
-        </button>
+        </Link>
         <Link
           to="/settings"
           className="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer dark:text-gray-400 dark:hover:text-white hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-600"

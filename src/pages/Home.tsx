@@ -1,6 +1,6 @@
 import { Navabr } from "../components";
 
-const CMM = () => {
+const Home = () => {
   return (
     <>
       <Navabr />
@@ -8,4 +8,4 @@ const CMM = () => {
   );
 };
 
-export default CMM;
+export default Home;

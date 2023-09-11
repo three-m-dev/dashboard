@@ -1,22 +1,24 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useMatch } from "react-router-dom";
 
 const Sidebar = () => {
-  // const normalLink = "";
-  // const activeLink = "";
+  const activeLink =
+    "flex items-center px-4 py-2 text-gray-800 text-md border-l-[5px] border-l-[#00a6fb] border-b-1 border-b-gray-200 bg-gray-100 rounded-lg font-medium";
+  const normalLink =
+    "flex items-center px-4 py-2 text-gray-800 text-md border-l-[5px] border-l-white bg-white hover:bg-gray-100 hover:border-gray-100 rounded-lg font-medium";
 
   return (
     <aside
-      className="fixed top-0 left-0 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+      className="fixed top-0 left-0 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0"
       aria-label="Sidenav"
       id="drawer-navigation"
     >
-      <div className="overflow-y-auto py-5 px-3 h-full bg-white dark:bg-gray-800">
+      <div className="overflow-y-auto py-5 px-3 h-full bg-white">
         <form action="#" method="GET" className="md:hidden mb-2">
           <label className="sr-only">Search</label>
           <div className="relative">
             <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
               <svg
-                className="w-5 h-5 text-gray-500 dark:text-gray-400"
+                className="w-5 h-5 text-gray-500"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +34,7 @@ const Sidebar = () => {
               type="text"
               name="search"
               id="sidebar-search"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2"
               placeholder="Search"
             />
           </div>
@@ -40,66 +42,33 @@ const Sidebar = () => {
         <ul className="space-y-2">
           <li>
             <NavLink
-              to="/"
-              className="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              to="/dashboard"
+              className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <svg
-                aria-hidden="true"
-                className="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                fill="currentColor"
-                viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-                <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
-              </svg>
-              <span className="ml-3">Overview</span>
-            </NavLink>
-          </li>
-          <li>
-            <button
-              type="button"
-              className="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-              aria-controls="dropdown-pages"
-              data-collapse-toggle="dropdown-pages"
-            >
-              <svg
-                aria-hidden="true"
-                className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-              <span className="flex-1 ml-3 text-left whitespace-nowrap">
-                Pages
-              </span>
-              <svg
-                aria-hidden="true"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
                 className="w-6 h-6"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  fill-rule="evenodd"
-                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                  clip-rule="evenodd"
-                ></path>
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25"
+                />
               </svg>
-            </button>
+
+              <span className="ml-4">Dashboard</span>
+            </NavLink>
           </li>
         </ul>
         <ul className="pt-5 mt-5 space-y-2 border-t border-gray-200 dark:border-gray-700">
           <li>
             <NavLink
-              to="/org-chart"
-              className="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group"
+              to="/employee"
+              className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -107,7 +76,30 @@ const Sidebar = () => {
                 viewBox="0 0 24 24"
                 strokeWidth={2}
                 stroke="currentColor"
-                className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                />
+              </svg>
+
+              <span className="ml-4">Employee</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/structure"
+              className={({ isActive }) => (isActive ? activeLink : normalLink)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+                className="w-6 h-6"
               >
                 <path
                   strokeLinecap="round"
@@ -116,13 +108,13 @@ const Sidebar = () => {
                 />
               </svg>
 
-              <span className="ml-3">Org Chart</span>
+              <span className="ml-4">Structure</span>
             </NavLink>
           </li>
           <li>
             <NavLink
-              to="/cmm"
-              className="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group"
+              to="/improvement"
+              className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -130,7 +122,7 @@ const Sidebar = () => {
                 viewBox="0 0 24 24"
                 strokeWidth={2}
                 stroke="currentColor"
-                className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                className="w-6 h-6"
               >
                 <path
                   strokeLinecap="round"
@@ -138,7 +130,7 @@ const Sidebar = () => {
                   d="M9 3.75H6.912a2.25 2.25 0 00-2.15 1.588L2.35 13.177a2.25 2.25 0 00-.1.661V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 00-2.15-1.588H15M2.25 13.5h3.86a2.25 2.25 0 012.012 1.244l.256.512a2.25 2.25 0 002.013 1.244h3.218a2.25 2.25 0 002.013-1.244l.256-.512a2.25 2.25 0 012.013-1.244h3.859M12 3v8.25m0 0l-3-3m3 3l3-3"
                 />
               </svg>
-              <span className="ml-3">CMM</span>
+              <span className="ml-4">Improvement</span>
             </NavLink>
           </li>
         </ul>

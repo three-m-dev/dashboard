@@ -38,7 +38,10 @@ const Navbar = () => {
               ></path>
             </svg>
           </button>
-          <Link to="/" className="flex items-center justify-between mr-4">
+          <Link
+            to="/dashboard"
+            className="flex items-center justify-between mr-4"
+          >
             <img
               src="https://flowbite.s3.amazonaws.com/logo.svg"
               className="mr-3 h-8"

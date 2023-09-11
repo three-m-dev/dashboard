@@ -2,9 +2,9 @@ import { Layout } from "../components";
 
 const Home = () => {
   return (
-    <>
-      <Layout />
-    </>
+    <Layout>
+      <div className="p-8">Dashboard</div>
+    </Layout>
   );
 };
 

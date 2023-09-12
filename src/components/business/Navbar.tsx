@@ -27,9 +27,9 @@ const Navbar = () => {
         <div className="flex md:order-2">
           <Link
             to="/contact"
-            className="text-white bg-primary hover:bg-secondary font-medium rounded-lg px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 "
+            className="text-white bg-primary hover:bg-secondary font-medium rounded-lg px-4 py-2 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 uppercase"
           >
-            CONTACT US
+            Contact Us
           </Link>
           <button
             data-collapse-toggle="navbar-sticky"
@@ -60,10 +60,10 @@ const Navbar = () => {
           className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
           id="navbar-sticky"
         >
-          <ul className="hidden items-center justify-center font-semibold lg:flex gap-16 text-white">
+          <ul className="hidden items-center justify-center font-medium lg:flex gap-16 text-white uppercase">
             <li className="group relative py-2">
               <NavLink to="/">
-                HOME
+                Home
                 <div className="h-[2px] w-full overflow-hidden bg-transparent">
                   <div className={homeMatch ? activeLink : normalLink}></div>
                 </div>
@@ -71,7 +71,7 @@ const Navbar = () => {
             </li>
             <li className="group relative py-2">
               <NavLink to="/about" className="">
-                ABOUT
+                About
                 <div className="h-[2px] w-full overflow-hidden bg-transparent">
                   <div className={aboutMatch ? activeLink : normalLink}></div>
                 </div>
@@ -79,7 +79,7 @@ const Navbar = () => {
             </li>
             <li className="group relative py-2">
               <NavLink to="/services">
-                SERVICES
+                Services
                 <div className="h-[2px] w-full overflow-hidden bg-transparent">
                   <div
                     className={servicesMatch ? activeLink : normalLink}
@@ -89,7 +89,7 @@ const Navbar = () => {
             </li>
             <li className="group relative py-2">
               <NavLink to="/careers">
-                CAREERS
+                Careers
                 <div className="h-[2px] w-full overflow-hidden bg-transparent">
                   <div className={careersMatch ? activeLink : normalLink}></div>
                 </div>

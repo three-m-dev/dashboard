@@ -180,8 +180,7 @@ const Sidebar = () => {
           </svg>
         </Link>
         <Link
-          to="https://three-m.com"
-          target="blank"
+          to="/"
           className="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer dark:hover:text-white dark:text-gray-400 hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-600"
         >
           <svg

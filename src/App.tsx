@@ -16,6 +16,8 @@ import {
 } from "./pages/business";
 
 const App = () => {
+  const user = false;
+
   return (
     <BrowserRouter>
       <Routes>
@@ -28,7 +30,7 @@ const App = () => {
 
         {/* Portal */}
         <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/portal/" element={<Dashboard />} />
         <Route path="/employee" element={<Employee />} />
         <Route path="/structure" element={<Structure />} />
         <Route path="/improvement" element={<Improvement />} />

@@ -1,5 +1,11 @@
+import { Navbar } from "../../components/business";
+
 const Careers = () => {
-  return <div>Careers</div>;
+  return (
+    <>
+      <Navbar />
+    </>
+  );
 };
 
 export default Careers;

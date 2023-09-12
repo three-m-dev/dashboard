@@ -1,5 +1,11 @@
+import { Navbar } from "../../components/business";
+
 const Contact = () => {
-  return <div>Contact</div>;
+  return (
+    <>
+      <Navbar />
+    </>
+  );
 };
 
 export default Contact;

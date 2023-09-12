@@ -1,5 +1,12 @@
+import { Footer, Hero, Navbar } from "../../components/business";
+
 const Home = () => {
-  return <div>Home</div>;
+  return (
+    <>
+      <Navbar />
+      <Hero />
+    </>
+  );
 };
 
 export default Home;

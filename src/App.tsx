@@ -6,7 +6,14 @@ import {
   Login,
   Structure,
 } from "./pages/portal";
-import { About, Careers, Contact, Home, Services } from "./pages/business";
+import {
+  About,
+  Careers,
+  Contact,
+  Home,
+  NotFound,
+  Services,
+} from "./pages/business";
 
 const App = () => {
   return (
@@ -27,7 +34,7 @@ const App = () => {
         <Route path="/improvement" element={<Improvement />} />
 
         {/* Misc */}
-        <Route path="*" element={<div>Not Found</div>} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

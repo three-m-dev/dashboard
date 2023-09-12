@@ -1,15 +1,33 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Employee, Home, Improvement, Login, Structure } from "./pages";
+import {
+  Dashboard,
+  Employee,
+  Improvement,
+  Login,
+  Structure,
+} from "./pages/portal";
+import { About, Careers, Contact, Home, Services } from "./pages/business";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Business */}
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/careers" element={<Careers />} />
+        <Route path="/contact" element={<Contact />} />
+
+        {/* Portal */}
         <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Home />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/employee" element={<Employee />} />
         <Route path="/structure" element={<Structure />} />
         <Route path="/improvement" element={<Improvement />} />
+
+        {/* Misc */}
+        <Route path="*" element={<div>Not Found</div>} />
       </Routes>
     </BrowserRouter>
   );

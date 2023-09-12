@@ -16,9 +16,7 @@ const Layout = ({ children }: LayoutProps) => {
         <div className="w-64">
           <Sidebar />
         </div>
-        <main className="flex-grow mt-14 bg-red-50">
-          {children}
-        </main>
+        <main className="flex-grow mt-14 bg-red-50">{children}</main>
       </div>
     </div>
   );

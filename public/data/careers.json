@@ -1,0 +1,109 @@
+[
+  {
+    "id": "1",
+    "title": "CNC Machinist",
+    "description": "Seeking a skilled CNC Machinist to set up and operate computer numerical control machines to fabricate parts.",
+    "location": "on-site",
+    "salary": "$40,000 - $50,000",
+    "type": "part-time",
+    "experienceLevel": "Mid-Level",
+    "requirements": [
+      "High school diploma or equivalent",
+      "2+ years of experience as a CNC machinist"
+    ],
+    "responsibilities": [
+      "Set up and operate CNC machines",
+      "Read and interpret blueprints for production"
+    ],
+    "qualifications": ["Knowledge of CNC programming", "Attention to detail"],
+    "applicationDeadline": "2023-12-15"
+  },
+  {
+    "id": "2",
+    "title": "Tool and Die Maker",
+    "description": "We are looking for an experienced Tool and Die Maker to construct and repair tools, dies, and specialized parts.",
+    "location": "hybrid",
+    "salary": "$45,000 - $55,000",
+    "type": "internship",
+    "experienceLevel": "Senior",
+    "requirements": [
+      "5+ years of experience in tool and die making",
+      "Journeyman certificate in Tool and Die Making"
+    ],
+    "responsibilities": [
+      "Construct and repair tools and dies",
+      "Ensure precision and accuracy in the creation of components"
+    ],
+    "qualifications": [
+      "Strong mechanical aptitude",
+      "Experience with grinding, milling, and lathe machines"
+    ],
+    "applicationDeadline": "2023-11-30"
+  },
+  {
+    "id": "3",
+    "title": "Welder/Fabricator",
+    "description": "In search of a Welder/Fabricator to perform a variety of welding tasks and fabrication works.",
+    "location": "remote",
+    "salary": "$35,000 - $45,000",
+    "type": "full-time",
+    "experienceLevel": "Entry-Level",
+    "requirements": [
+      "Certification in welding",
+      "1+ year of experience in welding and fabrication"
+    ],
+    "responsibilities": [
+      "Perform welding tasks based on blueprints",
+      "Fabricate and assemble metal components"
+    ],
+    "qualifications": [
+      "Proficiency in MIG, TIG, and stick welding",
+      "Ability to read blueprints"
+    ],
+    "applicationDeadline": "2023-12-10"
+  },
+  {
+    "id": "4",
+    "title": "Machine Shop Supervisor",
+    "description": "Hiring a Machine Shop Supervisor to oversee daily operations, ensuring that projects are completed on time and within budget.",
+    "location": "on-site",
+    "salary": "$60,000 - $70,000",
+    "type": "full-time",
+    "experienceLevel": "Senior",
+    "requirements": [
+      "Bachelor's degree in Manufacturing or related field",
+      "5+ years of experience in a machine shop"
+    ],
+    "responsibilities": [
+      "Supervise machine shop employees",
+      "Ensure projects are completed on time and within budget"
+    ],
+    "qualifications": [
+      "Leadership skills",
+      "Experience with CNC machines and CAD software"
+    ],
+    "applicationDeadline": "2023-11-25"
+  },
+  {
+    "id": "5",
+    "title": "Quality Inspector",
+    "description": "We are seeking a Quality Inspector to inspect machined parts to ensure adherence to quality standards.",
+    "location": "on-site",
+    "salary": "$30,000 - $40,000",
+    "type": "full-time",
+    "experienceLevel": "Entry-Level",
+    "requirements": [
+      "High school diploma or equivalent",
+      "1+ year of experience in quality inspection"
+    ],
+    "responsibilities": [
+      "Inspect machined parts for defects",
+      "Ensure adherence to quality standards"
+    ],
+    "qualifications": [
+      "Attention to detail",
+      "Experience using measurement tools"
+    ],
+    "applicationDeadline": "2023-12-05"
+  }
+]

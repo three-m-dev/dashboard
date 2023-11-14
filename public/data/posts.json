@@ -1,0 +1,22 @@
+[
+  {
+    "id": "1",
+    "title": "Website Revamp: Our New Digital Frontier",
+    "atuhor": "Jacob Reppuhn",
+    "date": "10/23/2023",
+    "imageUrl": "",
+    "description": "We are thrilled to announce the launch of our newly redesigned website! Designed with our valued clients and partners in mind, the revamped site offers a user-friendly experience, improved navigation, & the latest insights into our manufacturing advancements. Explore now to see what's new!",
+    "content": "",
+    "type": "update"
+  },
+  {
+    "id": "2",
+    "title": "Navigating Industry 4.0: The Future of Manufacturing",
+    "atuhor": "Jacob Reppuhn",
+    "date": "10/23/2023",
+    "imageUrl": "",
+    "description": "Dive into the transformative wave of Industry 4.0. Explore how advanced automation, data exchange, and interconnected technologies are reshaping manufacturing landscapes, driving efficiencies, and creating unprecedented value in today's dynamic markets.",
+    "content": "",
+    "type": "article"
+  }
+]

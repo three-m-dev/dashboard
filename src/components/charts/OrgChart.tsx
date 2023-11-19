@@ -1,57 +1,82 @@
-import React from "react";
+import { Tree, TreeNode } from "react-organizational-chart";
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import { Employee } from "../../interfaces/ICommon";
 
-interface Employee {
-  firstName: string;
-  lastName: string;
-  directReport: string;
-  role: string;
-  department: string;
-}
-
-interface OrgChartProps {
+type Props = {
   employees: Employee[];
-}
+};
 
-const OrgChart: React.FC<OrgChartProps> = ({ employees }) => {
-  const processedEmployees = new Set<string>();
+const OrgChart = (props: Props) => {
+  const renderTree = (employeeId: string) => {
+    const employee = props.employees.find((emp) => emp.id === employeeId);
 
-  const buildOrgChart = (
-    employees: Employee[],
-    directReport: string,
-    level: number = 0,
-  ): JSX.Element => {
-    const directReports = employees.filter(
-      (emp) =>
-        emp.directReport === directReport &&
-        !processedEmployees.has(emp.firstName + emp.lastName),
-    );
+    if (!employee) {
+      return null;
+    }
 
-    if (directReports.length === 0) return <></>;
-
-    directReports.forEach((emp) =>
-      processedEmployees.add(emp.firstName + emp.lastName),
+    const directReports = props.employees.filter(
+      (emp) => emp.directReport === employeeId,
     );
 
     return (
-      <div className={`flex ${level === 4 ? "flex-col" : "flex-row"}`}>
-        {directReports.map((emp, index) => (
-          <div key={index} className="m-2 flex flex-col items-center">
-            <div className="rounded border border-gray-200 p-2 shadow-sm w-44">
-              <div>
-                {emp.firstName} {emp.lastName}
-              </div>
-              <div className="text-sm text-gray-600">{emp.role}</div>
+      <TreeNode
+        key={employeeId}
+        label={
+          <div className="mx-auto w-52 overflow-hidden rounded-lg bg-white shadow-md">
+            <div className="p-2">
+              <h1 className="text-lg font-semibold text-gray-800">
+                {employee.firstName + " " + employee.lastName}
+              </h1>
+              <p className="mt-1 text-sm text-gray-600">
+                {employee.department}
+              </p>
+              <p className="mt-1 text-sm text-gray-500">{employee.role}</p>
             </div>
-            {buildOrgChart(employees, emp.directReport, level + 1)}
           </div>
+        }
+      >
+        {directReports.map((directReport) => (
+          <>{renderTree(directReport.id)}</>
         ))}
-      </div>
+      </TreeNode>
     );
   };
 
+  const topLevelEmployee = props.employees.find(
+    (employee) =>
+      employee.directReport === "11111111-1111-1111-1111-111111111111",
+  );
+
+  if (!topLevelEmployee) {
+    return null;
+  }
+
   return (
-    <div className="flex justify-center">
-      {buildOrgChart(employees, "11111111-1111-1111-1111-111111111111")}
+    <div className="h-full w-full overflow-auto">
+      <Tree
+        lineColor="#3b82f6"
+        lineWidth="2px"
+        label={
+          <div className="mx-auto w-52 overflow-hidden rounded-lg bg-white shadow-md">
+            <div className="p-2">
+              <h1 className="text-lg font-semibold text-gray-800">
+                {topLevelEmployee.firstName + " " + topLevelEmployee.lastName}
+              </h1>
+              <p className="mt-1 text-sm text-gray-600">
+                {topLevelEmployee.department}
+              </p>
+              <p className="mt-1 text-sm text-gray-500">
+                {topLevelEmployee.role}
+              </p>
+            </div>
+          </div>
+        }
+      >
+        {topLevelEmployee.id &&
+          props.employees
+            .filter((emp) => emp.directReport === topLevelEmployee.id)
+            .map((emp) => renderTree(emp.id))}
+      </Tree>
     </div>
   );
 };

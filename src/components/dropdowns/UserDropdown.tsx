@@ -50,8 +50,14 @@ const UserDropdown = () => {
                   Profile
                 </Link>
               </li>
-              <li className="px-4 py-2 hover:bg-blue-100">Settings</li>
-              <li className="px-4 py-2 hover:bg-blue-100">Change Password</li>
+              <li className="flex hover:bg-blue-100">
+                <Link
+                  to={`/settings/123`}
+                  className="h-full w-full px-4 py-2 text-left"
+                >
+                  Settings
+                </Link>
+              </li>
               <li className="flex border-t border-gray-100 hover:bg-blue-100">
                 <button
                   onClick={logout}

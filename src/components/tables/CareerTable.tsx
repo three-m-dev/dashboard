@@ -1,29 +1,11 @@
 import { Link } from "react-router-dom";
+import { ICareerListing } from "../../interfaces/ICommon";
 
-const CareerTable = () => {
-  const careerPositions = [
-    {
-      id: 1,
-      title: "CNC Mill Machinist",
-      department: "Machining",
-      company: "Three M",
-      location: "On Site",
-      type: "Full Time",
-    },
-    {
-      id: 2,
-      title: "Plant Maintenance Technician",
-      department: "Maintenance",
-      company: "Three M",
-      location: "On Site",
-      type: "Full Time",
-    },
-  ];
+type Props = {
+  listings: ICareerListing[];
+};
 
-  const handleActionClick = (id: number) => {
-    console.log(`Action clicked for position id ${id}`);
-  };
-
+const CareerTable = (props: Props) => {
   return (
     <div className="relative overflow-hidden bg-white shadow-md sm:rounded-lg">
       <div className="flex flex-col items-center justify-between space-y-3 p-4 md:flex-row md:space-x-4 md:space-y-0">
@@ -71,7 +53,7 @@ const CareerTable = () => {
                 d="M12 4.5v15m7.5-7.5h-15"
               />
             </svg>
-            New Position
+            New listing
           </button>
         </div>
       </div>
@@ -100,23 +82,23 @@ const CareerTable = () => {
             </tr>
           </thead>
           <tbody>
-            {careerPositions.map((position) => (
-              <tr key={position.id} className="border-b">
+            {props.listings.map((listing) => (
+              <tr key={listing.id} className="border-b">
                 <th
                   scope="row"
                   className="whitespace-nowrap px-4 py-3 font-medium text-gray-900"
                 >
                   <Link
-                    to={`/careers/${position.id}`}
+                    to={`/careers/${listing.id}`}
                     className="hover:underline"
                   >
-                    {position.title}
+                    {listing.title}
                   </Link>
                 </th>
-                <td className="px-4 py-3">{position.department}</td>
-                <td className="px-4 py-3">{position.company}</td>
-                <td className="px-4 py-3">{position.location}</td>
-                <td className="px-4 py-3">{position.type}</td>
+                <td className="px-4 py-3">{listing.department}</td>
+                <td className="px-4 py-3">{listing.company}</td>
+                <td className="px-4 py-3">{listing.location}</td>
+                <td className="px-4 py-3">{listing.employmentType}</td>
                 <td className="flex items-center justify-end px-4 py-3">
                   <button
                     className="inline-flex items-center rounded-lg text-center text-sm font-medium text-gray-500 hover:text-gray-800 focus:outline-none"
@@ -171,98 +153,6 @@ const CareerTable = () => {
           </tbody>
         </table>
       </div>
-      {/* <nav
-        className="flex flex-col items-start justify-between space-y-3 p-4 md:flex-row md:items-center md:space-y-0"
-        aria-label="Table navigation"
-      >
-        <span className="text-sm font-normal text-gray-500">
-          Showing <span className="font-semibold text-gray-900">1-10 </span>
-          of <span className="font-semibold text-gray-900">1000 </span>
-        </span>
-        <ul className="inline-flex items-stretch -space-x-px">
-          <li>
-            <a
-              href="#"
-              className="ml-0 flex h-full items-center justify-center rounded-l-lg border border-gray-300 bg-white px-3 py-1.5 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-            >
-              <span className="sr-only">Previous</span>
-              <svg
-                className="h-5 w-5"
-                aria-hidden="true"
-                fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              className="flex items-center justify-center border border-gray-300 bg-white px-3 py-2 text-sm leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-            >
-              1
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              className="flex items-center justify-center border border-gray-300 bg-white px-3 py-2 text-sm leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-            >
-              2
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              aria-current="page"
-              className="flex items-center justify-center border border-gray-300 bg-white px-3 py-2 text-sm leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-            >
-              3
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              className="flex items-center justify-center border border-gray-300 bg-white px-3 py-2 text-sm leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-            >
-              ...
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              className="flex items-center justify-center border border-gray-300 bg-white px-3 py-2 text-sm leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-            >
-              100
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              className="flex h-full items-center justify-center rounded-r-lg border border-gray-300 bg-white px-3 py-1.5 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-            >
-              <span className="sr-only">Next</span>
-              <svg
-                className="h-5 w-5"
-                aria-hidden="true"
-                fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </a>
-          </li>
-        </ul>
-      </nav> */}
     </div>
   );
 };

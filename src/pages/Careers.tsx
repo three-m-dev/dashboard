@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Navigate,
   Route,
@@ -12,19 +12,39 @@ import {
   ApplicantTable,
   Layout,
   ResumeTable,
+  Loading,
 } from "../components";
+import { useGetCareers } from "../hooks/useGetCareers";
 
 const Careers = () => {
   const [viewMode, setViewMode] = useState<
     "careers" | "applicants" | "resumes"
   >("careers");
 
+  const { getCareers, jobListings, isLoading, error } = useGetCareers();
+
+  useEffect(() => {
+    getCareers();
+  }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return (
+      <Layout>
+        <p>Error: {error}</p>
+      </Layout>
+    );
+  }
+
   const renderRoutes = () => {
     switch (viewMode) {
       case "careers":
         return (
           <Routes>
-            <Route path="/" element={<CareerTable />} />
+            <Route path="/" element={<CareerTable listings={jobListings} />} />
             <Route path="new" element={<CareerForm mode="create" />} />
             <Route path=":id" element={<CareerForm mode="view" />} />
           </Routes>

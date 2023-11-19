@@ -4,7 +4,6 @@ import { ITeamMember } from "../interfaces/ICommon";
 
 export const useGetTeamMembers = () => {
   const [teamMembers, setTeamMembers] = useState<ITeamMember[]>([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -18,14 +17,14 @@ export const useGetTeamMembers = () => {
         { withCredentials: true },
       );
       setTeamMembers(response.data.teamMembers);
-      setIsLoggedIn(true);
-      setIsLoading(false);
     } catch (error: any) {
       setError(error.response ? error.response.data.message : error.message);
-      setIsLoggedIn(false);
-      setIsLoading(false);
+    } finally {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
     }
   };
 
-  return { getTeamMembers, teamMembers, isLoading, isLoggedIn, error };
+  return { getTeamMembers, teamMembers, isLoading, error };
 };

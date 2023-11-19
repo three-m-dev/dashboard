@@ -1,20 +1,44 @@
 import { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { Careers, Home, Login, Profile, Team } from "./pages";
+import { Calendar, Careers, Home, Login, Profile, Team } from "./pages";
 import { useAuth } from "./hooks/useAuth";
+import { Layout, Loading } from "./components";
 
 const App = () => {
   const { isLoggedIn, checkAuthStatus } = useAuth();
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
-    checkAuthStatus().then(() => {
-      setIsCheckingAuth(false);
-    });
+    let timeout = setTimeout(() => {
+      if (isCheckingAuth) {
+        setHasError(true);
+      }
+    }, 1000);
+
+    checkAuthStatus()
+      .then(() => {
+        setIsCheckingAuth(false);
+        clearTimeout(timeout); 
+      })
+      .catch(() => {
+        setHasError(true); 
+        clearTimeout(timeout);
+      });
+
+    return () => clearTimeout(timeout); 
   }, [checkAuthStatus]);
 
+  if (hasError) {
+    return (
+      <Layout>
+        <div>Error occurred while checking authentication status.</div>
+      </Layout>
+    );
+  }
+
   if (isCheckingAuth) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (
@@ -26,6 +50,10 @@ const App = () => {
       <Route
         path="/"
         element={isLoggedIn ? <Home /> : <Navigate to="/login" />}
+      />
+      <Route
+        path="/calendar/*"
+        element={isLoggedIn ? <Calendar /> : <Navigate to="/login" />}
       />
       <Route
         path="/team/*"

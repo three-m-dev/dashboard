@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Layout, OrgChart, TeamTable } from "../components";
+import { Layout, Loading, OrgChart, TeamTable } from "../components";
 import { useGetTeamMembers } from "../hooks/useGetTeamMembers";
 
 const Team = () => {
@@ -7,23 +7,22 @@ const Team = () => {
     "team-members",
   );
 
-  const { getTeamMembers, teamMembers, isLoading, isLoggedIn, error } =
-    useGetTeamMembers();
+  const { getTeamMembers, teamMembers, isLoading, error } = useGetTeamMembers();
 
   useEffect(() => {
     getTeamMembers();
   }, []);
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <Loading />;
   }
 
   if (error) {
-    return <p>Error: {error}</p>;
-  }
-
-  if (!isLoggedIn) {
-    return <p>User not logged in</p>;
+    return (
+      <Layout>
+        <p>Error: {error}</p>
+      </Layout>
+    );
   }
 
   const renderRoutes = () => {
@@ -32,9 +31,8 @@ const Team = () => {
         return <TeamTable teamMembers={teamMembers} />;
       case "org-chart":
         return <OrgChart teamMembers={teamMembers} />;
-
       default:
-        return;
+        return <p>No view selected</p>;
     }
   };
 

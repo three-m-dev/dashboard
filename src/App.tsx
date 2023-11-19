@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { Careers, Home, Login, Profile } from "./pages";
+import { Careers, Home, Login, Profile, Team } from "./pages";
 import { useAuth } from "./hooks/useAuth";
 
 const App = () => {
@@ -28,12 +28,16 @@ const App = () => {
         element={isLoggedIn ? <Home /> : <Navigate to="/login" />}
       />
       <Route
-        path="/employees/:employeeId"
-        element={isLoggedIn ? <Profile /> : <Navigate to="/login" />}
+        path="/team/*"
+        element={isLoggedIn ? <Team /> : <Navigate to="/login" />}
       />
       <Route
         path="/careers/*"
         element={isLoggedIn ? <Careers /> : <Navigate to="/login" />}
+      />
+      <Route
+        path="/profile/:employeeId"
+        element={isLoggedIn ? <Profile /> : <Navigate to="/login" />}
       />
 
       <Route path="*" element={<div>Not Found</div>} />

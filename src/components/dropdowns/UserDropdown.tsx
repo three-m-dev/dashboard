@@ -1,10 +1,17 @@
 import { useState } from "react";
 import useLogout from "../../hooks/useLogout";
+import { Link } from "react-router-dom";
 
 const UserDropdown = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const { logout } = useLogout();
+
+  const user = {
+    name: "Jacob Reppuhn",
+    role: "Software Engineer",
+    company: "Three M",
+  };
 
   return (
     <div className="flex items-center">
@@ -31,28 +38,25 @@ const UserDropdown = () => {
         {isDropdownOpen && (
           <div className="absolute -right-2 mt-2 w-64 rounded-b-md bg-white shadow">
             <div className="border-b border-gray-100 px-4 py-2">
-              <strong className="text-gray-700">User's Full Name</strong>
-              <p className="mt-1 text-sm text-gray-500">
-                Software Engineer at OpenAI
-              </p>
+              <strong className="text-gray-700">{user.name}</strong>
+              <p className="mt-1 text-sm text-gray-500">{user.role}</p>
             </div>
             <ul className="list-none">
-              <li className="px-4 py-2 hover:bg-blue-100">
-                <strong>Company:</strong> OpenAI
-              </li>
-              <li className="px-4 py-2 hover:bg-blue-100">
-                <strong>Site:</strong> San Francisco, CA
-              </li>
-              <li className="px-4 py-2 hover:bg-blue-100">
-                <strong>Timezone:</strong> PST (UTC-8)
-              </li>
-              <li className="border-t border-gray-100 px-4 py-2 hover:bg-blue-100">
-                Profile
+              <li className="flex hover:bg-blue-100">
+                <Link
+                  to={`/profile/123`}
+                  className="h-full w-full px-4 py-2 text-left"
+                >
+                  Profile
+                </Link>
               </li>
               <li className="px-4 py-2 hover:bg-blue-100">Settings</li>
               <li className="px-4 py-2 hover:bg-blue-100">Change Password</li>
-              <li className="border-t border-gray-100 px-4 py-2 hover:bg-blue-100">
-                <button onClick={logout} className="h-full w-full text-left">
+              <li className="flex border-t border-gray-100 hover:bg-blue-100">
+                <button
+                  onClick={logout}
+                  className="h-full w-full px-4 py-2 text-left"
+                >
                   Logout
                 </button>
               </li>

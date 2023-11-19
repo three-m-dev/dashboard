@@ -22,8 +22,8 @@ export const useAuth = () => {
       setIsLoggedIn(true);
       setIsLoading(false);
       navigate("/");
-    } catch (error) {
-      setError("Login failed");
+    } catch (error: any) {
+      setError(error.response.data.message);
       setIsLoading(false);
     }
   };

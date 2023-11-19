@@ -1,5 +1,3 @@
-// types.ts
-
 export interface Address {
   city: string;
   state: string;
@@ -8,7 +6,7 @@ export interface Address {
   addressLine: string;
 }
 
-export interface Employee {
+export interface ITeamMember {
   id: string;
   userId: string;
   firstName: string;

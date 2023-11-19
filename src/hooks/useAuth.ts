@@ -15,7 +15,7 @@ export const useAuth = () => {
 
     try {
       await axios.post(
-        "http://localhost:3000/api/v1/users/auth",
+        "http://localhost:3000/api/v1/team/team-member/auth",
         { username, password },
         { withCredentials: true },
       );
@@ -30,7 +30,7 @@ export const useAuth = () => {
 
   const checkAuthStatus = async () => {
     try {
-      await axios.get("http://localhost:3000/api/v1/users/session", {
+      await axios.get("http://localhost:3000/api/v1/team/team-member/session", {
         withCredentials: true,
       });
       setIsLoggedIn(true);

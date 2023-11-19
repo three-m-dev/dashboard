@@ -1,36 +1,35 @@
 import { Tree, TreeNode } from "react-organizational-chart";
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import { Employee } from "../../interfaces/ICommon";
+import { ITeamMember } from "../../interfaces/ICommon";
 
 type Props = {
-  employees: Employee[];
+  teamMembers: ITeamMember[];
 };
 
 const OrgChart = (props: Props) => {
-  const renderTree = (employeeId: string) => {
-    const employee = props.employees.find((emp) => emp.id === employeeId);
+  const renderTree = (teamMemberId: string) => {
+    const teamMember = props.teamMembers.find((tm) => tm.id === teamMemberId);
 
-    if (!employee) {
+    if (!teamMember) {
       return null;
     }
 
-    const directReports = props.employees.filter(
-      (emp) => emp.directReport === employeeId,
+    const directReports = props.teamMembers.filter(
+      (tm) => tm.directReport === teamMemberId,
     );
 
     return (
       <TreeNode
-        key={employeeId}
+        key={teamMemberId}
         label={
           <div className="mx-auto w-52 overflow-hidden rounded-lg bg-white shadow-md">
             <div className="p-2">
               <h1 className="text-lg font-semibold text-gray-800">
-                {employee.firstName + " " + employee.lastName}
+                {teamMember.firstName + " " + teamMember.lastName}
               </h1>
               <p className="mt-1 text-sm text-gray-600">
-                {employee.department}
+                {teamMember.department}
               </p>
-              <p className="mt-1 text-sm text-gray-500">{employee.role}</p>
+              <p className="mt-1 text-sm text-gray-500">{teamMember.role}</p>
             </div>
           </div>
         }
@@ -42,12 +41,12 @@ const OrgChart = (props: Props) => {
     );
   };
 
-  const topLevelEmployee = props.employees.find(
-    (employee) =>
-      employee.directReport === "11111111-1111-1111-1111-111111111111",
+  const topLevelTeamMember = props.teamMembers.find(
+    (teamMember) =>
+      teamMember.directReport === "11111111-1111-1111-1111-111111111111",
   );
 
-  if (!topLevelEmployee) {
+  if (!topLevelTeamMember) {
     return null;
   }
 
@@ -60,22 +59,24 @@ const OrgChart = (props: Props) => {
           <div className="mx-auto w-52 overflow-hidden rounded-lg bg-white shadow-md">
             <div className="p-2">
               <h1 className="text-lg font-semibold text-gray-800">
-                {topLevelEmployee.firstName + " " + topLevelEmployee.lastName}
+                {topLevelTeamMember.firstName +
+                  " " +
+                  topLevelTeamMember.lastName}
               </h1>
               <p className="mt-1 text-sm text-gray-600">
-                {topLevelEmployee.department}
+                {topLevelTeamMember.department}
               </p>
               <p className="mt-1 text-sm text-gray-500">
-                {topLevelEmployee.role}
+                {topLevelTeamMember.role}
               </p>
             </div>
           </div>
         }
       >
-        {topLevelEmployee.id &&
-          props.employees
-            .filter((emp) => emp.directReport === topLevelEmployee.id)
-            .map((emp) => renderTree(emp.id))}
+        {topLevelTeamMember.id &&
+          props.teamMembers
+            .filter((tm) => tm.directReport === topLevelTeamMember.id)
+            .map((tm) => renderTree(tm.id))}
       </Tree>
     </div>
   );

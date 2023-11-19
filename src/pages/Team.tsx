@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import { Layout, OrgChart, TeamTable } from "../components";
-import { useGetEmployees } from "../hooks/useGetEmployees";
+import { useGetTeamMembers } from "../hooks/useGetTeamMembers";
 
 const Team = () => {
   const [viewMode, setViewMode] = useState<"team-members" | "org-chart">(
     "team-members",
   );
 
-  const { getEmployees, employees, isLoading, isLoggedIn, error } =
-    useGetEmployees();
+  const { getTeamMembers, teamMembers, isLoading, isLoggedIn, error } =
+    useGetTeamMembers();
 
   useEffect(() => {
-    getEmployees();
+    getTeamMembers();
   }, []);
 
   if (isLoading) {
@@ -29,9 +29,9 @@ const Team = () => {
   const renderRoutes = () => {
     switch (viewMode) {
       case "team-members":
-        return <TeamTable employees={employees} />;
+        return <TeamTable teamMembers={teamMembers} />;
       case "org-chart":
-        return <OrgChart employees={employees} />;
+        return <OrgChart teamMembers={teamMembers} />;
 
       default:
         return;

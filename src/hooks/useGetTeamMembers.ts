@@ -1,23 +1,23 @@
 import { useState } from "react";
 import axios from "axios";
-import { Employee } from "../interfaces/ICommon";
+import { ITeamMember } from "../interfaces/ICommon";
 
-export const useGetEmployees = () => {
-  const [employees, setEmployees] = useState<Employee[]>([]);
+export const useGetTeamMembers = () => {
+  const [teamMembers, setTeamMembers] = useState<ITeamMember[]>([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const getEmployees = async () => {
+  const getTeamMembers = async () => {
     setIsLoading(true);
     setError(null);
 
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/v1/employees",
+        "http://localhost:3000/api/v1/team/team-members",
         { withCredentials: true },
       );
-      setEmployees(response.data.employees);
+      setTeamMembers(response.data.teamMembers);
       setIsLoggedIn(true);
       setIsLoading(false);
     } catch (error: any) {
@@ -27,5 +27,5 @@ export const useGetEmployees = () => {
     }
   };
 
-  return { getEmployees, employees, isLoading, isLoggedIn, error };
+  return { getTeamMembers, teamMembers, isLoading, isLoggedIn, error };
 };

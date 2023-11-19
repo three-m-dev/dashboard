@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState, ReactNode } from "react";
+import { createContext, useEffect, useState, ReactNode } from "react";
 
 type User = {
   id: string;
@@ -18,7 +18,7 @@ type AuthProviderProps = {
   children: ReactNode;
 };
 
-export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+export const AuthProvider = (props: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{ user, saveUser }}>
-      {children}
+      {props.children}
     </AuthContext.Provider>
   );
 };

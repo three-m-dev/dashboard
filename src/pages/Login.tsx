@@ -1,10 +1,20 @@
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
+import { Loading } from "../components";
+import { Navigate } from "react-router";
 
 const Login = () => {
-  const { login, isLoading, error } = useAuth();
+  const { login, isLoading, error, isLoggedIn } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (isLoggedIn) {
+    <Navigate to="/" />;
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,7 +41,7 @@ const Login = () => {
               Password
             </label>
             <input
-              type="password"
+              type="text"
               className="w-full rounded-md border px-3 py-2 text-sm focus:outline-none md:text-base"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -41,6 +51,7 @@ const Login = () => {
           <button
             className="block w-full rounded-lg bg-blue-500 py-2.5 font-semibold leading-6 text-white transition duration-200 hover:bg-blue-600"
             disabled={isLoading}
+            type="submit"
           >
             {isLoading && username && password ? "Logging In.." : "Login"}
           </button>

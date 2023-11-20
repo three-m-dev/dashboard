@@ -1,71 +1,48 @@
-import { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Calendar, Careers, Home, Login, Profile, Team } from "./pages";
 import { useAuth } from "./hooks/useAuth";
-import { Layout, Loading } from "./components";
+import { Loading } from "./components";
 
 const App = () => {
-  const { isLoggedIn, checkAuthStatus } = useAuth();
-  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
-  const [hasError, setHasError] = useState(false);
+  const { isLoggedIn, isLoading, error } = useAuth();
 
-  useEffect(() => {
-    let timeout = setTimeout(() => {
-      if (isCheckingAuth) {
-        setHasError(true);
-      }
-    }, 1000);
-
-    checkAuthStatus()
-      .then(() => {
-        setIsCheckingAuth(false);
-        clearTimeout(timeout); 
-      })
-      .catch(() => {
-        setHasError(true); 
-        clearTimeout(timeout);
-      });
-
-    return () => clearTimeout(timeout); 
-  }, [checkAuthStatus]);
-
-  if (hasError) {
-    return (
-      <Layout>
-        <div>Error occurred while checking authentication status.</div>
-      </Layout>
-    );
+  if (isLoading) {
+    return <Loading />;
   }
 
-  if (isCheckingAuth) {
-    return <Loading />;
+  if (error) {
+    return (
+      <div className="flex h-full w-full items-center justify-center">
+        <div>Error occurred while checking authentication status.</div>
+      </div>
+    );
   }
 
   return (
     <Routes>
       <Route
         path="/login"
-        element={isLoggedIn ? <Navigate to="/" /> : <Login />}
+        element={isLoggedIn ? <Navigate to="/" replace /> : <Login />}
       />
       <Route
         path="/"
-        element={isLoggedIn ? <Home /> : <Navigate to="/login" />}
+        element={isLoggedIn ? <Home /> : <Navigate to="/login" replace />}
       />
       <Route
         path="/calendar/*"
-        element={isLoggedIn ? <Calendar /> : <Navigate to="/login" />}
+        element={isLoggedIn ? <Calendar /> : <Navigate to="/login" replace />}
       />
       <Route
         path="/team/*"
-        element={isLoggedIn ? <Team /> : <Navigate to="/login" />}
+        element={isLoggedIn ? <Team /> : <Navigate to="/login" replace />}
       />
       <Route
         path="/careers/*"
-        element={isLoggedIn ? <Careers /> : <Navigate to="/login" />}
+        element={isLoggedIn ? <Careers /> : <Navigate to="/login" replace />}
       />
       <Route
         path="/profile/:employeeId"
-        element={isLoggedIn ? <Profile /> : <Navigate to="/login" />}
+        element={isLoggedIn ? <Profile /> : <Navigate to="/login" replace />}
       />
 
       <Route path="*" element={<div>Not Found</div>} />

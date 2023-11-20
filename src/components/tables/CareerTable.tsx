@@ -57,15 +57,15 @@ const CareerTable = (props: Props) => {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="h-5 w-5"
+                className="h-6 w-6"
               >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  d="M12 4.5v15m7.5-7.5h-15"
+                  d="M12 6v12m6-6H6"
                 />
               </svg>
-              New listing
+              New Career Listing
             </button>
           </div>
         </div>

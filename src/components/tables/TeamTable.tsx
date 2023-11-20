@@ -58,7 +58,7 @@ const TeamTable = (props: Props) => {
           {canAddTeamMember && (
             <div className="flex w-full flex-shrink-0 flex-col items-stretch justify-end space-y-2 md:w-auto md:flex-row md:items-center md:space-x-3 md:space-y-0">
               <button
-                onClick={() => toggleTeamMemberModal()}
+                onClick={toggleTeamMemberModal}
                 className="flex items-center gap-1 rounded-md bg-gray-200 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-blue-500 hover:text-white"
               >
                 <svg

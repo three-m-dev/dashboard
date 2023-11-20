@@ -69,7 +69,7 @@ const Careers = () => {
   return (
     <Layout>
       <section>
-        <div className="toggle-buttons flex justify-center gap-2 py-4">
+        <div className="toggle-buttons flex justify-center gap-2 pb-4">
           <button
             className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${
               viewMode === "careers"

@@ -5,7 +5,7 @@ type Props = {
   toggleModal: () => void;
 };
 
-const TeamMemberModal = ({ toggleModal }: Props) => {
+const TeamMemberModal = (props: Props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -75,7 +75,7 @@ const TeamMemberModal = ({ toggleModal }: Props) => {
     await createTeamMember(userData, employeeData);
 
     if (!error) {
-      toggleModal();
+      props.toggleModal();
     }
   };
 
@@ -86,7 +86,7 @@ const TeamMemberModal = ({ toggleModal }: Props) => {
           <h3 className="text-lg font-bold">New Team Member</h3>
           <button
             className="rounded-md p-2.5 text-gray-600 hover:bg-gray-200"
-            onClick={toggleModal}
+            onClick={props.toggleModal}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

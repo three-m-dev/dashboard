@@ -41,7 +41,7 @@ const Team = () => {
       <section>
         <div className="toggle-buttons flex justify-center gap-2 pb-4">
           <button
-            className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${
+            className={`rounded-md px-4 py-2.5 text-sm font-medium transition-colors ${
               viewMode === "team-members"
                 ? "bg-blue-500 text-white"
                 : "bg-gray-200 text-gray-700"
@@ -51,7 +51,7 @@ const Team = () => {
             Team Members
           </button>
           <button
-            className={`rounded-md px-4 py-2 text-sm font-medium transition-colors ${
+            className={`rounded-md px-4 py-2.5 text-sm font-medium transition-colors ${
               viewMode === "org-chart"
                 ? "bg-blue-500 text-white"
                 : "bg-gray-200 text-gray-700"

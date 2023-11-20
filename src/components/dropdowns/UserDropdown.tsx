@@ -18,7 +18,7 @@ const UserDropdown = () => {
       <div className="relative">
         <button
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-          className="rounded-md p-2.5 text-gray-600 hover:bg-gray-200"
+          className="rounded-md p-2 text-gray-600 hover:bg-gray-200"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

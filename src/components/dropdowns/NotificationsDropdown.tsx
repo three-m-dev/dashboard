@@ -23,7 +23,7 @@ const NotificationsDropdown = () => {
   return (
     <div className="flex items-center">
       <div className="relative">
-        <button onClick={() => setIsOpen(!isOpen)} className="rounded-md p-2.5 text-gray-600 hover:bg-gray-200">
+        <button onClick={() => setIsOpen(!isOpen)} className="rounded-md p-2 text-gray-600 hover:bg-gray-200">
         <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

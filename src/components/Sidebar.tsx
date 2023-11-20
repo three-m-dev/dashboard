@@ -54,7 +54,7 @@ const Sidebar = ({ isOpen, toggleSidebar }: SidebarProps) => {
   }, [isOpen]);
 
   const linkClass = (match: boolean) =>
-    `flex p-2.5 mx-2 rounded-md gap-2 ${match ? activeLink : inactiveLink}`;
+    `flex p-2 mx-2 rounded-md gap-2 ${match ? activeLink : inactiveLink}`;
 
   const sidebarClasses = [
     isOpen ? "fixed md:relative w-3/4" : "hidden md:block",

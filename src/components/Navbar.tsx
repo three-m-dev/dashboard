@@ -10,7 +10,7 @@ const Navbar = (props: NavbarProps) => {
     <header className="z-20 flex items-center justify-between bg-white p-2 shadow">
       <button
         onClick={props.onToggleSidebar}
-        className="rounded-md p-2.5 text-gray-600 hover:bg-gray-200"
+        className="rounded-md p-2 text-gray-600 hover:bg-gray-200"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -28,7 +28,7 @@ const Navbar = (props: NavbarProps) => {
         </svg>
       </button>
       <div className="flex gap-2">
-        <button className="rounded-md p-2.5 text-gray-600 hover:bg-gray-200">
+        <button className="rounded-md p-2 text-gray-600 hover:bg-gray-200">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

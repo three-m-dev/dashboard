@@ -3,9 +3,9 @@ import { Layout, Loading, OrgChart, TeamTable } from "../components";
 import { useGetTeamMembers } from "../hooks/useGetTeamMembers";
 
 const Team = () => {
-  const [viewMode, setViewMode] = useState<"team-members" | "org-chart">(
-    "team-members",
-  );
+  const [viewMode, setViewMode] = useState<
+    "team-members" | "departments" | "org-chart"
+  >("team-members");
 
   const { getTeamMembers, teamMembers, isLoading, error } = useGetTeamMembers();
 
@@ -29,6 +29,8 @@ const Team = () => {
     switch (viewMode) {
       case "team-members":
         return <TeamTable teamMembers={teamMembers} />;
+      case "departments":
+        return <TeamTable teamMembers={teamMembers} />;
       case "org-chart":
         return <OrgChart teamMembers={teamMembers} />;
       default:
@@ -49,6 +51,16 @@ const Team = () => {
             onClick={() => setViewMode("team-members")}
           >
             Team Members
+          </button>
+          <button
+            className={`rounded-md px-4 py-2.5 text-sm font-medium transition-colors ${
+              viewMode === "departments"
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200 text-gray-700"
+            }`}
+            onClick={() => setViewMode("departments")}
+          >
+            Departments
           </button>
           <button
             className={`rounded-md px-4 py-2.5 text-sm font-medium transition-colors ${

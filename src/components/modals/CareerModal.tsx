@@ -1,24 +1,68 @@
 import { useState } from "react";
 import { useCreateCareerListing } from "../../hooks/useCreateCareerListing";
-import { ICareerListing } from "../../interfaces/ICommon";
+import BulletTextArea from "../forms/BulletTextArea";
+import { IDepartment } from "../../interfaces/ICommon";
 
 type Props = {
   toggleModal: () => void;
-  careers: ICareerListing[];
+  departments: IDepartment[];
 };
 
 const CareerModal = (props: Props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [company, setCompany] = useState("");
-  const [location, setLocation] = useState("");
-  const [departmnet, setDepartment] = useState("");
-  const [type, setType] = useState("");
-  const [requirements, setRequirements] = useState({});
-  const [qualifications, setQualifications] = useState({});
-  const [salary, setSalary] = useState("");
+  const [company, setCompany] = useState<number>(0);
+  const [location, setLocation] = useState<number>(0);
+  const [department, setDepartment] = useState("");
+  const [employmentType, setEmploymentType] = useState<number>(0);
+  const [benefits, setBenefits] = useState<string>("");
+  const [requirements, setRequirements] = useState<string>("");
+  const [qualifications, setQualifications] = useState<string>("");
+  const [startingAt, setStartingAt] = useState("");
+  const [compensationType, setCompensationType] = useState<number>(0);
 
   const { createCareerListing, isLoading, error } = useCreateCareerListing();
+
+  const parseBulletsToJsonArray = (bulletList: string): string => {
+    return JSON.stringify(
+      bulletList
+        .split("\n")
+        .filter((line) => line.trim().startsWith("• "))
+        .map((line) => line.trim().substring(2)),
+    );
+  };
+
+  const handleCompanyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCompany(Number(e.target.value));
+  };
+
+  const handleEmploymentTypeChange = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setEmploymentType(Number(e.target.value));
+  };
+
+  const handleLocationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setLocation(Number(e.target.value));
+  };
+
+  const handleCompensationTypeChange = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setCompensationType(Number(e.target.value));
+  };
+
+  const handleBenefitsChange = (value: string) => {
+    setBenefits(parseBulletsToJsonArray(value));
+  };
+
+  const handleRequirementsChange = (value: string) => {
+    setRequirements(parseBulletsToJsonArray(value));
+  };
+
+  const handleQualificationsChange = (value: string) => {
+    setQualifications(parseBulletsToJsonArray(value));
+  };
 
   const handleSubmit = async () => {
     const listingData = {
@@ -26,13 +70,16 @@ const CareerModal = (props: Props) => {
       description,
       company,
       location,
-      departmnet,
-      type,
-      requirements,
-      qualifications,
-      salary,
+      department,
+      employmentType,
+      benefits: JSON.parse(benefits),
+      requirements: JSON.parse(requirements),
+      qualifications: JSON.parse(qualifications),
+      startingAt,
+      compensationType,
     };
 
+    console.log(listingData);
     await createCareerListing(listingData);
 
     if (!error) {
@@ -77,9 +124,7 @@ const CareerModal = (props: Props) => {
               <select
                 id="company"
                 className="focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
-                onChange={(e) => {
-                  setCompany(e.target.value);
-                }}
+                onChange={handleCompanyChange}
                 value={company}
               >
                 <option>Select Company</option>
@@ -98,11 +143,14 @@ const CareerModal = (props: Props) => {
                 onChange={(e) => {
                   setDepartment(e.target.value);
                 }}
-                value={departmnet}
+                value={department}
               >
                 <option>Select Department</option>
-                <option value={1}>Three M</option>
-                <option value={2}>Ultra Grip</option>
+                {props.departments.map((department) => (
+                  <option key={department.id} value={department.name}>
+                    {department.name}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -111,12 +159,10 @@ const CareerModal = (props: Props) => {
                 Employment Type
               </label>
               <select
-                id="type"
+                id="employmentType"
                 className="focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
-                value={type}
-                onChange={(e) => {
-                  setType(e.target.value);
-                }}
+                value={employmentType}
+                onChange={handleEmploymentTypeChange}
               >
                 <option>Select Type</option>
                 <option value={1}>Full Time</option>
@@ -133,9 +179,7 @@ const CareerModal = (props: Props) => {
               <select
                 id="location"
                 className="focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
-                onChange={(e) => {
-                  setLocation(e.target.value);
-                }}
+                onChange={handleLocationChange}
                 value={location}
               >
                 <option>Select Location</option>
@@ -145,7 +189,7 @@ const CareerModal = (props: Props) => {
               </select>
             </div>
 
-            <div className="sm:col-span-8">
+            <div className="sm:col-span-6">
               <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
                 Title
               </label>
@@ -164,23 +208,39 @@ const CareerModal = (props: Props) => {
               />
             </div>
 
-            <div className="sm:col-span-4">
+            <div className="sm:col-span-3">
               <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
-                Salary / Wage
+                Starting At
               </label>
               <input
                 type="text"
-                name="salary"
-                id="salary"
+                name="compensation"
+                id="compensation"
                 className="focus:ring-primary-600 focus:border-primary-600 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
-                placeholder="$41,600/yr or $20.00/hr"
-                value={salary}
+                placeholder="$42,000/$20.00"
+                value={startingAt}
                 onChange={(e) => {
-                  setSalary(e.target.value);
+                  setStartingAt(e.target.value);
                 }}
                 required
                 autoComplete="off"
               />
+            </div>
+
+            <div className="sm:col-span-3">
+              <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                Salary/Hourly
+              </label>
+              <select
+                id="compensationType"
+                className="focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                onChange={handleCompensationTypeChange}
+                value={compensationType}
+              >
+                <option>Select Type</option>
+                <option value={1}>Salary</option>
+                <option value={2}>Hourly</option>
+              </select>
             </div>
 
             <div className="sm:col-span-12">
@@ -201,34 +261,35 @@ const CareerModal = (props: Props) => {
 
             <div className="sm:col-span-12">
               <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                Benefits
+              </label>
+              <BulletTextArea
+                placeholder="Write career benefits here"
+                value={benefits}
+                onChange={handleBenefitsChange}
+              />
+            </div>
+
+            <div className="sm:col-span-12">
+              <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
                 Requirements
               </label>
-              <textarea
-                id="requirments"
-                rows={3}
-                className="focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+              <BulletTextArea
                 placeholder="Write career requirments here"
-                value={description}
-                onChange={(e) => {
-                  setRequirements(e.target.value);
-                }}
-              ></textarea>
+                value={requirements}
+                onChange={handleRequirementsChange}
+              />
             </div>
 
             <div className="sm:col-span-12">
               <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
                 Qualifications
               </label>
-              <textarea
-                id="qualifications"
-                rows={3}
-                className="focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+              <BulletTextArea
                 placeholder="Write career qualifications here"
-                value={description}
-                onChange={(e) => {
-                  setQualifications(e.target.value);
-                }}
-              ></textarea>
+                value={qualifications}
+                onChange={handleQualificationsChange}
+              />
             </div>
 
             <button

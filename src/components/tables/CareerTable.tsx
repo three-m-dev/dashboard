@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
-import { ICareerListing } from "../../interfaces/ICommon";
+import { ICareerListing, IDepartment } from "../../interfaces/ICommon";
 import { useState } from "react";
 import CareerModal from "../modals/CareerModal";
 
 type Props = {
   listings: ICareerListing[];
+  departments: IDepartment[];
 };
 
 const CareerTable = (props: Props) => {
@@ -166,7 +167,12 @@ const CareerTable = (props: Props) => {
           </table>
         </div>
       </div>
-      {careerModalOpen && <CareerModal toggleModal={toggleCareerModal} />}
+      {careerModalOpen && (
+        <CareerModal
+          toggleModal={toggleCareerModal}
+          departments={props.departments}
+        />
+      )}
     </>
   );
 };

@@ -1,10 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
-import { ITeamMember } from "../../interfaces/ICommon";
+import { IDepartment, ITeamMember } from "../../interfaces/ICommon";
 import { useState } from "react";
 import TeamMemberModal from "../modals/TeamMemberModal";
 
 type Props = {
   teamMembers: ITeamMember[];
+  departments: IDepartment[];
 };
 
 const TeamTable = (props: Props) => {
@@ -174,7 +175,11 @@ const TeamTable = (props: Props) => {
         </div>
       </div>
       {teamMemberModalOpen && (
-        <TeamMemberModal teamMembers={props.teamMembers} toggleModal={toggleTeamMemberModal} />
+        <TeamMemberModal
+          teamMembers={props.teamMembers}
+          departments={props.departments}
+          toggleModal={toggleTeamMemberModal}
+        />
       )}
     </>
   );

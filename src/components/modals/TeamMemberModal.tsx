@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useCreateTeamMember } from "../../hooks/useCreateTeamMember";
-import { ITeamMember } from "../../interfaces/ICommon";
+import { IDepartment, ITeamMember } from "../../interfaces/ICommon";
 
 type Props = {
   toggleModal: () => void;
   teamMembers: ITeamMember[];
+  departments: IDepartment[];
 };
 
 const TeamMemberModal = (props: Props) => {
@@ -27,17 +28,11 @@ const TeamMemberModal = (props: Props) => {
   const [directReport, setDirectReport] = useState("");
   const [hiredAt, setHiredAt] = useState("");
   const [type, setType] = useState("");
+  const [notes, setNotes] = useState("");
 
   const [showPassword, setShowPassword] = useState(false);
 
   const { createTeamMember, isLoading, error } = useCreateTeamMember();
-
-  const departments = [
-    {
-      id: 1,
-      name: "Executive",
-    },
-  ];
 
   const toggleShowPassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -435,7 +430,7 @@ const TeamMemberModal = (props: Props) => {
                 }}
               >
                 <option>Select Department</option>
-                {departments.map((department) => (
+                {props.departments.map((department) => (
                   <option key={department.id} value={department.name}>
                     {department.name}
                   </option>
@@ -471,6 +466,10 @@ const TeamMemberModal = (props: Props) => {
                 rows={4}
                 className="focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
                 placeholder="Write team member notes here"
+                value={notes}
+                onChange={(e) => {
+                  setNotes(e.target.value);
+                }}
               ></textarea>
             </div>
 

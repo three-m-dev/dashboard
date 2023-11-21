@@ -1,13 +1,32 @@
 import { useEffect, useState } from "react";
-import { Layout, Loading, OrgChart, TeamTable } from "../components";
+import {
+  DepartmentTable,
+  Layout,
+  Loading,
+  OrgChart,
+  TeamTable,
+} from "../components";
 import { useGetTeamMembers } from "../hooks/useGetTeamMembers";
 
 const Team = () => {
-  const [viewMode, setViewMode] = useState<
-    "team-members" | "departments" | "org-chart"
-  >("team-members");
+  const [viewMode, setViewMode] = useState<"team-members" | "org-chart">(
+    "team-members",
+  );
 
   const { getTeamMembers, teamMembers, isLoading, error } = useGetTeamMembers();
+
+  const departments = [
+    {
+      id: "1",
+      name: "Executive",
+      count: 2,
+    },
+    {
+      id: "2",
+      name: "Management",
+      count: 7,
+    },
+  ];
 
   useEffect(() => {
     getTeamMembers();
@@ -28,9 +47,16 @@ const Team = () => {
   const renderRoutes = () => {
     switch (viewMode) {
       case "team-members":
-        return <TeamTable teamMembers={teamMembers} />;
-      case "departments":
-        return <TeamTable teamMembers={teamMembers} />;
+        return (
+          <div className="grid h-full w-full grid-cols-6 gap-4">
+            <div className="col-span-5">
+              <TeamTable teamMembers={teamMembers} departments={departments} />
+            </div>
+            <div className="col-span-1">
+              <DepartmentTable departments={departments} />
+            </div>
+          </div>
+        );
       case "org-chart":
         return <OrgChart teamMembers={teamMembers} />;
       default:
@@ -54,23 +80,13 @@ const Team = () => {
           </button>
           <button
             className={`rounded-md px-4 py-2.5 text-sm font-medium transition-colors ${
-              viewMode === "departments"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-700"
-            }`}
-            onClick={() => setViewMode("departments")}
-          >
-            Departments
-          </button>
-          <button
-            className={`rounded-md px-4 py-2.5 text-sm font-medium transition-colors ${
               viewMode === "org-chart"
                 ? "bg-blue-500 text-white"
                 : "bg-gray-200 text-gray-700"
             }`}
             onClick={() => setViewMode("org-chart")}
           >
-            Organization Chart
+            Organization
           </button>
         </div>
         {renderRoutes()}

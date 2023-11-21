@@ -14,8 +14,8 @@ export const useCreateCareerListing = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/v1/team/team-member",
-        { career: listingData },
+        "http://localhost:3000/api/v1/careers/listings/create",
+        listingData,
         { withCredentials: true },
       );
       setCreatedCareerListing(response.data);

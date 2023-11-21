@@ -1,11 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  Navigate,
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-} from "react-router";
+import { Navigate, Route, Routes } from "react-router";
 import {
   CareerForm,
   CareerTable,
@@ -22,6 +16,19 @@ const Careers = () => {
   >("careers");
 
   const { getCareers, jobListings, isLoading, error } = useGetCareers();
+
+  const departments = [
+    {
+      id: "1",
+      name: "Executive",
+      count: 2,
+    },
+    {
+      id: "2",
+      name: "Management",
+      count: 7,
+    },
+  ];
 
   useEffect(() => {
     getCareers();
@@ -44,7 +51,12 @@ const Careers = () => {
       case "careers":
         return (
           <Routes>
-            <Route path="/" element={<CareerTable listings={jobListings} />} />
+            <Route
+              path="/"
+              element={
+                <CareerTable listings={jobListings} departments={departments} />
+              }
+            />
             <Route path="new" element={<CareerForm mode="create" />} />
             <Route path=":id" element={<CareerForm mode="view" />} />
           </Routes>

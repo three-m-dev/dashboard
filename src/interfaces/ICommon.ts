@@ -32,6 +32,12 @@ export interface ITeamMember {
   updatedAt: string;
 }
 
+export interface IDepartment {
+  id: string;
+  name: string;
+  count: number;
+}
+
 export interface ICareerListing {
   id: string;
   title: string;
@@ -42,7 +48,8 @@ export interface ICareerListing {
   employmentType: string;
   requirements: string[];
   qualifications: string[];
-  salaryRange: string;
+  startingAt: string;
+  compnesationType: string;
   benefits: string[];
   status: string;
   applicantCount: number;

@@ -1,8 +1,6 @@
 export { default as Layout } from "./Layout";
 export { default as Loading } from "./Loading";
 
-export { default as CareerForm } from "./forms/CareerDetails";
-
 export { default as ApplicantTable } from "./tables/ApplicantTable";
 export { default as CareerTable } from "./tables/CareerTable";
 export { default as DepartmentTable } from "./tables/DepartmentTable";

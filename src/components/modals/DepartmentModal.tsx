@@ -13,7 +13,7 @@ const DepartmentModal = (props: Props) => {
 
   return (
     <div className="fixed inset-0 z-50 flex h-full w-full items-center justify-center overflow-y-auto bg-gray-600 bg-opacity-50 backdrop-blur-sm">
-      <div className="relative mx-4 w-full rounded-md border bg-white p-5 shadow-lg sm:mx-auto sm:max-w-sm">
+      <div className="relative mx-4 w-full rounded-md border bg-white p-5 shadow-lg sm:mx-auto sm:max-w-[384px]">
         <div className="mb-4 flex items-center justify-between rounded-t border-b pb-4 dark:border-gray-600">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
             New Department
@@ -60,18 +60,18 @@ const DepartmentModal = (props: Props) => {
               />
             </div>
 
-            <button
-              onClick={props.toggleModal}
-              className="items-center gap-1 rounded-md bg-red-500 py-2.5 text-sm font-medium text-white transition-colors hover:bg-gray-200 hover:text-gray-800 sm:col-span-1"
-            >
-              Cancel
-            </button>
 
             <button
               type="submit"
               className="items-center gap-1 rounded-md bg-blue-500 py-2.5 text-sm font-medium text-white transition-colors hover:bg-gray-200 hover:text-gray-800 sm:col-span-1"
             >
               {isLoading ? "Submitting.." : "Submit"}
+            </button>
+            <button
+              onClick={props.toggleModal}
+              className="items-center gap-1 rounded-md bg-red-500 py-2.5 text-sm font-medium text-white transition-colors hover:bg-gray-200 hover:text-gray-800 sm:col-span-1"
+            >
+              Cancel
             </button>
           </div>
         </form>

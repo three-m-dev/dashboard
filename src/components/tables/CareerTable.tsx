@@ -1,7 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { ICareerListing, IDepartment } from "../../interfaces/ICommon";
 import { useState } from "react";
 import CareerModal from "../modals/CareerModal";
+import CareerDetailsModal from "../modals/CareerDetailsModal";
 
 type Props = {
   listings: ICareerListing[];
@@ -11,8 +12,19 @@ type Props = {
 const CareerTable = (props: Props) => {
   const [careerModalOpen, setCareerModalOpen] = useState(false);
 
+  const navigate = useNavigate();
+
+  const { id: careerId } = useParams();
+  const selectedCareer = props.listings.find(
+    (listing) => listing.id === careerId,
+  );
+
   const toggleCareerModal = () => {
     setCareerModalOpen(!careerModalOpen);
+  };
+
+  const toggleCareerDetailsModal = () => {
+    navigate("/careers");
   };
 
   return (
@@ -171,6 +183,12 @@ const CareerTable = (props: Props) => {
         <CareerModal
           toggleModal={toggleCareerModal}
           departments={props.departments}
+        />
+      )}
+      {selectedCareer && (
+        <CareerDetailsModal
+          toggleModal={toggleCareerDetailsModal}
+          careerDetails={selectedCareer}
         />
       )}
     </>

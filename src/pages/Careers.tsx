@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Navigate, Route, Routes } from "react-router";
 import {
-  CareerForm,
   CareerTable,
   ApplicantTable,
   Layout,
@@ -58,7 +57,12 @@ const Careers = () => {
               }
             />
 
-            <Route path=":id" element={<CareerForm listings={jobListings} />} />
+            <Route
+              path=":id"
+              element={
+                <CareerTable listings={jobListings} departments={departments} />
+              }
+            />
           </Routes>
         );
       case "applicants":

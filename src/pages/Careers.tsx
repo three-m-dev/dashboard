@@ -57,8 +57,8 @@ const Careers = () => {
                 <CareerTable listings={jobListings} departments={departments} />
               }
             />
-            <Route path="new" element={<CareerForm mode="create" />} />
-            <Route path=":id" element={<CareerForm mode="view" />} />
+
+            <Route path=":id" element={<CareerForm listings={jobListings} />} />
           </Routes>
         );
       case "applicants":

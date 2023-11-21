@@ -49,7 +49,7 @@ export interface ICareerListing {
   requirements: string[];
   qualifications: string[];
   startingAt: string;
-  compnesationType: string;
+  compensationType: string;
   benefits: string[];
   status: string;
   applicantCount: number;

@@ -93,8 +93,8 @@ const TeamMemberModal = (props: Props) => {
   return (
     <div className="fixed inset-0 z-50 flex h-full w-full items-center justify-center overflow-y-auto bg-gray-600 bg-opacity-50 backdrop-blur-sm">
       <div className="relative mx-4 w-full rounded-md border bg-white p-5 shadow-lg sm:mx-auto sm:max-w-screen-md">
-        <div className="mb-4 flex items-center justify-between rounded-t border-b pb-4 dark:border-gray-600">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+        <div className="mb-4 flex items-center justify-between rounded-t border-b pb-4">
+          <h3 className="text-lg font-semibold text-gray-900">
             New Team Member
           </h3>
           <button
@@ -121,14 +121,14 @@ const TeamMemberModal = (props: Props) => {
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 sm:grid-cols-12">
             <div className="sm:col-span-4">
-              <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+              <label className="mb-2 block text-sm font-medium text-gray-900">
                 Username
               </label>
               <input
                 type="text"
                 name="username"
                 id="username"
-                className="focus:ring-primary-600 focus:border-primary-600 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                 placeholder="Username"
                 value={username}
                 onChange={(e) => {
@@ -139,14 +139,14 @@ const TeamMemberModal = (props: Props) => {
               />
             </div>
             <div className="sm:col-span-4">
-              <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+              <label className="mb-2 block text-sm font-medium text-gray-900">
                 Password
               </label>
               <input
                 type="text"
                 name="password"
                 id="password"
-                className="focus:ring-primary-600 focus:border-primary-600 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                 placeholder="********"
                 value={password}
                 onChange={(e) => {
@@ -157,14 +157,14 @@ const TeamMemberModal = (props: Props) => {
               />
             </div>
             <div className="sm:col-span-4">
-              <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+              <label className="mb-2 block text-sm font-medium text-gray-900">
                 Repeat Password
               </label>
               <input
                 type="text"
                 name="repeatPassword"
                 id="repeatPassword"
-                className="focus:ring-primary-600 focus:border-primary-600 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                 placeholder="********"
                 value={repeatPassword}
                 onChange={(e) => {
@@ -175,14 +175,14 @@ const TeamMemberModal = (props: Props) => {
               />
             </div>
             <div className="sm:col-span-5">
-              <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+              <label className="mb-2 block text-sm font-medium text-gray-900">
                 First Name
               </label>
               <input
                 type="text"
                 name="firstName"
                 id="firstName"
-                className="focus:ring-primary-600 focus:border-primary-600 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                 placeholder="John"
                 value={firstName}
                 onChange={(e) => {
@@ -194,14 +194,14 @@ const TeamMemberModal = (props: Props) => {
             </div>
 
             <div className="sm:col-span-5">
-              <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+              <label className="mb-2 block text-sm font-medium text-gray-900">
                 Last Name
               </label>
               <input
                 type="text"
                 name="lastName"
                 id="lastName"
-                className="focus:ring-primary-600 focus:border-primary-600 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                 placeholder="Doe"
                 value={lastName}
                 onChange={(e) => {
@@ -212,14 +212,14 @@ const TeamMemberModal = (props: Props) => {
               />
             </div>
             <div className="sm:col-span-2">
-              <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+              <label className="mb-2 block text-sm font-medium text-gray-900">
                 Middle Initial
               </label>
               <input
                 type="text"
                 name="middleInitial"
                 id="middleInitial"
-                className="focus:ring-primary-600 focus:border-primary-600 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                 placeholder="A"
                 value={middleInitial}
                 onChange={(e) => {
@@ -229,14 +229,14 @@ const TeamMemberModal = (props: Props) => {
               />
             </div>
             <div className="sm:col-span-6">
-              <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+              <label className="mb-2 block text-sm font-medium text-gray-900">
                 Email
               </label>
               <input
                 type="text"
                 name="email"
                 id="email"
-                className="focus:ring-primary-600 focus:border-primary-600 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                 placeholder="example@domain.com"
                 value={email}
                 onChange={(e) => {
@@ -247,14 +247,14 @@ const TeamMemberModal = (props: Props) => {
               />
             </div>
             <div className="sm:col-span-6">
-              <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+              <label className="mb-2 block text-sm font-medium text-gray-900">
                 Phone
               </label>
               <input
                 type="text"
                 name="phone"
                 id="phone"
-                className="focus:ring-primary-600 focus:border-primary-600 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                 placeholder="123-456-7890"
                 value={phone}
                 onChange={(e) => {
@@ -265,14 +265,14 @@ const TeamMemberModal = (props: Props) => {
               />
             </div>
             <div className="sm:col-span-6">
-              <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+              <label className="mb-2 block text-sm font-medium text-gray-900">
                 Street Address
               </label>
               <input
                 type="text"
                 name="addressLine"
                 id="addressLine"
-                className="focus:ring-primary-600 focus:border-primary-600 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                 placeholder="123 Main St"
                 value={addressLine}
                 onChange={(e) => {
@@ -282,14 +282,14 @@ const TeamMemberModal = (props: Props) => {
               />
             </div>
             <div className="sm:col-span-6">
-              <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+              <label className="mb-2 block text-sm font-medium text-gray-900">
                 City
               </label>
               <input
                 type="text"
                 name="city"
                 id="city"
-                className="focus:ring-primary-600 focus:border-primary-600 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                 placeholder="Detroit"
                 value={city}
                 onChange={(e) => {
@@ -299,14 +299,14 @@ const TeamMemberModal = (props: Props) => {
               />
             </div>
             <div className="sm:col-span-4">
-              <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+              <label className="mb-2 block text-sm font-medium text-gray-900">
                 State/Province
               </label>
               <input
                 type="text"
                 name="state"
                 id="state"
-                className="focus:ring-primary-600 focus:border-primary-600 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                 placeholder="Michigan"
                 value={state}
                 onChange={(e) => {
@@ -316,14 +316,14 @@ const TeamMemberModal = (props: Props) => {
               />
             </div>
             <div className="sm:col-span-4">
-              <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+              <label className="mb-2 block text-sm font-medium text-gray-900">
                 Postal Code
               </label>
               <input
                 type="text"
                 name="postalCode"
                 id="postalCode"
-                className="focus:ring-primary-600 focus:border-primary-600 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                 placeholder="12345"
                 value={postalCode}
                 onChange={(e) => {
@@ -333,14 +333,14 @@ const TeamMemberModal = (props: Props) => {
               />
             </div>
             <div className="sm:col-span-4">
-              <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+              <label className="mb-2 block text-sm font-medium text-gray-900">
                 Country
               </label>
               <input
                 type="text"
                 name="country"
                 id="country"
-                className="focus:ring-primary-600 focus:border-primary-600 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                 placeholder="United States"
                 value={country}
                 onChange={(e) => {
@@ -350,14 +350,14 @@ const TeamMemberModal = (props: Props) => {
               />
             </div>
             <div className="sm:col-span-4">
-              <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+              <label className="mb-2 block text-sm font-medium text-gray-900">
                 Role
               </label>
               <input
                 type="text"
                 name="role"
                 id="role"
-                className="focus:ring-primary-600 focus:border-primary-600 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                 placeholder="Team Member"
                 value={role}
                 onChange={(e) => {
@@ -368,14 +368,14 @@ const TeamMemberModal = (props: Props) => {
               />
             </div>
             <div className="sm:col-span-4">
-              <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+              <label className="mb-2 block text-sm font-medium text-gray-900">
                 Start Date
               </label>
               <input
                 type="date"
                 name="hiredAt"
                 id="hiredAt"
-                className="focus:ring-primary-600 focus:border-primary-600 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                 value={hiredAt}
                 onChange={(e) => {
                   setHiredAt(e.target.value);
@@ -385,12 +385,12 @@ const TeamMemberModal = (props: Props) => {
               />
             </div>
             <div className="sm:col-span-4">
-              <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+              <label className="mb-2 block text-sm font-medium text-gray-900">
                 Employment Type
               </label>
               <select
                 id="type"
-                className="focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                className="focus:ring-primary-500 focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                 onChange={(e) => {
                   setType(e.target.value);
                 }}
@@ -403,12 +403,12 @@ const TeamMemberModal = (props: Props) => {
               </select>
             </div>
             <div className="sm:col-span-4">
-              <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+              <label className="mb-2 block text-sm font-medium text-gray-900">
                 Company
               </label>
               <select
                 id="company"
-                className="focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                className="focus:ring-primary-500 focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                 onChange={(e) => {
                   setCompany(e.target.value);
                 }}
@@ -419,12 +419,12 @@ const TeamMemberModal = (props: Props) => {
               </select>
             </div>
             <div className="sm:col-span-4">
-              <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+              <label className="mb-2 block text-sm font-medium text-gray-900">
                 Department
               </label>
               <select
                 id="department"
-                className="focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                className="focus:ring-primary-500 focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                 onChange={(e) => {
                   setDepartment(e.target.value);
                 }}
@@ -438,12 +438,12 @@ const TeamMemberModal = (props: Props) => {
               </select>
             </div>
             <div className="sm:col-span-4">
-              <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+              <label className="mb-2 block text-sm font-medium text-gray-900">
                 Direct Report
               </label>
               <select
                 id="directReport"
-                className="focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                className="focus:ring-primary-500 focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                 onChange={(e) => {
                   setDirectReport(e.target.value);
                 }}
@@ -458,13 +458,13 @@ const TeamMemberModal = (props: Props) => {
               </select>
             </div>
             <div className="sm:col-span-12">
-              <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+              <label className="mb-2 block text-sm font-medium text-gray-900">
                 Notes
               </label>
               <textarea
                 id="description"
                 rows={4}
-                className="focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                className="focus:ring-primary-500 focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                 placeholder="Write team member notes here"
                 value={notes}
                 onChange={(e) => {

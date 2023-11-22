@@ -37,14 +37,6 @@ const Careers = () => {
     return <Loading />;
   }
 
-  if (error) {
-    return (
-      <Layout>
-        <p>Error: {error}</p>
-      </Layout>
-    );
-  }
-
   const renderRoutes = () => {
     switch (viewMode) {
       case "careers":

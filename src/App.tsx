@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { Calendar, Careers, Home, Login, Profile, Team } from "./pages";
 import { useAuth } from "./hooks/useAuth";
 import { Loading } from "./components";
+import TeamTest from "./pages/TeamTest";
 
 const App = () => {
   const { isLoggedIn, isLoading, error } = useAuth();
@@ -20,6 +21,10 @@ const App = () => {
 
   return (
     <Routes>
+      <Route
+        path="/test"
+        element={isLoggedIn ? <TeamTest /> : <Navigate to="/login" replace />}
+      />
       <Route
         path="/login"
         element={isLoggedIn ? <Navigate to="/" replace /> : <Login />}

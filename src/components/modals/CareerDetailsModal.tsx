@@ -9,8 +9,8 @@ const CareerDetailsModal = (props: Props) => {
   return (
     <div className="fixed inset-0 z-50 flex h-full w-full items-center justify-center overflow-y-auto bg-gray-600 bg-opacity-50 backdrop-blur-sm">
       <div className="relative mx-4 w-full rounded-md border bg-white shadow-lg sm:mx-auto sm:max-w-screen-md">
-        <div className="flex items-center justify-between rounded-t border-b p-5 dark:border-gray-600">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+        <div className="flex items-center justify-between rounded-t border-b p-5">
+          <h3 className="text-lg font-semibold text-gray-900">
             Career Listing Details
           </h3>
           <button
@@ -34,101 +34,100 @@ const CareerDetailsModal = (props: Props) => {
           </button>
         </div>
 
-        {/* Scrollable content area */}
         <div className="max-h-[80vh] overflow-auto">
           <form className="p-5">
             <div className="grid gap-4 sm:grid-cols-12">
               <div className="sm:col-span-3">
-                <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                <label className="mb-2 block text-sm font-medium text-gray-900">
                   Company
                 </label>
                 <div
                   id="company"
-                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                 >
                   {props.careerDetails.company}
                 </div>
               </div>
 
               <div className="sm:col-span-3">
-                <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                <label className="mb-2 block text-sm font-medium text-gray-900">
                   Department
                 </label>
                 <div
                   id="department"
-                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                 >
                   {props.careerDetails.department}
                 </div>
               </div>
 
               <div className="sm:col-span-3">
-                <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                <label className="mb-2 block text-sm font-medium text-gray-900">
                   Employment Type
                 </label>
                 <div
                   id="employmentType"
-                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                 >
                   {props.careerDetails.employmentType}
                 </div>
               </div>
 
               <div className="sm:col-span-3">
-                <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                <label className="mb-2 block text-sm font-medium text-gray-900">
                   Location
                 </label>
                 <div
                   id="location"
-                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                 >
                   {props.careerDetails.location}
                 </div>
               </div>
 
               <div className="sm:col-span-6">
-                <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                <label className="mb-2 block text-sm font-medium text-gray-900">
                   Title
                 </label>
                 <div
                   id="title"
-                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                 >
                   {props.careerDetails.title}
                 </div>
               </div>
 
               <div className="sm:col-span-3">
-                <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                <label className="mb-2 block text-sm font-medium text-gray-900">
                   Starting At
                 </label>
                 <div
                   id="startingAt"
-                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                 >
                   {props.careerDetails.startingAt}
                 </div>
               </div>
 
               <div className="sm:col-span-3">
-                <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                <label className="mb-2 block text-sm font-medium text-gray-900">
                   Compensation Type
                 </label>
                 <div
                   id="compensationType"
-                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                 >
                   {props.careerDetails.compensationType}
                 </div>
               </div>
 
               <div className="sm:col-span-12">
-                <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                <label className="mb-2 block text-sm font-medium text-gray-900">
                   Description
                 </label>
                 <div
                   id="description"
-                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                   style={{ minHeight: "3em" }}
                 >
                   {props.careerDetails.description}
@@ -136,12 +135,12 @@ const CareerDetailsModal = (props: Props) => {
               </div>
 
               <div className="sm:col-span-12">
-                <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                <label className="mb-2 block text-sm font-medium text-gray-900">
                   Benefits
                 </label>
                 <div
                   id="benefits"
-                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                   style={{ whiteSpace: "pre-line" }}
                 >
                   {props.careerDetails.benefits &&
@@ -154,12 +153,12 @@ const CareerDetailsModal = (props: Props) => {
               </div>
 
               <div className="sm:col-span-12">
-                <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                <label className="mb-2 block text-sm font-medium text-gray-900">
                   Requirements
                 </label>
                 <div
                   id="requirements"
-                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                   style={{ whiteSpace: "pre-line" }}
                 >
                   {props.careerDetails.requirements &&
@@ -174,12 +173,12 @@ const CareerDetailsModal = (props: Props) => {
               </div>
 
               <div className="sm:col-span-12">
-                <label className="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                <label className="mb-2 block text-sm font-medium text-gray-900">
                   Qualifications
                 </label>
                 <div
                   id="qualifications"
-                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                  className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                   style={{ whiteSpace: "pre-line" }}
                 >
                   {props.careerDetails.qualifications &&

@@ -36,24 +36,21 @@ const Team = () => {
     return <Loading />;
   }
 
-  if (error) {
-    return (
-      <Layout>
-        <p>Error: {error}</p>
-      </Layout>
-    );
-  }
-
   const renderRoutes = () => {
     switch (viewMode) {
       case "team-members":
         return (
           <div className="grid h-full w-full grid-cols-6 gap-4">
-            <div className="col-span-5">
+            <div className="col-span-5 flex flex-col">
               <TeamTable teamMembers={teamMembers} departments={departments} />
             </div>
-            <div className="col-span-1">
-              <DepartmentTable departments={departments} />
+            <div className="col-span-1 grid grid-rows-2 gap-4">
+              <div className="row-span-1 flex">
+                <DepartmentTable departments={departments} />
+              </div>
+              <div className="row-span-1 flex">
+                <DepartmentTable departments={departments} />
+              </div>
             </div>
           </div>
         );

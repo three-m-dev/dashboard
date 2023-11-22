@@ -8,33 +8,33 @@ import {
   Loading,
 } from "../components";
 import { useGetCareerListings } from "../hooks/useGetCareerListings";
+import { useGetDepartments } from "../hooks/useGetDepartments";
 
 const Careers = () => {
   const [viewMode, setViewMode] = useState<
     "careers" | "applicants" | "resumes"
   >("careers");
 
-  const { getCareerListings, careerListings, isLoading, error } =
-    useGetCareerListings();
+  const {
+    getCareerListings,
+    careerListings,
+    isLoading: isCareersLoading,
+    error: careersError,
+  } = useGetCareerListings();
 
-  const departments = [
-    {
-      id: "1",
-      name: "Executive",
-      count: 2,
-    },
-    {
-      id: "2",
-      name: "Management",
-      count: 7,
-    },
-  ];
+  const {
+    getDepartments,
+    departments,
+    isLoading: isDepartmentLoading,
+    error: departmentError,
+  } = useGetDepartments();
 
   useEffect(() => {
     getCareerListings();
+    getDepartments();
   }, []);
 
-  if (isLoading) {
+  if (isCareersLoading || isDepartmentLoading) {
     return <Loading />;
   }
 
@@ -54,7 +54,7 @@ const Careers = () => {
             />
 
             <Route
-              path=":id"
+              path="/:id"
               element={
                 <CareerTable
                   listings={careerListings}

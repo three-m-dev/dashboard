@@ -6,6 +6,11 @@ type Props = {
 };
 
 const CareerDetailsModal = (props: Props) => {
+  const date = new Date(props.careerDetails.updatedAt);
+  const formattedDate = `${
+    date.getMonth() + 1
+  }/${date.getDate()}/${date.getFullYear()}`;
+
   return (
     <div className="fixed inset-0 z-50 flex h-full w-full items-center justify-center overflow-y-auto bg-gray-600 bg-opacity-50 backdrop-blur-sm">
       <div className="relative mx-4 w-full rounded-md border bg-white shadow-lg sm:mx-auto sm:max-w-screen-md">
@@ -189,6 +194,15 @@ const CareerDetailsModal = (props: Props) => {
                         ),
                       )
                     : "No qualification information available"}
+                </div>
+              </div>
+
+              <div className="col-span-12">
+                <label className="mb-2 block text-sm font-medium text-gray-900">
+                  Last Updated
+                </label>
+                <div>
+                  On {formattedDate} by {props.careerDetails.updatedBy}
                 </div>
               </div>
             </div>

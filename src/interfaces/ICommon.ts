@@ -58,3 +58,5 @@ export interface ICareerListing {
   createdAt: string;
   updatedAt: string;
 }
+
+

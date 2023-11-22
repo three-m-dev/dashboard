@@ -1,38 +1,32 @@
 import { useEffect, useState } from "react";
-import {
-  DepartmentTable,
-  Layout,
-  Loading,
-  OrgChart,
-  TeamTable,
-} from "../components";
+import { Layout, Loading, OrgChart, TeamTable } from "../components";
 import { useGetTeamMembers } from "../hooks/useGetTeamMembers";
+import { useGetDepartments } from "../hooks/useGetDepartments";
 
 const Team = () => {
   const [viewMode, setViewMode] = useState<"team-members" | "org-chart">(
     "team-members",
   );
 
-  const { getTeamMembers, teamMembers, isLoading, error } = useGetTeamMembers();
-
-  const departments = [
-    {
-      id: "1",
-      name: "Executive",
-      count: 2,
-    },
-    {
-      id: "2",
-      name: "Management",
-      count: 7,
-    },
-  ];
+  const {
+    getTeamMembers,
+    teamMembers,
+    isLoading: isTeamLoading,
+    error: teamError,
+  } = useGetTeamMembers();
+  const {
+    getDepartments,
+    departments,
+    isLoading: isDepartmentLoading,
+    error: departmentError,
+  } = useGetDepartments();
 
   useEffect(() => {
     getTeamMembers();
+    getDepartments();
   }, []);
 
-  if (isLoading) {
+  if (isTeamLoading || isDepartmentLoading) {
     return <Loading />;
   }
 
@@ -41,16 +35,8 @@ const Team = () => {
       case "team-members":
         return (
           <div className="grid h-full w-full grid-cols-6 gap-4">
-            <div className="col-span-5 flex flex-col">
+            <div className="col-span-6 flex flex-col">
               <TeamTable teamMembers={teamMembers} departments={departments} />
-            </div>
-            <div className="col-span-1 grid grid-rows-2 gap-4">
-              <div className="row-span-1 flex">
-                <DepartmentTable departments={departments} />
-              </div>
-              <div className="row-span-1 flex">
-                <DepartmentTable departments={departments} />
-              </div>
             </div>
           </div>
         );

@@ -7,14 +7,15 @@ import {
   ResumeTable,
   Loading,
 } from "../components";
-import { useGetCareers } from "../hooks/useGetCareers";
+import { useGetCareerListings } from "../hooks/useGetCareerListings";
 
 const Careers = () => {
   const [viewMode, setViewMode] = useState<
     "careers" | "applicants" | "resumes"
   >("careers");
 
-  const { getCareers, jobListings, isLoading, error } = useGetCareers();
+  const { getCareerListings, careerListings, isLoading, error } =
+    useGetCareerListings();
 
   const departments = [
     {
@@ -30,7 +31,7 @@ const Careers = () => {
   ];
 
   useEffect(() => {
-    getCareers();
+    getCareerListings();
   }, []);
 
   if (isLoading) {
@@ -45,14 +46,20 @@ const Careers = () => {
             <Route
               path="/"
               element={
-                <CareerTable listings={jobListings} departments={departments} />
+                <CareerTable
+                  listings={careerListings}
+                  departments={departments}
+                />
               }
             />
 
             <Route
               path=":id"
               element={
-                <CareerTable listings={jobListings} departments={departments} />
+                <CareerTable
+                  listings={careerListings}
+                  departments={departments}
+                />
               }
             />
           </Routes>

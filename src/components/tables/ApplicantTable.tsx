@@ -6,6 +6,40 @@ type Props = {
 };
 
 const applicationTable = (props: Props) => {
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+  };
+
+  const formatPhoneNumber = (phoneNumberString: string) => {
+    const cleaned = ("" + phoneNumberString).replace(/\D/g, "");
+    const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+    if (match) {
+      return "+1 (" + match[1] + ") " + match[2] + "-" + match[3];
+    }
+    return null;
+  };
+
+  const getStatusStyles = (status: string) => {
+    switch (status) {
+      case "New":
+        return "bg-blue-200 text-blue-800";
+      case "Reviewed":
+        return "bg-green-200 text-green-800";
+      case "Contacted":
+        return "bg-yellow-200 text-yellow-800";
+      case "Interviewed":
+        return "bg-indigo-200 text-indigo-800";
+      case "Offered":
+        return "bg-purple-200 text-purple-800";
+      case "Hired":
+        return "bg-teal-200 text-teal-800";
+      case "Rejected":
+        return "bg-red-200 text-red-800";
+      default:
+        return "bg-gray-200 text-gray-800";
+    }
+  };
+
   return (
     <div className="relative overflow-hidden bg-white shadow-md sm:rounded-lg">
       <div className="flex flex-col items-center justify-between space-y-3 p-4 md:flex-row md:space-x-4 md:space-y-0">
@@ -52,6 +86,15 @@ const applicationTable = (props: Props) => {
                 Phone
               </th>
               <th scope="col" className="px-4 py-3">
+                Applied For
+              </th>
+              <th scope="col" className="px-4 py-3">
+                Applied On
+              </th>
+              <th scope="col" className="px-4 py-3">
+                Status
+              </th>
+              <th scope="col" className="px-4 py-3">
                 <span className="sr-only">Actions</span>
               </th>
             </tr>
@@ -72,9 +115,44 @@ const applicationTable = (props: Props) => {
                       application.applicant.lastName}
                   </Link>
                 </th>
-                <td className="px-4 py-3">{application.applicant.email}</td>
+
                 <td className="px-4 py-3">
-                  {application.applicant.phoneNumber}
+                  {" "}
+                  <button
+                    onClick={() => copyToClipboard(application.applicant.email)}
+                    className="hover:text-blue-500"
+                  >
+                    {application.applicant.email}
+                  </button>
+                </td>
+                <td className="px-4 py-3">
+                  <button
+                    onClick={() =>
+                      copyToClipboard(application.applicant.phoneNumber)
+                    }
+                    className="hover:text-blue-500"
+                  >
+                    {formatPhoneNumber(application.applicant.phoneNumber)}
+                  </button>
+                </td>
+                <td className="px-4 py-3">
+                  <span>{application.careerListing.title}</span>
+                </td>
+                <td className="px-4 py-3">
+                  {new Date(application.createdAt).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </td>
+                <td className="px-4 py-3">
+                  <span
+                    className={`rounded px-2.5 py-1 ${getStatusStyles(
+                      application.status,
+                    )}`}
+                  >
+                    {application.status}
+                  </span>
                 </td>
                 <td className="flex items-center justify-end px-4 py-3">
                   <button

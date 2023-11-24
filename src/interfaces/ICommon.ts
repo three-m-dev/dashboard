@@ -76,6 +76,7 @@ export interface IApplicant {
 export interface IApplication {
   id: string;
   careerListingId: string;
+  careerListing: ICareerListing;
   status: string;
   source: string;
   applicant: IApplicant;

@@ -9,6 +9,7 @@ import {
 } from "../components";
 import { useGetCareerListings } from "../hooks/useGetCareerListings";
 import { useGetDepartments } from "../hooks/useGetDepartments";
+import { useGetApplications } from "../hooks/useGetApplications";
 
 const Careers = () => {
   const [viewMode, setViewMode] = useState<
@@ -29,9 +30,17 @@ const Careers = () => {
     error: departmentError,
   } = useGetDepartments();
 
+  const {
+    getApplications,
+    applications,
+    isLoading: isApplicationsLoading,
+    error: applicationsError,
+  } = useGetApplications();
+
   useEffect(() => {
     getCareerListings();
     getDepartments();
+    getApplications();
   }, []);
 
   if (isCareersLoading || isDepartmentLoading) {
@@ -67,7 +76,10 @@ const Careers = () => {
       case "applicants":
         return (
           <Routes>
-            <Route path="/" element={<ApplicantTable />} />
+            <Route
+              path="/"
+              element={<ApplicantTable applications={applications} />}
+            />
           </Routes>
         );
       case "resumes":

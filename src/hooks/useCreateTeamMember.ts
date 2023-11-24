@@ -14,7 +14,7 @@ export const useCreateTeamMember = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/v1/team/team-member",
+        "http://localhost:3000/api/v1/organization/team-member",
         { user: userData, teamMember: teamMemberData },
         { withCredentials: true },
       );

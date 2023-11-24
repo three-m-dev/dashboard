@@ -11,7 +11,7 @@ const useLogout = () => {
   const logout = async () => {
     try {
       await axios.post(
-        "http://localhost:3000/api/v1/team/team-member/logout",
+        "http://localhost:3000/api/v1/organization/logout",
         {},
         { withCredentials: true },
       );

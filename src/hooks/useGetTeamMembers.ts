@@ -13,7 +13,7 @@ export const useGetTeamMembers = () => {
 
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/v1/team/team-members",
+        "http://localhost:3000/api/v1/organization/team-members",
         { withCredentials: true },
       );
       setTeamMembers(response.data.teamMembers);

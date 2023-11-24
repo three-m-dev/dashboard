@@ -1,22 +1,22 @@
 import { useState } from "react";
 import axios from "axios";
-import { ICareerListing } from "../interfaces/ICommon";
+import { IApplication } from "../interfaces/ICommon";
 
-export const useGetCareerListings = () => {
-  const [careerListings, setCareerListings] = useState<ICareerListing[]>([]);
+export const useGetApplications = () => {
+  const [applications, setApplications] = useState<IApplication[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const getCareerListings = async () => {
+  const getApplications = async () => {
     setIsLoading(true);
     setError(null);
 
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/v1/careers",
+        "http://localhost:3000/api/v1/careers/applications",
         { withCredentials: true },
       );
-      setCareerListings(response.data.careerListings);
+      setApplications(response.data.careerApplications);
     } catch (error: any) {
       setError(error.response ? error.response.data.message : error.message);
     } finally {
@@ -26,5 +26,5 @@ export const useGetCareerListings = () => {
     }
   };
 
-  return { getCareerListings, careerListings, isLoading, error };
+  return { getApplications, applications, isLoading, error };
 };

@@ -13,7 +13,7 @@ export const useGetDepartments = () => {
 
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/v1/team/departments",
+        "http://localhost:3000/api/v1/organization/departments",
         { withCredentials: true },
       );
       setDepartments(response.data.departments);

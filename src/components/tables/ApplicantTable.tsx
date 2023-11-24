@@ -1,20 +1,11 @@
 import { Link } from "react-router-dom";
+import { IApplication } from "../../interfaces/ICommon";
 
-const ApplicantTable = () => {
-  const applicants = [
-    {
-      id: 1,
-      firstName: "Jacob",
-      lastName: "Reppuhn",
-      email: "jreppuhn@three-m.com",
-      phone: "2485551223",
-    },
-  ];
+type Props = {
+  applications: IApplication[];
+};
 
-  const handleActionClick = (id: number) => {
-    console.log(`Action clicked for position id ${id}`);
-  };
-
+const applicationTable = (props: Props) => {
   return (
     <div className="relative overflow-hidden bg-white shadow-md sm:rounded-lg">
       <div className="flex flex-col items-center justify-between space-y-3 p-4 md:flex-row md:space-x-4 md:space-y-0">
@@ -66,21 +57,25 @@ const ApplicantTable = () => {
             </tr>
           </thead>
           <tbody>
-            {applicants.map((applicant) => (
-              <tr key={applicant.id} className="border-b">
+            {props.applications.map((application) => (
+              <tr key={application.id} className="border-b">
                 <th
                   scope="row"
                   className="whitespace-nowrap px-4 py-3 font-medium text-gray-900"
                 >
                   <Link
-                    to={`/careers/applicant/${applicant.id}`}
+                    to={`/careers/application/${application.id}`}
                     className="hover:underline"
                   >
-                    {applicant.firstName + " " + applicant.lastName}
+                    {application.applicant.firstName +
+                      " " +
+                      application.applicant.lastName}
                   </Link>
                 </th>
-                <td className="px-4 py-3">{applicant.email}</td>
-                <td className="px-4 py-3">{applicant.phone}</td>
+                <td className="px-4 py-3">{application.applicant.email}</td>
+                <td className="px-4 py-3">
+                  {application.applicant.phoneNumber}
+                </td>
                 <td className="flex items-center justify-end px-4 py-3">
                   <button
                     className="inline-flex items-center rounded-lg text-center text-sm font-medium text-gray-500 hover:text-gray-800 focus:outline-none"
@@ -231,4 +226,4 @@ const ApplicantTable = () => {
   );
 };
 
-export default ApplicantTable;
+export default applicationTable;

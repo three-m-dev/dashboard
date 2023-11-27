@@ -272,10 +272,10 @@ const CareerModal = (props: Props) => {
 
             <div className="sm:col-span-12">
               <label className="mb-2 block text-sm font-medium text-gray-900">
-                Requirements
+                Responsibilities
               </label>
               <BulletTextArea
-                placeholder="Write career requirements here"
+                placeholder="Write career responsibilities here"
                 value={requirements}
                 onChange={handleRequirementsChange}
               />

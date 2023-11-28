@@ -10,14 +10,16 @@ const Layout = (props: Props) => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen w-screen">
       <Sidebar
         isOpen={isSidebarOpen}
         toggleSidebar={() => setSidebarOpen(!isSidebarOpen)}
       />
-      <div className="flex flex-1 flex-col overflow-hidden">
+      <div className="flex flex-1 flex-col">
         <Navbar onToggleSidebar={() => setSidebarOpen(!isSidebarOpen)} />
-        <main className="flex-1 bg-gray-100 p-4">{props.children}</main>
+        <main className="flex-1 overflow-auto bg-gray-100 p-4">
+          {props.children}
+        </main>
       </div>
     </div>
   );

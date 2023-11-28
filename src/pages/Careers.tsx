@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { Navigate, Route, Routes } from "react-router";
+import {
+  useLocation,
+  useParams,
+  Navigate,
+  Route,
+  Routes,
+} from "react-router-dom";
 import {
   CareerTable,
   ApplicantTable,
@@ -12,9 +18,8 @@ import { useGetDepartments } from "../hooks/useGetDepartments";
 import { useGetApplications } from "../hooks/useGetApplications";
 
 const Careers = () => {
-  const [viewMode, setViewMode] = useState<
-    "careers" | "applicants" | "resumes"
-  >("careers");
+  const [viewMode, setViewMode] = useState("careers");
+  const location = useLocation();
 
   const {
     getCareerListings,
@@ -43,12 +48,18 @@ const Careers = () => {
     getApplications();
   }, []);
 
-  if (isCareersLoading || isDepartmentLoading) {
-    return <Loading />;
-  }
+  const getCurrentViewMode = () => {
+    const params = useParams();
+    if (params.id && location.pathname.includes("/application/")) {
+      return "applicants";
+    }
+    return viewMode;
+  };
+
+  const currentViewMode = getCurrentViewMode();
 
   const renderRoutes = () => {
-    switch (viewMode) {
+    switch (currentViewMode) {
       case "careers":
         return (
           <Routes>
@@ -61,7 +72,6 @@ const Careers = () => {
                 />
               }
             />
-
             <Route
               path="/:id"
               element={
@@ -80,6 +90,10 @@ const Careers = () => {
               path="/"
               element={<ApplicantTable applications={applications} />}
             />
+            <Route
+              path="/application/:id"
+              element={<ApplicantTable applications={applications} />}
+            />
           </Routes>
         );
       case "resumes":
@@ -92,6 +106,10 @@ const Careers = () => {
         return <Navigate to="/" />;
     }
   };
+
+  if (isCareersLoading || isDepartmentLoading) {
+    return <Loading />;
+  }
 
   return (
     <Layout>

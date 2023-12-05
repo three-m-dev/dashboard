@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { IDepartment } from "../interfaces/ICommon";
+import { baseUrl } from "../utils/config";
 
 export const useGetDepartments = () => {
   const [departments, setDepartments] = useState<IDepartment[]>([]);
@@ -12,10 +13,9 @@ export const useGetDepartments = () => {
     setError(null);
 
     try {
-      const response = await axios.get(
-        "http://localhost:3000/api/v1/organization/departments",
-        { withCredentials: true },
-      );
+      const response = await axios.get(`${baseUrl}/organization/departments`, {
+        withCredentials: true,
+      });
       setDepartments(response.data.departments);
     } catch (error: any) {
       setError(error.response ? error.response.data.message : error.message);

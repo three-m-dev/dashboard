@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { ITeamMember } from "../interfaces/ICommon";
+import { baseUrl } from "../utils/config";
 
 export const useGetTeamMembers = () => {
   const [teamMembers, setTeamMembers] = useState<ITeamMember[]>([]);
@@ -12,10 +13,9 @@ export const useGetTeamMembers = () => {
     setError(null);
 
     try {
-      const response = await axios.get(
-        "http://localhost:3000/api/v1/organization/team-members",
-        { withCredentials: true },
-      );
+      const response = await axios.get(`${baseUrl}/organization/team-members`, {
+        withCredentials: true,
+      });
       setTeamMembers(response.data.teamMembers);
     } catch (error: any) {
       setError(error.response ? error.response.data.message : error.message);

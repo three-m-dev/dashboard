@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { baseUrl } from "../utils/config";
 
 const useLogout = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -11,7 +12,7 @@ const useLogout = () => {
   const logout = async () => {
     try {
       await axios.post(
-        "http://localhost:3000/api/v1/organization/logout",
+        `${baseUrl}/organization/logout`,
         {},
         { withCredentials: true },
       );

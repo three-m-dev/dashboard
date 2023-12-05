@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { ITeamMember } from "../interfaces/ICommon";
+import { baseUrl } from "../utils/config";
 
 export const useCreateTeamMember = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -14,7 +15,7 @@ export const useCreateTeamMember = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/v1/organization/team-member",
+        `${baseUrl}/organization/team-member`,
         { user: userData, teamMember: teamMemberData },
         { withCredentials: true },
       );

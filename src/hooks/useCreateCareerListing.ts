@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { ICareerListing } from "../interfaces/ICommon";
+import { baseUrl } from "../utils/config";
 
 export const useCreateCareerListing = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -14,7 +15,7 @@ export const useCreateCareerListing = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/v1/careers/create",
+        `${baseUrl}/careers/create`,
         listingData,
         { withCredentials: true },
       );

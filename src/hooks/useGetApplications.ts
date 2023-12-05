@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { IApplication } from "../interfaces/ICommon";
+import { baseUrl } from "../utils/config";
 
 export const useGetApplications = () => {
   const [applications, setApplications] = useState<IApplication[]>([]);
@@ -12,10 +13,9 @@ export const useGetApplications = () => {
     setError(null);
 
     try {
-      const response = await axios.get(
-        "http://localhost:3000/api/v1/careers/applications",
-        { withCredentials: true },
-      );
+      const response = await axios.get(`${baseUrl}/careers/applications`, {
+        withCredentials: true,
+      });
       setApplications(response.data.careerApplications);
     } catch (error: any) {
       setError(error.response ? error.response.data.message : error.message);

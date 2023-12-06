@@ -33,19 +33,19 @@ const ApplicationsTable = (props: Props) => {
 
   const getStatusStyles = (status: string) => {
     switch (status) {
-      case "New":
+      case "new":
         return "bg-blue-200 text-blue-800";
-      case "Reviewed":
+      case "reviewed":
         return "bg-green-200 text-green-800";
-      case "Contacted":
+      case "contacted":
         return "bg-yellow-200 text-yellow-800";
-      case "Interviewed":
+      case "interviewed":
         return "bg-indigo-200 text-indigo-800";
-      case "Offered":
+      case "offered":
         return "bg-purple-200 text-purple-800";
-      case "Hired":
+      case "hired":
         return "bg-teal-200 text-teal-800";
-      case "Rejected":
+      case "rejected":
         return "bg-red-200 text-red-800";
       default:
         return "bg-gray-200 text-gray-800";
@@ -184,7 +184,7 @@ const ApplicationsTable = (props: Props) => {
                   </td>
                   <td className="px-4 py-3">
                     <span
-                      className={`rounded px-2.5 py-1 ${getStatusStyles(
+                      className={`rounded px-2.5 py-1 capitalize ${getStatusStyles(
                         application.status,
                       )}`}
                     >

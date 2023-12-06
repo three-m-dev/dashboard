@@ -38,7 +38,7 @@ export interface IDepartment {
   count: number;
 }
 
-export interface ICareerListing {
+export interface ICareer {
   id: string;
   title: string;
   description: string;
@@ -75,8 +75,8 @@ export interface IApplicant {
 
 export interface IApplication {
   id: string;
-  careerListingId: string;
-  careerListing: ICareerListing;
+  careerId: string;
+  career: ICareer;
   status: string;
   source: string;
   applicant: IApplicant;

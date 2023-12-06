@@ -7,13 +7,13 @@ import {
   Routes,
 } from "react-router-dom";
 import {
-  CareerTable,
-  ApplicantTable,
+  CareersTable,
+  ApplicationsTable,
   Layout,
-  ResumeTable,
+  ResumesTable,
   Loading,
 } from "../components";
-import { useGetCareerListings } from "../hooks/useGetCareerListings";
+import { useGetCareers } from "../hooks/useGetCareers";
 import { useGetDepartments } from "../hooks/useGetDepartments";
 import { useGetApplications } from "../hooks/useGetApplications";
 
@@ -22,17 +22,17 @@ const Careers = () => {
   const location = useLocation();
 
   const {
-    getCareerListings,
-    careerListings,
+    getCareers,
+    careers,
     isLoading: isCareersLoading,
     error: careersError,
-  } = useGetCareerListings();
+  } = useGetCareers();
 
   const {
     getDepartments,
     departments,
     isLoading: isDepartmentLoading,
-    error: departmentError,
+    error: departmentsError,
   } = useGetDepartments();
 
   const {
@@ -43,7 +43,7 @@ const Careers = () => {
   } = useGetApplications();
 
   useEffect(() => {
-    getCareerListings();
+    getCareers();
     getDepartments();
     getApplications();
   }, []);
@@ -66,40 +66,34 @@ const Careers = () => {
             <Route
               path="/"
               element={
-                <CareerTable
-                  listings={careerListings}
-                  departments={departments}
-                />
+                <CareersTable careers={careers} departments={departments} />
               }
             />
             <Route
               path="/:id"
               element={
-                <CareerTable
-                  listings={careerListings}
-                  departments={departments}
-                />
+                <CareersTable careers={careers} departments={departments} />
               }
             />
           </Routes>
         );
-      case "applicants":
+      case "applications":
         return (
           <Routes>
             <Route
               path="/"
-              element={<ApplicantTable applications={applications} />}
+              element={<ApplicationsTable applications={applications} />}
             />
             <Route
               path="/application/:id"
-              element={<ApplicantTable applications={applications} />}
+              element={<ApplicationsTable applications={applications} />}
             />
           </Routes>
         );
       case "resumes":
         return (
           <Routes>
-            <Route path="/" element={<ResumeTable />} />
+            <Route path="/" element={<ResumesTable />} />
           </Routes>
         );
       default:
@@ -127,13 +121,13 @@ const Careers = () => {
           </button>
           <button
             className={`rounded-md px-4 py-2.5 text-sm font-medium transition-colors ${
-              viewMode === "applicants"
+              viewMode === "applications"
                 ? "bg-blue-500 text-white"
                 : "bg-gray-200 text-gray-700"
             }`}
-            onClick={() => setViewMode("applicants")}
+            onClick={() => setViewMode("applications")}
           >
-            Applicants
+            Applications
           </button>
           <button
             className={`rounded-md px-4 py-2.5 text-sm font-medium transition-colors ${

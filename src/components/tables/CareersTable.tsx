@@ -1,56 +1,28 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { IApplication } from "../../interfaces/ICommon";
-import ApplicantDetails from "../modals/ApplicantDetailsModal";
-import ApplicantDetailsModal from "../modals/ApplicantDetailsModal";
+import { ICareer, IDepartment } from "../../interfaces/ICommon";
+import { useState } from "react";
+import NewCareerModal from "../modals/NewCareerModal";
+import CareerDetailsModal from "../modals/CareerDetailsModal";
 
 type Props = {
-  applications: IApplication[];
+  careers: ICareer[];
+  departments: IDepartment[];
 };
 
-const applicationTable = (props: Props) => {
+const CareersTable = (props: Props) => {
+  const [careerModalOpen, setCareerModalOpen] = useState(false);
+
   const navigate = useNavigate();
 
-  const { id: applicationId } = useParams();
-  const selectedApplication = props.applications.find(
-    (application) => application.id === applicationId,
-  );
+  const { id: careerId } = useParams();
+  const selectedCareer = props.careers.find((career) => career.id === careerId);
 
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
+  const toggleCareerModal = () => {
+    setCareerModalOpen(!careerModalOpen);
   };
 
-  const formatPhoneNumber = (phoneNumberString: string) => {
-    const cleaned = ("" + phoneNumberString).replace(/\D/g, "");
-    const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
-    if (match) {
-      return "+1 (" + match[1] + ") " + match[2] + "-" + match[3];
-    }
-    return null;
-  };
-
-  const toggleApplicationDetailsModal = () => {
+  const toggleCareerDetailsModal = () => {
     navigate("/careers");
-  };
-
-  const getStatusStyles = (status: string) => {
-    switch (status) {
-      case "New":
-        return "bg-blue-200 text-blue-800";
-      case "Reviewed":
-        return "bg-green-200 text-green-800";
-      case "Contacted":
-        return "bg-yellow-200 text-yellow-800";
-      case "Interviewed":
-        return "bg-indigo-200 text-indigo-800";
-      case "Offered":
-        return "bg-purple-200 text-purple-800";
-      case "Hired":
-        return "bg-teal-200 text-teal-800";
-      case "Rejected":
-        return "bg-red-200 text-red-800";
-      default:
-        return "bg-gray-200 text-gray-800";
-    }
   };
 
   return (
@@ -86,7 +58,10 @@ const applicationTable = (props: Props) => {
             </form>
           </div>
           <div className="flex w-full flex-shrink-0 flex-col items-stretch justify-end space-y-2 md:w-auto md:flex-row md:items-center md:space-x-3 md:space-y-0">
-            <button className="flex items-center gap-1 rounded-md bg-gray-200 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-blue-500 hover:text-white">
+            <button
+              onClick={toggleCareerModal}
+              className="flex items-center gap-1 rounded-md bg-gray-200 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-blue-500 hover:text-white"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -98,10 +73,10 @@ const applicationTable = (props: Props) => {
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
+                  d="M12 4.5v15m7.5-7.5h-15"
                 />
               </svg>
-              Export Applicants
+              New Career career
             </button>
           </div>
         </div>
@@ -110,22 +85,19 @@ const applicationTable = (props: Props) => {
             <thead className="bg-gray-50 text-xs uppercase text-gray-700">
               <tr>
                 <th scope="col" className="px-4 py-3">
-                  Name
+                  Title
                 </th>
                 <th scope="col" className="px-4 py-3">
-                  Email
+                  Department
                 </th>
                 <th scope="col" className="px-4 py-3">
-                  Phone
+                  Company
                 </th>
                 <th scope="col" className="px-4 py-3">
-                  Applied For
+                  Location
                 </th>
                 <th scope="col" className="px-4 py-3">
-                  Applied On
-                </th>
-                <th scope="col" className="px-4 py-3">
-                  Status
+                  Type
                 </th>
                 <th scope="col" className="px-4 py-3">
                   <span className="sr-only">Actions</span>
@@ -133,64 +105,44 @@ const applicationTable = (props: Props) => {
               </tr>
             </thead>
             <tbody>
-              {props.applications.map((application) => (
-                <tr key={application.id} className="border-b">
+              {props.careers.map((career) => (
+                <tr key={career.id} className="border-b">
                   <th
                     scope="row"
                     className="whitespace-nowrap px-4 py-3 font-medium text-gray-900"
                   >
                     <Link
-                      to={`/careers/application/${application.id}`}
+                      to={`/careers/${career.id}`}
                       className="hover:underline"
                     >
-                      {application.applicant.firstName +
-                        " " +
-                        application.applicant.lastName}
+                      {career.title}
                     </Link>
                   </th>
+                  <td className="px-4 py-3">{career.department}</td>
+                  <td className="px-4 py-3">
+                    {career.company
+                      .split("-")
+                      .map(
+                        (word) => word.charAt(0).toUpperCase() + word.slice(1),
+                      )
+                      .join(" ")}
+                  </td>
 
                   <td className="px-4 py-3">
-                    {" "}
-                    <button
-                      onClick={() =>
-                        copyToClipboard(application.applicant.email)
-                      }
-                      className="hover:text-blue-500"
-                    >
-                      {application.applicant.email}
-                    </button>
+                    {career.location
+                      .split("-")
+                      .map(
+                        (word) => word.charAt(0).toUpperCase() + word.slice(1),
+                      )
+                      .join(" ")}
                   </td>
                   <td className="px-4 py-3">
-                    <button
-                      onClick={() =>
-                        copyToClipboard(application.applicant.phoneNumber)
-                      }
-                      className="hover:text-blue-500"
-                    >
-                      {formatPhoneNumber(application.applicant.phoneNumber)}
-                    </button>
-                  </td>
-                  <td className="px-4 py-3">
-                    <span>{application.careerListing.title}</span>
-                  </td>
-                  <td className="px-4 py-3">
-                    {new Date(application.createdAt).toLocaleDateString(
-                      "en-US",
-                      {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      },
-                    )}
-                  </td>
-                  <td className="px-4 py-3">
-                    <span
-                      className={`rounded px-2.5 py-1 ${getStatusStyles(
-                        application.status,
-                      )}`}
-                    >
-                      {application.status}
-                    </span>
+                    {career.employmentType
+                      .split("-")
+                      .map(
+                        (word) => word.charAt(0).toUpperCase() + word.slice(1),
+                      )
+                      .join(" ")}
                   </td>
                   <td className="flex items-center justify-end px-4 py-3">
                     <button
@@ -247,14 +199,20 @@ const applicationTable = (props: Props) => {
           </table>
         </div>
       </div>
-      {selectedApplication && (
-        <ApplicantDetailsModal
-          toggleModal={toggleApplicationDetailsModal}
-          applicationDetails={selectedApplication}
+      {careerModalOpen && (
+        <NewCareerModal
+          toggleModal={toggleCareerModal}
+          departments={props.departments}
+        />
+      )}
+      {selectedCareer && (
+        <CareerDetailsModal
+          toggleModal={toggleCareerDetailsModal}
+          careerDetails={selectedCareer}
         />
       )}
     </>
   );
 };
 
-export default applicationTable;
+export default CareersTable;

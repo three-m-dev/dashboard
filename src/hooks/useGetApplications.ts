@@ -16,7 +16,7 @@ export const useGetApplications = () => {
       const response = await axios.get(`${baseUrl}/careers/applications`, {
         withCredentials: true,
       });
-      setApplications(response.data.careerApplications);
+      setApplications(response.data.applications);
     } catch (error: any) {
       setError(error.response ? error.response.data.message : error.message);
     } finally {

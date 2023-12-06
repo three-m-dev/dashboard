@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useCreateCareerListing } from "../../hooks/useCreateCareerListing";
+import { useCreateCareer } from "../../hooks/useCreateCareer";
 import BulletTextArea from "../forms/BulletTextArea";
 import { IDepartment } from "../../interfaces/ICommon";
 
@@ -8,7 +8,7 @@ type Props = {
   departments: IDepartment[];
 };
 
-const CareerModal = (props: Props) => {
+const NewCareerModal = (props: Props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [company, setCompany] = useState<number>(0);
@@ -21,7 +21,7 @@ const CareerModal = (props: Props) => {
   const [startingAt, setStartingAt] = useState("");
   const [compensationType, setCompensationType] = useState<number>(0);
 
-  const { createCareerListing, isLoading, error } = useCreateCareerListing();
+  const { createCareer, isLoading, error } = useCreateCareer();
 
   const parseBulletsToJsonArray = (bulletList: string): string => {
     return JSON.stringify(
@@ -79,7 +79,7 @@ const CareerModal = (props: Props) => {
       compensationType,
     };
 
-    const career = await createCareerListing(careerData);
+    const career = await createCareer(careerData);
 
     if (career !== null) {
       props.toggleModal();
@@ -311,4 +311,4 @@ const CareerModal = (props: Props) => {
   );
 };
 
-export default CareerModal;
+export default NewCareerModal;

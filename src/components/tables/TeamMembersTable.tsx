@@ -1,30 +1,27 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { ICareerListing, IDepartment } from "../../interfaces/ICommon";
+import { Link, useNavigate } from "react-router-dom";
+import { IDepartment, ITeamMember } from "../../interfaces/ICommon";
 import { useState } from "react";
-import CareerModal from "../modals/CareerModal";
-import CareerDetailsModal from "../modals/CareerDetailsModal";
+import TeamMemberModal from "../modals/TeamMemberModal";
 
 type Props = {
-  listings: ICareerListing[];
+  teamMembers: ITeamMember[];
   departments: IDepartment[];
 };
 
-const CareerTable = (props: Props) => {
-  const [careerModalOpen, setCareerModalOpen] = useState(false);
+const TeamMembersTable = (props: Props) => {
+  const [teamMemberModalOpen, setTeamMemberModalOpen] = useState(false);
+
+  const canViewTeamMembers = true;
+  const canAddTeamMember = true;
 
   const navigate = useNavigate();
 
-  const { id: careerId } = useParams();
-  const selectedCareer = props.listings.find(
-    (listing) => listing.id === careerId,
-  );
+  if (!canViewTeamMembers) {
+    navigate("/");
+  }
 
-  const toggleCareerModal = () => {
-    setCareerModalOpen(!careerModalOpen);
-  };
-
-  const toggleCareerDetailsModal = () => {
-    navigate("/careers");
+  const toggleTeamMemberModal = () => {
+    setTeamMemberModalOpen(!teamMemberModalOpen);
   };
 
   return (
@@ -59,9 +56,9 @@ const CareerTable = (props: Props) => {
               </div>
             </form>
           </div>
-          <div className="flex w-full flex-shrink-0 flex-col items-stretch justify-end space-y-2 md:w-auto md:flex-row md:items-center md:space-x-3 md:space-y-0">
+          {canAddTeamMember && (
             <button
-              onClick={toggleCareerModal}
+              onClick={toggleTeamMemberModal}
               className="flex items-center gap-1 rounded-md bg-gray-200 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-blue-500 hover:text-white"
             >
               <svg
@@ -70,24 +67,27 @@ const CareerTable = (props: Props) => {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="h-5 w-5"
+                className="h-6 w-6"
               >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  d="M12 4.5v15m7.5-7.5h-15"
+                  d="M12 6v12m6-6H6"
                 />
               </svg>
-              New Career Listing
+              New Team Member
             </button>
-          </div>
+          )}
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm text-gray-500">
             <thead className="bg-gray-50 text-xs uppercase text-gray-700">
               <tr>
                 <th scope="col" className="px-4 py-3">
-                  Title
+                  Name
+                </th>
+                <th scope="col" className="px-4 py-3">
+                  Role
                 </th>
                 <th scope="col" className="px-4 py-3">
                   Department
@@ -96,34 +96,34 @@ const CareerTable = (props: Props) => {
                   Company
                 </th>
                 <th scope="col" className="px-4 py-3">
-                  Location
-                </th>
-                <th scope="col" className="px-4 py-3">
-                  Type
-                </th>
-                <th scope="col" className="px-4 py-3">
                   <span className="sr-only">Actions</span>
                 </th>
               </tr>
             </thead>
             <tbody>
-              {props.listings.map((listing) => (
-                <tr key={listing.id} className="border-b">
+              {props.teamMembers.map((teamMember) => (
+                <tr key={teamMember.id} className="border-b">
                   <th
                     scope="row"
                     className="whitespace-nowrap px-4 py-3 font-medium text-gray-900"
                   >
                     <Link
-                      to={`/careers/${listing.id}`}
+                      to={`/team-members/${teamMember.id}`}
                       className="hover:underline"
                     >
-                      {listing.title}
+                      {teamMember.firstName + " " + teamMember.lastName}
                     </Link>
                   </th>
-                  <td className="px-4 py-3">{listing.department}</td>
-                  <td className="px-4 py-3">{listing.company}</td>
-                  <td className="px-4 py-3">{listing.location}</td>
-                  <td className="px-4 py-3">{listing.employmentType}</td>
+                  <td className="px-4 py-3">{teamMember.role}</td>
+                  <td className="px-4 py-3">{teamMember.department}</td>
+                  <td className="px-4 py-3">
+                    {teamMember.company
+                      .split("-")
+                      .map(
+                        (word) => word.charAt(0).toUpperCase() + word.slice(1),
+                      )
+                      .join(" ")}
+                  </td>
                   <td className="flex items-center justify-end px-4 py-3">
                     <button
                       className="inline-flex items-center rounded-lg text-center text-sm font-medium text-gray-500 hover:text-gray-800 focus:outline-none"
@@ -179,20 +179,15 @@ const CareerTable = (props: Props) => {
           </table>
         </div>
       </div>
-      {careerModalOpen && (
-        <CareerModal
-          toggleModal={toggleCareerModal}
+      {teamMemberModalOpen && (
+        <TeamMemberModal
+          teamMembers={props.teamMembers}
           departments={props.departments}
-        />
-      )}
-      {selectedCareer && (
-        <CareerDetailsModal
-          toggleModal={toggleCareerDetailsModal}
-          careerDetails={selectedCareer}
+          toggleModal={toggleTeamMemberModal}
         />
       )}
     </>
   );
 };
 
-export default CareerTable;
+export default TeamMembersTable;

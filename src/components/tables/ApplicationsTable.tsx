@@ -1,27 +1,55 @@
-import { Link, useNavigate } from "react-router-dom";
-import { IDepartment, ITeamMember } from "../../interfaces/ICommon";
-import { useState } from "react";
-import TeamMemberModal from "../modals/TeamMemberModal";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { IApplication } from "../../interfaces/ICommon";
+import ApplicantDetailsModal from "../modals/ApplicantDetailsModal";
 
 type Props = {
-  teamMembers: ITeamMember[];
-  departments: IDepartment[];
+  applications: IApplication[];
 };
 
-const TeamTable = (props: Props) => {
-  const [teamMemberModalOpen, setTeamMemberModalOpen] = useState(false);
-
-  const canViewTeamMembers = true;
-  const canAddTeamMember = true;
-
+const ApplicationsTable = (props: Props) => {
   const navigate = useNavigate();
 
-  if (!canViewTeamMembers) {
-    navigate("/");
-  }
+  const { id: applicationId } = useParams();
+  const selectedApplication = props.applications.find(
+    (application) => application.id === applicationId,
+  );
 
-  const toggleTeamMemberModal = () => {
-    setTeamMemberModalOpen(!teamMemberModalOpen);
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+  };
+
+  const formatPhoneNumber = (phoneNumberString: string) => {
+    const cleaned = ("" + phoneNumberString).replace(/\D/g, "");
+    const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+    if (match) {
+      return "+1 (" + match[1] + ") " + match[2] + "-" + match[3];
+    }
+    return null;
+  };
+
+  const toggleApplicationDetailsModal = () => {
+    navigate("/careers");
+  };
+
+  const getStatusStyles = (status: string) => {
+    switch (status) {
+      case "New":
+        return "bg-blue-200 text-blue-800";
+      case "Reviewed":
+        return "bg-green-200 text-green-800";
+      case "Contacted":
+        return "bg-yellow-200 text-yellow-800";
+      case "Interviewed":
+        return "bg-indigo-200 text-indigo-800";
+      case "Offered":
+        return "bg-purple-200 text-purple-800";
+      case "Hired":
+        return "bg-teal-200 text-teal-800";
+      case "Rejected":
+        return "bg-red-200 text-red-800";
+      default:
+        return "bg-gray-200 text-gray-800";
+    }
   };
 
   return (
@@ -56,28 +84,25 @@ const TeamTable = (props: Props) => {
               </div>
             </form>
           </div>
-          {canAddTeamMember && (
-            <button
-              onClick={toggleTeamMemberModal}
-              className="flex items-center gap-1 rounded-md bg-gray-200 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-blue-500 hover:text-white"
-            >
+          <div className="flex w-full flex-shrink-0 flex-col items-stretch justify-end space-y-2 md:w-auto md:flex-row md:items-center md:space-x-3 md:space-y-0">
+            <button className="flex items-center gap-1 rounded-md bg-gray-200 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-blue-500 hover:text-white">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="h-6 w-6"
+                className="h-5 w-5"
               >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  d="M12 6v12m6-6H6"
+                  d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
                 />
               </svg>
-              New Team Member
+              Export
             </button>
-          )}
+          </div>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm text-gray-500">
@@ -87,13 +112,19 @@ const TeamTable = (props: Props) => {
                   Name
                 </th>
                 <th scope="col" className="px-4 py-3">
-                  Role
+                  Email
                 </th>
                 <th scope="col" className="px-4 py-3">
-                  Department
+                  Phone
                 </th>
                 <th scope="col" className="px-4 py-3">
-                  Company
+                  Applied For
+                </th>
+                <th scope="col" className="px-4 py-3">
+                  Applied On
+                </th>
+                <th scope="col" className="px-4 py-3">
+                  Status
                 </th>
                 <th scope="col" className="px-4 py-3">
                   <span className="sr-only">Actions</span>
@@ -101,22 +132,65 @@ const TeamTable = (props: Props) => {
               </tr>
             </thead>
             <tbody>
-              {props.teamMembers.map((teamMember) => (
-                <tr key={teamMember.id} className="border-b">
+              {props.applications.map((application) => (
+                <tr key={application.id} className="border-b">
                   <th
                     scope="row"
                     className="whitespace-nowrap px-4 py-3 font-medium text-gray-900"
                   >
                     <Link
-                      to={`/team-members/${teamMember.id}`}
+                      to={`/careers/application/${application.id}`}
                       className="hover:underline"
                     >
-                      {teamMember.firstName + " " + teamMember.lastName}
+                      {application.applicant.firstName +
+                        " " +
+                        application.applicant.lastName}
                     </Link>
                   </th>
-                  <td className="px-4 py-3">{teamMember.role}</td>
-                  <td className="px-4 py-3">{teamMember.department}</td>
-                  <td className="px-4 py-3">{teamMember.company}</td>
+
+                  <td className="px-4 py-3">
+                    {" "}
+                    <button
+                      onClick={() =>
+                        copyToClipboard(application.applicant.email)
+                      }
+                      className="hover:text-blue-500"
+                    >
+                      {application.applicant.email}
+                    </button>
+                  </td>
+                  <td className="px-4 py-3">
+                    <button
+                      onClick={() =>
+                        copyToClipboard(application.applicant.phoneNumber)
+                      }
+                      className="hover:text-blue-500"
+                    >
+                      {formatPhoneNumber(application.applicant.phoneNumber)}
+                    </button>
+                  </td>
+                  <td className="px-4 py-3">
+                    <span>{application.career.title}</span>
+                  </td>
+                  <td className="px-4 py-3">
+                    {new Date(application.createdAt).toLocaleDateString(
+                      "en-US",
+                      {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      },
+                    )}
+                  </td>
+                  <td className="px-4 py-3">
+                    <span
+                      className={`rounded px-2.5 py-1 ${getStatusStyles(
+                        application.status,
+                      )}`}
+                    >
+                      {application.status}
+                    </span>
+                  </td>
                   <td className="flex items-center justify-end px-4 py-3">
                     <button
                       className="inline-flex items-center rounded-lg text-center text-sm font-medium text-gray-500 hover:text-gray-800 focus:outline-none"
@@ -172,15 +246,14 @@ const TeamTable = (props: Props) => {
           </table>
         </div>
       </div>
-      {teamMemberModalOpen && (
-        <TeamMemberModal
-          teamMembers={props.teamMembers}
-          departments={props.departments}
-          toggleModal={toggleTeamMemberModal}
+      {selectedApplication && (
+        <ApplicantDetailsModal
+          toggleModal={toggleApplicationDetailsModal}
+          applicationDetails={selectedApplication}
         />
       )}
     </>
   );
 };
 
-export default TeamTable;
+export default ApplicationsTable;

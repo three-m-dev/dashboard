@@ -216,10 +216,34 @@ const NewCareerModal = (props: Props) => {
                 name="compensation"
                 id="compensation"
                 className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
-                placeholder="$42,000/$20.00"
+                placeholder="Amount"
                 value={startingAt}
                 onChange={(e) => {
-                  setStartingAt(e.target.value);
+                  let value = e.target.value.replace(/[^\d.,$]/g, ""); // Allow only numbers, commas, periods, and dollar sign
+
+                  // Remove dollar sign if it's the only character left
+                  if (value === "$") {
+                    value = "";
+                  }
+
+                  if (value && !value.startsWith("$")) {
+                    // If input doesn't start with $ and is not empty, add it
+                    value = "$" + value;
+                  }
+
+                  // Remove extra commas and format the number
+                  const numberParts = value.replace(/[$,]/g, "").split(".");
+                  if (numberParts[0]) {
+                    numberParts[0] = parseInt(
+                      numberParts[0],
+                      10,
+                    ).toLocaleString();
+                  }
+                  value = value.startsWith("$")
+                    ? "$" + numberParts.join(".")
+                    : numberParts.join(".");
+
+                  setStartingAt(value);
                 }}
                 required
                 autoComplete="off"

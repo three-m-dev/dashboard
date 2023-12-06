@@ -185,7 +185,7 @@ const CareerDetailsModal = (props: Props) => {
                           <div key={index}>• {responsibility}</div>
                         ),
                       )
-                    : "No requirement information available"}
+                    : "No responsibility information available"}
                 </div>
               </div>
 

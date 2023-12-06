@@ -8,12 +8,12 @@ export const useCreateCareer = () => {
   const [error, setError] = useState<string | null>(null);
   const [career, setCareer] = useState<ICareer | null>(null);
 
-  const createCareer = async (listingData: any) => {
+  const createCareer = async (careerData: any) => {
     setIsLoading(true);
     setError(null);
 
     try {
-      const response = await axios.post(`${baseUrl}/careers`, listingData, {
+      const response = await axios.post(`${baseUrl}/careers`, careerData, {
         withCredentials: true,
       });
       setCareer(response.data);

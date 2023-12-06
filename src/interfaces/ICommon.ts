@@ -46,7 +46,7 @@ export interface ICareer {
   location: string;
   department: string;
   employmentType: string;
-  requirements: string[];
+  responsibilities: string[];
   qualifications: string[];
   startingAt: string;
   compensationType: string;

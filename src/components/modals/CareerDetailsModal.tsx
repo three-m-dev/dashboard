@@ -1,7 +1,7 @@
-import { ICareerListing } from "../../interfaces/ICommon";
+import { ICareer } from "../../interfaces/ICommon";
 
 type Props = {
-  careerDetails: ICareerListing;
+  careerDetails: ICareer;
   toggleModal: () => void;
 };
 
@@ -50,7 +50,10 @@ const CareerDetailsModal = (props: Props) => {
                   id="company"
                   className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                 >
-                  {props.careerDetails.company}
+                  {props.careerDetails.company
+                    .split("-")
+                    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(" ")}
                 </div>
               </div>
 
@@ -74,7 +77,10 @@ const CareerDetailsModal = (props: Props) => {
                   id="employmentType"
                   className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                 >
-                  {props.careerDetails.employmentType}
+                  {props.careerDetails.employmentType
+                    .split("-")
+                    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(" ")}
                 </div>
               </div>
 
@@ -86,7 +92,10 @@ const CareerDetailsModal = (props: Props) => {
                   id="location"
                   className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                 >
-                  {props.careerDetails.location}
+                  {props.careerDetails.location
+                    .split("-")
+                    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(" ")}
                 </div>
               </div>
 
@@ -122,7 +131,10 @@ const CareerDetailsModal = (props: Props) => {
                   id="compensationType"
                   className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                 >
-                  {props.careerDetails.compensationType}
+                  {props.careerDetails.compensationType
+                    .split("-")
+                    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(" ")}
                 </div>
               </div>
 
@@ -166,11 +178,11 @@ const CareerDetailsModal = (props: Props) => {
                   className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                   style={{ whiteSpace: "pre-line" }}
                 >
-                  {props.careerDetails.requirements &&
-                  props.careerDetails.requirements.length > 0
-                    ? props.careerDetails.requirements.map(
-                        (requirement, index) => (
-                          <div key={index}>• {requirement}</div>
+                  {props.careerDetails.responsibilities &&
+                  props.careerDetails.responsibilities.length > 0
+                    ? props.careerDetails.responsibilities.map(
+                        (responsibility, index) => (
+                          <div key={index}>• {responsibility}</div>
                         ),
                       )
                     : "No requirement information available"}

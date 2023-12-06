@@ -16,7 +16,7 @@ const NewCareerModal = (props: Props) => {
   const [department, setDepartment] = useState("");
   const [employmentType, setEmploymentType] = useState<number>(0);
   const [benefits, setBenefits] = useState<string>("");
-  const [requirements, setRequirements] = useState<string>("");
+  const [responsibilities, setResponsibilities] = useState<string>("");
   const [qualifications, setQualifications] = useState<string>("");
   const [startingAt, setStartingAt] = useState("");
   const [compensationType, setCompensationType] = useState<number>(0);
@@ -56,15 +56,17 @@ const NewCareerModal = (props: Props) => {
     setBenefits(parseBulletsToJsonArray(value));
   };
 
-  const handleRequirementsChange = (value: string) => {
-    setRequirements(parseBulletsToJsonArray(value));
+  const handleResponsibilitiesChange = (value: string) => {
+    setResponsibilities(parseBulletsToJsonArray(value));
   };
 
   const handleQualificationsChange = (value: string) => {
     setQualifications(parseBulletsToJsonArray(value));
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event: any) => {
+    event.preventDefault();
+
     const careerData = {
       title,
       description,
@@ -73,9 +75,9 @@ const NewCareerModal = (props: Props) => {
       department,
       employmentType,
       benefits: JSON.parse(benefits),
-      requirements: JSON.parse(requirements),
+      responsibilities: JSON.parse(responsibilities),
       qualifications: JSON.parse(qualifications),
-      startingAt,
+      startingAt: parseFloat(startingAt.replace(/[^0-9.]/g, "")),
       compensationType,
     };
 
@@ -299,8 +301,8 @@ const NewCareerModal = (props: Props) => {
               </label>
               <BulletTextArea
                 placeholder="Write career responsibilities here"
-                value={requirements}
-                onChange={handleRequirementsChange}
+                value={responsibilities}
+                onChange={handleResponsibilitiesChange}
               />
             </div>
 

@@ -27,7 +27,7 @@ const TeamMemberModal = (props: Props) => {
   const [role, setRole] = useState("");
   const [directReport, setDirectReport] = useState("");
   const [hiredAt, setHiredAt] = useState("");
-  const [type, setType] = useState("");
+  const [type, setType] = useState(0);
   const [notes, setNotes] = useState("");
 
   const [showPassword, setShowPassword] = useState(false);
@@ -50,7 +50,9 @@ const TeamMemberModal = (props: Props) => {
     setRepeatPassword(retVal);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event: any) => {
+    event.preventDefault();
+
     if (repeatPassword !== password) {
       console.log("Passwords do not match");
       return;
@@ -81,11 +83,12 @@ const TeamMemberModal = (props: Props) => {
       directReport,
       hiredAt,
       type,
+      status: 1,
     };
 
-    await createTeamMember(userData, employeeData);
+    const teamMember = await createTeamMember(userData, employeeData);
 
-    if (!error) {
+    if (teamMember !== null) {
       props.toggleModal();
     }
   };
@@ -392,7 +395,7 @@ const TeamMemberModal = (props: Props) => {
                 id="type"
                 className="focus:ring-primary-500 focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                 onChange={(e) => {
-                  setType(e.target.value);
+                  setType(parseInt(e.target.value));
                 }}
               >
                 <option>Select Type</option>

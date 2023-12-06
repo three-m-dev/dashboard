@@ -65,7 +65,7 @@ const CareerModal = (props: Props) => {
   };
 
   const handleSubmit = async () => {
-    const listingData = {
+    const careerData = {
       title,
       description,
       company,
@@ -79,10 +79,9 @@ const CareerModal = (props: Props) => {
       compensationType,
     };
 
-    console.log(listingData);
-    await createCareerListing(listingData);
+    const career = await createCareerListing(careerData);
 
-    if (!error) {
+    if (career !== null) {
       props.toggleModal();
     }
   };

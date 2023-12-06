@@ -28,7 +28,7 @@ const Navbar = (props: NavbarProps) => {
         </svg>
       </button>
       <div className="flex gap-2">
-        <button className="rounded-md p-2 text-gray-600 hover:bg-gray-200">
+        {/* <button className="rounded-md p-2 text-gray-600 hover:bg-gray-200">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -43,8 +43,7 @@ const Navbar = (props: NavbarProps) => {
               d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"
             />
           </svg>
-        </button>
-        <NotificationsDropdown />
+        </button> */}
         <UserDropdown />
       </div>
     </header>

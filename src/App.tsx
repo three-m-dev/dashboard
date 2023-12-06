@@ -6,16 +6,12 @@ import { Loading } from "./components";
 const App = () => {
   const { loggedIn, loading, error } = useSession();
 
-  if (loading) {
-    return <Loading />;
+  if (error && error === "Not authenticated") {
+    return <Navigate to="/login" replace />;
   }
 
-  if (error) {
-    return (
-      <div className="flex h-full w-full items-center justify-center">
-        <div>Error occurred while checking authentication status: {error}</div>
-      </div>
-    );
+  if (loading) {
+    return <Loading />;
   }
 
   return (

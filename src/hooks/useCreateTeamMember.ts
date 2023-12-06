@@ -15,7 +15,7 @@ export const useCreateTeamMember = () => {
 
     try {
       const response = await axios.post(
-        `${baseUrl}/organization/team-member`,
+        `${baseUrl}/organization/team-members`,
         { user: userData, teamMember: teamMemberData },
         { withCredentials: true },
       );

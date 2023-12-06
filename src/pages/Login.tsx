@@ -1,30 +1,23 @@
 import { useState } from "react";
-import { useAuth } from "../hooks/useAuth";
-import { Loading } from "../components";
-import { Navigate } from "react-router";
+import { useLogin } from "../hooks/useLogin";
 
 const Login = () => {
-  const { login, isLoading, error, isLoggedIn } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { login, loading, error } = useLogin();
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  if (isLoggedIn) {
-    <Navigate to="/" />;
-  }
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await login(username, password);
+    const success = await login(username, password);
+    if (success) {
+      // Handle successful login if needed
+    }
   };
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 p-4 md:p-8">
       <div className="w-full rounded-lg bg-white p-4 shadow-md md:w-3/4 md:p-8 lg:w-1/2 xl:w-96">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleLogin}>
           <div className="mb-4">
             <label className="mb-2 block font-semibold text-gray-600 md:text-lg">
               Username
@@ -50,10 +43,10 @@ const Login = () => {
 
           <button
             className="block w-full rounded-lg bg-blue-500 py-2.5 font-semibold leading-6 text-white transition duration-200 hover:bg-blue-600"
-            disabled={isLoading}
+            disabled={loading}
             type="submit"
           >
-            {isLoading && username && password ? "Logging In.." : "Login"}
+            {loading && username && password ? "Logging In.." : "Login"}
           </button>
         </form>
       </div>

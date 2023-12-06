@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useLogout from "../../hooks/useLogout";
+import { useLogout } from "../../hooks/useLogout";
 import { Link } from "react-router-dom";
 
 const UserDropdown = () => {

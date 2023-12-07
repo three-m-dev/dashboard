@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { Careers, Home, Login, Profile, Team } from "./pages";
+import { Careers, Home, Login, Production, Profile, Team } from "./pages";
 import { useSession } from "./hooks/useSession";
 import { Loading } from "./components";
 
@@ -33,6 +33,10 @@ const App = () => {
       <Route
         path="/careers/*"
         element={loggedIn ? <Careers /> : <Navigate to="/login" replace />}
+      />
+      <Route
+        path="/production/*"
+        element={loggedIn ? <Production /> : <Navigate to="/login" replace />}
       />
       <Route
         path="/profile/:employeeId"

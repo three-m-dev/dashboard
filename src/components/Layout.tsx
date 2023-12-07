@@ -17,7 +17,7 @@ const Layout = (props: Props) => {
       />
       <div className="flex flex-1 flex-col">
         <Navbar onToggleSidebar={() => setSidebarOpen(!isSidebarOpen)} />
-        <main className="flex flex-1 flex-col overflow-auto bg-gray-100 p-4">
+        <main className="flex flex-1 flex-col overflow-auto bg-gray-50 p-4">
           {props.children}
         </main>
       </div>

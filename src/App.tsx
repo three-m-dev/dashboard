@@ -4,11 +4,13 @@ import { useSession } from "./hooks/useSession";
 import { Loading } from "./components";
 
 const App = () => {
-  const { loggedIn, loading, error } = useSession();
+  const { loggedIn, loading, error, user } = useSession();
 
   if (error && error === "Not authenticated") {
     return <Navigate to="/login" replace />;
   }
+
+  console.log(user);
 
   if (loading) {
     return <Loading />;

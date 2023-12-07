@@ -1,5 +1,5 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { IApplication } from "../../interfaces/ICommon";
+import { IApplication } from "../../shared/interfaces";
 import ApplicantDetailsModal from "../modals/ApplicantDetailsModal";
 
 type Props = {

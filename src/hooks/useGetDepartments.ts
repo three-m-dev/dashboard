@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { IDepartment } from "../interfaces/ICommon";
+import { IDepartment } from "../shared/interfaces";
 import { baseUrl } from "../utils/config";
 
 export const useGetDepartments = () => {

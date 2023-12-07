@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { ITeamMember } from "../interfaces/ICommon";
+import { ITeamMember } from "../shared/interfaces";
 import { baseUrl } from "../utils/config";
 
 export const useGetTeamMembers = () => {

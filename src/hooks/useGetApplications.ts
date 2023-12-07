@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { IApplication } from "../interfaces/ICommon";
+import { IApplication } from "../shared/interfaces";
 import { baseUrl } from "../utils/config";
 
 export const useGetApplications = () => {

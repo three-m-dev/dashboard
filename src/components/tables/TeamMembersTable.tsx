@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { IDepartment, ITeamMember } from "../../interfaces/ICommon";
+import { IDepartment, ITeamMember } from "../../shared/interfaces";
 import { useState } from "react";
 import TeamMemberModal from "../modals/TeamMemberModal";
 

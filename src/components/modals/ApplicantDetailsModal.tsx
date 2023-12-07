@@ -1,4 +1,4 @@
-import { IApplication } from "../../interfaces/ICommon";
+import { IApplication } from "../../shared/interfaces";
 
 type Props = {
   applicationDetails: IApplication;

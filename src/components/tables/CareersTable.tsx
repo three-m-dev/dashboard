@@ -1,5 +1,5 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { ICareer, IDepartment } from "../../interfaces/ICommon";
+import { ICareer, IDepartment } from "../../shared/interfaces";
 import { useState } from "react";
 import NewCareerModal from "../modals/NewCareerModal";
 import CareerDetailsModal from "../modals/CareerDetailsModal";

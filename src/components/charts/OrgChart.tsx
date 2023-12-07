@@ -1,5 +1,5 @@
 import { Tree, TreeNode } from "react-organizational-chart";
-import { ITeamMember } from "../../interfaces/ICommon";
+import { ITeamMember } from "../../shared/interfaces";
 
 type Props = {
   teamMembers: ITeamMember[];

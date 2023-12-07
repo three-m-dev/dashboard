@@ -1,4 +1,4 @@
-import { ICareer } from "../../interfaces/ICommon";
+import { ICareer } from "../../shared/interfaces";
 
 type Props = {
   careerDetails: ICareer;

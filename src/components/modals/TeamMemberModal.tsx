@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useCreateTeamMember } from "../../hooks/useCreateTeamMember";
-import { IDepartment, ITeamMember } from "../../interfaces/ICommon";
+import { IDepartment, ITeamMember } from "../../shared/interfaces";
 
 type Props = {
   toggleModal: () => void;

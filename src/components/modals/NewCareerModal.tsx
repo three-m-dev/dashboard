@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useCreateCareer } from "../../hooks/useCreateCareer";
 import BulletTextArea from "../forms/BulletTextArea";
-import { IDepartment } from "../../interfaces/ICommon";
+import { IDepartment } from "../../shared/interfaces";
 
 type Props = {
   toggleModal: () => void;

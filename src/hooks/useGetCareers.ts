@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { ICareer } from "../interfaces/ICommon";
+import { ICareer } from "../shared/interfaces";
 import { baseUrl } from "../utils/config";
 
 export const useGetCareers = () => {

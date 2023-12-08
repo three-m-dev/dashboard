@@ -267,7 +267,7 @@ const Careers = () => {
 
   return (
     <Layout>
-      <section className="px-4 pt-2">
+      <section>
         <div className="mb-4 flex w-full flex-col items-center justify-between md:mb-0 md:flex-row">
           <h2 className="text-2xl font-bold">Careers</h2>
           {renderButtons()}

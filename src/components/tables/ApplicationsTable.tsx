@@ -40,7 +40,7 @@ const ApplicationsTable = (props: Props) => {
       case "contacted":
         return "bg-yellow-200 text-yellow-800";
       case "interviewed":
-        return "bg-indigo-200 text-indigo-800";
+        return "bg-blue-200 text-blue-800";
       case "offered":
         return "bg-purple-200 text-purple-800";
       case "hired":
@@ -54,13 +54,13 @@ const ApplicationsTable = (props: Props) => {
 
   return (
     <>
-      <div className="overflow-x-auto px-6">
+      <div className="overflow-x-auto">
         <table className="w-full table-auto bg-white">
           <thead>
             <tr className="text-left text-xs text-gray-500">
               <th className="flex items-center py-4 pl-6 font-medium">
                 <input className="mr-3" type="checkbox" name="" id="" />
-                <a className="flex items-center" href="#">
+                <button className="flex items-center">
                   <span>Name</span>
                   <span className="ml-2">
                     <svg
@@ -76,10 +76,10 @@ const ApplicationsTable = (props: Props) => {
                       ></path>
                     </svg>
                   </span>
-                </a>
+                </button>
               </th>
               <th className="py-4 font-medium">
-                <a className="flex items-center" href="#">
+                <button className="flex items-center">
                   <span>Email</span>
                   <span className="ml-2">
                     <svg
@@ -95,10 +95,10 @@ const ApplicationsTable = (props: Props) => {
                       ></path>
                     </svg>
                   </span>
-                </a>
+                </button>
               </th>
               <th className="py-4 font-medium">
-                <a className="flex items-center" href="#">
+                <button className="flex items-center">
                   <span>Phone</span>
                   <span className="ml-2">
                     <svg
@@ -114,10 +114,10 @@ const ApplicationsTable = (props: Props) => {
                       ></path>
                     </svg>
                   </span>
-                </a>
+                </button>
               </th>
               <th className="py-4 font-medium">
-                <a className="flex items-center" href="#">
+                <button className="flex items-center">
                   <span>Position</span>
                   <span className="ml-2">
                     <svg
@@ -133,10 +133,10 @@ const ApplicationsTable = (props: Props) => {
                       ></path>
                     </svg>
                   </span>
-                </a>
+                </button>
               </th>
               <th className="py-4 font-medium">
-                <a className="flex items-center" href="#">
+                <button className="flex items-center">
                   <span>Source</span>
                   <span className="ml-2">
                     <svg
@@ -152,10 +152,10 @@ const ApplicationsTable = (props: Props) => {
                       ></path>
                     </svg>
                   </span>
-                </a>
+                </button>
               </th>
               <th className="py-4 font-medium">
-                <a className="flex items-center" href="#">
+                <button className="flex items-center">
                   <span>Date</span>
                   <span className="ml-2">
                     <svg
@@ -171,10 +171,10 @@ const ApplicationsTable = (props: Props) => {
                       ></path>
                     </svg>
                   </span>
-                </a>
+                </button>
               </th>
               <th className="py-4 font-medium">
-                <a className="flex items-center" href="#">
+                <button className="flex items-center">
                   <span>Status</span>
                   <span className="ml-2">
                     <svg
@@ -190,9 +190,9 @@ const ApplicationsTable = (props: Props) => {
                       ></path>
                     </svg>
                   </span>
-                </a>
+                </button>
               </th>
-              <th className="py-4 font-medium flex justify-center">
+              <th className="flex justify-center py-4 font-medium">
                 <span>Actions</span>
               </th>
             </tr>
@@ -228,7 +228,7 @@ const ApplicationsTable = (props: Props) => {
                     {application.status}
                   </span>
                 </td>
-                <td className="font-medium flex items-center justify-center">
+                <td className="flex items-center justify-center font-medium">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -250,7 +250,7 @@ const ApplicationsTable = (props: Props) => {
         </table>
       </div>
 
-      <div className="-mx-4 mt-2 flex flex-wrap items-center justify-between px-6">
+      <div className="-mx-4 mt-2 flex flex-wrap items-center justify-between">
         <div className="mb-4 flex w-full items-center px-4 lg:mb-0 lg:w-1/3">
           <p className="text-xs text-gray-400">Show</p>
           <div className="mx-3 rounded border bg-white px-2 py-2 text-xs text-gray-500">
@@ -264,10 +264,7 @@ const ApplicationsTable = (props: Props) => {
           <p className="text-xs text-gray-400">of 1200</p>
         </div>
         <div className="flex w-full items-center justify-center px-4 lg:w-auto">
-          <a
-            className="mr-3 inline-flex h-8 w-8 items-center justify-center rounded border border-gray-300 bg-white text-xs text-gray-500 hover:bg-indigo-50"
-            href="#"
-          >
+          <button className="mr-3 inline-flex items-center justify-center rounded border border-gray-300 bg-white p-2.5 text-xs text-gray-500 hover:bg-blue-50">
             <svg
               width="6"
               height="8"
@@ -280,13 +277,10 @@ const ApplicationsTable = (props: Props) => {
                 fill="#A4AFBB"
               ></path>
             </svg>
-          </a>
-          <a
-            className="mr-3 inline-flex h-8 w-8 items-center justify-center rounded border border-gray-300 bg-white text-xs text-gray-500 hover:bg-indigo-50"
-            href="#"
-          >
+          </button>
+          <button className="mr-3 inline-flex items-center justify-center rounded border border-gray-300 bg-white p-2.5 text-xs text-gray-500 hover:bg-blue-50">
             1
-          </a>
+          </button>
           <span className="mr-3 inline-block">
             <svg
               className="h-3 w-3 text-gray-200"
@@ -300,24 +294,15 @@ const ApplicationsTable = (props: Props) => {
               ></path>
             </svg>
           </span>
-          <a
-            className="mr-3 inline-flex h-8 w-8 items-center justify-center rounded bg-indigo-500 text-xs text-white"
-            href="#"
-          >
+          <a className="mr-3 inline-flex items-center justify-center rounded border border-blue-500 bg-blue-500 p-2.5 text-xs text-white">
             12
           </a>
-          <a
-            className="mr-3 inline-flex h-8 w-8 items-center justify-center rounded border border-gray-300 bg-white text-xs text-gray-500 hover:bg-indigo-50"
-            href="#"
-          >
+          <button className="mr-3 inline-flex items-center justify-center rounded border border-gray-300 bg-white p-2.5 text-xs text-gray-500 hover:bg-blue-50">
             13
-          </a>
-          <a
-            className="mr-3 inline-flex h-8 w-8 items-center justify-center rounded border border-gray-300 bg-white text-xs text-gray-500 hover:bg-indigo-50"
-            href="#"
-          >
+          </button>
+          <button className="mr-3 inline-flex items-center justify-center rounded border border-gray-300 bg-white p-2.5 text-xs text-gray-500 hover:bg-blue-50">
             14
-          </a>
+          </button>
           <span className="mr-3 inline-block">
             <svg
               className="h-3 w-3 text-gray-200"
@@ -331,16 +316,10 @@ const ApplicationsTable = (props: Props) => {
               ></path>
             </svg>
           </span>
-          <a
-            className="mr-3 inline-flex h-8 w-8 items-center justify-center rounded border border-gray-300 bg-white text-xs hover:bg-indigo-50"
-            href="#"
-          >
+          <button className="mr-3 inline-flex h-8 w-8 items-center justify-center rounded border border-gray-300 bg-white text-xs hover:bg-blue-50">
             62
-          </a>
-          <a
-            className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-300 bg-white text-xs text-gray-500 hover:bg-indigo-50"
-            href="#"
-          >
+          </button>
+          <button className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-300 bg-white text-xs text-gray-500 hover:bg-blue-50">
             <svg
               width="6"
               height="8"
@@ -353,7 +332,7 @@ const ApplicationsTable = (props: Props) => {
                 fill="#A4AFBB"
               ></path>
             </svg>
-          </a>
+          </button>
         </div>
       </div>
     </>

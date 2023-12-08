@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Downtime, Layout, Output, Resources } from "../components";
+import { Downtime, Layout, Output, PageHeader, Resources } from "../components";
 
 const Production = () => {
   const [viewMode, setViewMode] = useState("overview");
@@ -7,6 +7,60 @@ const Production = () => {
   const handleViewChange = (value: string) => {
     if (viewMode !== value) {
       setViewMode(value);
+    }
+  };
+
+  const renderHeader = () => {
+    switch (viewMode) {
+      case "overview":
+        return (
+          <PageHeader
+            title="Production"
+            onSearch={() => {
+              console.log("Search button clicked");
+            }}
+          />
+        );
+      case "resources":
+        return (
+          <PageHeader
+            title="Production"
+            onSearch={() => {
+              console.log("Search button clicked");
+            }}
+            filterButton={{
+              onClick: () => {
+                console.log("Filter button clicked");
+              },
+            }}
+            createButton={{
+              onClick: () => {
+                console.log("Create button clicked");
+              },
+            }}
+          />
+        );
+      case "operators":
+        return (
+          <PageHeader
+            title="Production"
+            onSearch={() => {
+              console.log("Search button clicked");
+            }}
+            filterButton={{
+              onClick: () => {
+                console.log("Filter button clicked");
+              },
+            }}
+            createButton={{
+              onClick: () => {
+                console.log("Create button clicked");
+              },
+            }}
+          />
+        );
+      default:
+        return <p>No view selected</p>;
     }
   };
 
@@ -27,8 +81,8 @@ const Production = () => {
 
   return (
     <Layout>
+      {renderHeader()}
       <section className="px-6 pt-2">
-        <h2 className="mb-4 text-2xl font-bold">Production</h2>
         <div className="flex flex-wrap text-center text-sm">
           <button
             onClick={() => handleViewChange("overview")}

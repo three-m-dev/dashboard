@@ -1,7 +1,7 @@
 const Output = () => {
   return (
     <section className="py-8">
-      <div className="container mx-auto px-4">
+      <div className="mx-auto px-6">
         <div className="overflow-hidden rounded shadow">
           <div className="bg-indigo-500">
             <h3 className="p-6 text-xl font-bold text-white">Output</h3>
@@ -21,7 +21,7 @@ const Output = () => {
                 <p className="text-xs text-gray-500">
                   This week's actual output
                 </p>
-                <h3 className="text-3xl font-bold">$190,00</h3>
+                <h3 className="text-3xl font-bold">$190,000</h3>
               </div>
             </div>
             <div className="w-1/2 p-3">

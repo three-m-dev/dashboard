@@ -127,7 +127,7 @@ const Resources = () => {
   };
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-8 mt-6">
+    <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-8 px-6">
       {resourceList.map((resource, index) => {
         const statusClass = getStatusClass(resource.status);
         const oeeClass = getOeeClass(resource.oee);

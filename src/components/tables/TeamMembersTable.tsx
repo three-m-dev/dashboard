@@ -18,8 +18,8 @@ const TeamMembersTable = (props: Props) => {
   };
 
   return (
-    <section className="py-8">
-      <div className="container mx-auto px-4">
+    <section>
+      <div className="mx-auto px-4">
         {props.teamMembers.map((teamMember) => (
           <div className="mb-4 rounded bg-white p-10 shadow">
             <div className="-mx-4 flex flex-wrap items-center">

@@ -1,8 +1,4 @@
-import React from "react";
-
-type Props = {};
-
-const Downtime: React.FC<Props> = () => {
+const Downtime = () => {
   const downtimes = [
     {
       reason: "Changeover",
@@ -30,12 +26,12 @@ const Downtime: React.FC<Props> = () => {
 
   return (
     <section className="py-8">
-      <div className="container mx-auto px-4">
+      <div className="mx-auto px-6">
         <div className="rounded bg-white py-4">
           <div className="border-b border-blue-50 px-6 pb-6">
             <h3 className="text-xl font-bold">Downtime</h3>
             <p className="text-sm text-gray-500">
-              The percentage of time the machine was not running
+              The percentage of downtime per reason
             </p>
           </div>
           {sortedDowntimes.map((downtime, index) => (
@@ -45,9 +41,15 @@ const Downtime: React.FC<Props> = () => {
                   <p className="text-sm font-medium">{downtime.reason}</p>
                 </div>
                 <div className="w-1/2 px-4">
-                  <p className="mb-1 text-xs font-medium text-indigo-500">
-                    {downtime.percentage}%
-                  </p>
+                  <div className="flex gap-1 items-center">
+                    <p className="text-xs font-medium text-indigo-500">
+                      {downtime.percentage}%
+                    </p>
+                    <p className="text-sm font-medium text-gray-500">
+                      {downtime.duration}
+                    </p>
+                  </div>
+
                   <div className="flex">
                     <div className="relative h-1 w-full rounded-full bg-indigo-50">
                       <div

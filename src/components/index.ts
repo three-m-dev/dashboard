@@ -9,3 +9,5 @@ export { default as TeamTable } from "./tables/TeamMembersTable";
 export { default as OrgChart } from "./charts/OrgChart";
 
 export { default as Resources } from "./Resources";
+export { default as Downtime } from "./charts/Downtime";
+export { default as Output } from "./charts/Output";

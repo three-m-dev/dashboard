@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Layout, Resources } from "../components";
+import { Downtime, Layout, Output, Resources } from "../components";
 
 const Production = () => {
   const [viewMode, setViewMode] = useState("overview");
@@ -13,22 +13,10 @@ const Production = () => {
   const renderView = () => {
     if (viewMode === "overview") {
       return (
-        <div className="flex h-full flex-col gap-4 overflow-auto">
-          <div className="flex w-full gap-4">
-            <div className="h-24 w-full rounded bg-white shadow"></div>
-            <div className="h-24 w-full rounded bg-white shadow"></div>
-            <div className="h-24 w-full rounded bg-white shadow"></div>
-            <div className="h-24 w-full rounded bg-white shadow"></div>
-          </div>
-          <div className="flex h-full w-full gap-4">
-            <div className="h-full w-full rounded bg-white shadow"></div>
-            <div className="h-full w-1/2 rounded bg-white shadow"></div>
-          </div>
-          <div className="flex h-full w-full gap-4">
-            <div className="h-full w-full rounded bg-white shadow"></div>
-            <div className="h-full w-1/2 rounded bg-white shadow"></div>
-          </div>
-        </div>
+        <>
+          <Output />
+          <Downtime />
+        </>
       );
     } else if (viewMode === "resources") {
       return <Resources />;
@@ -39,40 +27,50 @@ const Production = () => {
 
   return (
     <Layout>
-      <div className="mb-4 flex justify-center">
-        <div className="flex gap-2">
+      <section className="px-6 pt-2">
+        <h2 className="mb-4 text-2xl font-bold">Production</h2>
+        <div className="flex flex-wrap text-center text-sm">
           <button
             onClick={() => handleViewChange("overview")}
-            className={`rounded px-4 py-1 ${
-              viewMode === "overview"
-                ? "bg-blue-400 text-white"
-                : "bg-gray-200 text-gray-700"
-            }`}
+            className={
+              `mb-4 inline-block w-full border-b-2  px-4 pb-2  md:w-1/2 lg:mb-0 lg:w-auto ` +
+              `${
+                viewMode === "overview"
+                  ? "border-indigo-500 text-indigo-500"
+                  : "border-transparent text-gray-300 hover:border-gray-300"
+              }`
+            }
           >
             Overview
           </button>
           <button
             onClick={() => handleViewChange("resources")}
-            className={`rounded px-4 py-1 ${
-              viewMode === "resources"
-                ? "bg-blue-400 text-white"
-                : "bg-gray-200 text-gray-700"
-            }`}
+            className={
+              `mb-4 inline-block w-full border-b-2  px-4 pb-2  md:w-1/2 lg:mb-0 lg:w-auto ` +
+              `${
+                viewMode === "resources"
+                  ? "border-indigo-500 text-indigo-500"
+                  : "border-transparent text-gray-300 hover:border-gray-300"
+              }`
+            }
           >
             Resources
           </button>
           <button
             onClick={() => handleViewChange("operators")}
-            className={`rounded px-4 py-1 ${
-              viewMode === "operators"
-                ? "bg-blue-400 text-white"
-                : "bg-gray-200 text-gray-700"
-            }`}
+            className={
+              `mb-4 inline-block w-full border-b-2  px-4 pb-2  md:w-1/2 lg:mb-0 lg:w-auto ` +
+              `${
+                viewMode === "operators"
+                  ? "border-indigo-500 text-indigo-500"
+                  : "border-transparent text-gray-300 hover:border-gray-300"
+              }`
+            }
           >
             Operators
           </button>
         </div>
-      </div>
+      </section>
       {renderView()}
     </Layout>
   );

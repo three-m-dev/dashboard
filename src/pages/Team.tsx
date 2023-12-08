@@ -49,31 +49,25 @@ const Team = () => {
 
   return (
     <Layout>
-      <section>
-        <div className="toggle-buttons flex justify-center gap-2 pb-4">
-          <button
-            className={`rounded-md px-4 py-2.5 text-sm font-medium transition-colors ${
-              viewMode === "team-members"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-700"
-            }`}
-            onClick={() => setViewMode("team-members")}
+      <section className="px-6 pt-2">
+        <h2 className="mb-4 text-2xl font-bold">Team Center</h2>
+        <div className="flex flex-wrap text-center text-sm">
+          <a
+            className="mb-4 inline-block w-full border-b-2 border-indigo-500 px-4 pb-2 text-indigo-500 md:w-1/2 lg:mb-0 lg:w-auto"
+            href="#"
           >
             Team Members
-          </button>
-          <button
-            className={`rounded-md px-4 py-2.5 text-sm font-medium transition-colors ${
-              viewMode === "org-chart"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-700"
-            }`}
-            onClick={() => setViewMode("org-chart")}
+          </a>
+          <a
+            className="mb-4 inline-block w-full border-b-2 border-transparent px-4 pb-2 text-gray-300 hover:border-gray-300 md:w-1/2 lg:mb-0 lg:w-auto"
+            href="#"
           >
-            Organization
-          </button>
+            Org Chart
+          </a>
         </div>
-        {renderRoutes()}
       </section>
+
+      {renderRoutes()}
     </Layout>
   );
 };

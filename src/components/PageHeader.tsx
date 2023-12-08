@@ -2,6 +2,7 @@ import Button from "./Button";
 import FilterIcon from "../icons/FilterIcon";
 import PlusIcon from "../icons/PlusIcon";
 import FullScreenIcon from "../icons/FullScreenIcon";
+import SearchIcon from "../icons/SearchIcon";
 
 type PageHeaderButtonProps = {
   onClick: () => void;
@@ -30,11 +31,17 @@ const PageHeader = ({
 
       <div className="flex gap-2">
         {onSearch && (
-          <input
-            type="text"
-            placeholder={searchPlaceholder || "Search..."}
-            onChange={(e) => onSearch(e.target.value)}
-          />
+          <div className="mb-4 flex min-h-[40px] w-full rounded border bg-white px-4 py-2 md:mb-0 md:ml-auto md:w-1/2 lg:w-auto">
+            <input
+              className="text-sm placeholder-gray-500"
+              type="text"
+              placeholder={searchPlaceholder || "Search..."}
+              onChange={(e) => onSearch(e.target.value)}
+            />
+            <button className="ml-auto">
+              <SearchIcon />
+            </button>
+          </div>
         )}
         {filterButton && (
           <Button

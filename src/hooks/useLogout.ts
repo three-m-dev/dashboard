@@ -1,30 +1,26 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
 import axios from "axios";
-import { baseUrl } from "../utils/config";
+import { AuthContext } from "../contexts/AuthContext";
+
+const URL = "http://localhost:8080/api/v1/organization/logout";
 
 export const useLogout = () => {
-  const [loggedIn, setLoggedIn] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const authContext = useContext(AuthContext);
 
-  const navigate = useNavigate();
+  if (!authContext) {
+    throw new Error("AuthContext not found");
+  }
+
+  const { setIsAuthenticated } = authContext;
 
   const logout = async () => {
     try {
-      await axios.post(
-        `${baseUrl}/organization/logout`,
-        {},
-        { withCredentials: true },
-      );
-      setLoggedIn(true);
-      setLoading(false);
-      navigate("/login");
+      await axios.post(URL, {}, { withCredentials: true });
+      setIsAuthenticated(false);
     } catch (error) {
-      setError("Logout failed");
-      setLoading(false);
+      console.error("Logout failed:", error);
     }
   };
 
-  return { logout, loggedIn, loading, error };
+  return { logout };
 };

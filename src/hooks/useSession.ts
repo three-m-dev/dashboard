@@ -1,45 +1,26 @@
-// useSession hook
-import { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useEffect } from "react";
 import axios from "axios";
-import { baseUrl } from "../utils/config";
+import { AuthContext } from "../contexts/AuthContext";
+
+const URL = "http://localhost:8080/api/v1/organization/session";
 
 export const useSession = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [user, setUser] = useState(null);
-
-  const navigate = useNavigate();
-
-  const checkSession = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const response = await axios.get(`${baseUrl}/organization/session`, {
-        withCredentials: true,
-      });
-      if (response.data.loggedIn) {
-        setLoggedIn(true);
-        setUser(response.data.user);
-      } else {
-        setLoggedIn(false);
-        setUser(null);
-        navigate("/login");
-      }
-    } catch (err: any) {
-      setLoggedIn(false);
-      setUser(null);
-      setError(err.message || "Error occurred during session check.");
-    } finally {
-      setLoading(false);
-    }
-  }, [navigate]);
+  const { setIsAuthenticated, setLoading } = useContext(AuthContext) ?? {};
 
   useEffect(() => {
-    checkSession();
-  }, [checkSession]);
+    const checkSession = async () => {
+      try {
+        await axios.get(URL, { withCredentials: true });
+        setIsAuthenticated?.(true);
+      } catch (error) {
+        setIsAuthenticated?.(false);
+      } finally {
+        setLoading?.(false);
+      }
+    };
 
-  return { loggedIn, loading, error, user, checkSession };
+    checkSession();
+  }, [setIsAuthenticated, setLoading]);
+
+  return {};
 };

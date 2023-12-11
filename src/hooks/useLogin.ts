@@ -1,38 +1,26 @@
-// useLogin hook
-import { useState } from "react";
+import { useContext } from "react";
 import axios from "axios";
-import { baseUrl } from "../utils/config";
-import { useSession } from "./useSession";
+import { AuthContext } from "../contexts/AuthContext";
+
+const URL = "http://localhost:8080/api/v1/organization/login";
 
 export const useLogin = () => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const { checkSession } = useSession();
+  const authContext = useContext(AuthContext);
+
+  if (!authContext) {
+    throw new Error("AuthContext not found");
+  }
+
+  const { setIsAuthenticated } = authContext;
 
   const login = async (username: string, password: string) => {
-    setLoading(true);
-    setError(null);
-
     try {
-      const response = await axios.post(
-        `${baseUrl}/organization/login`,
-        { username, password },
-        { withCredentials: true },
-      );
-      if (response.data.loggedIn) {
-        await checkSession();
-        return true;
-      } else {
-        setError("Login failed.");
-        return false;
-      }
-    } catch (err: any) {
-      setError(err.response?.data.message || "An error occurred during login.");
-      return false;
-    } finally {
-      setLoading(false);
+      await axios.post(URL, { username, password }, { withCredentials: true });
+      setIsAuthenticated(true);
+    } catch (error) {
+      console.error("Login failed:", error);
     }
   };
 
-  return { login, loading, error };
+  return { login };
 };

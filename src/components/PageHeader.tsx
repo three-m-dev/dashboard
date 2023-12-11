@@ -1,8 +1,8 @@
 import Button from "./Button";
-import FilterIcon from "../icons/FilterIcon";
-import PlusIcon from "../icons/PlusIcon";
-import FullScreenIcon from "../icons/FullScreenIcon";
-import SearchIcon from "../icons/SearchIcon";
+import FilterIcon from "../assets/icons/FilterIcon";
+import PlusIcon from "../assets/icons/PlusIcon";
+import FullScreenIcon from "../assets/icons/FullScreenIcon";
+import SearchIcon from "../assets/icons/SearchIcon";
 
 type PageHeaderButtonProps = {
   onClick: () => void;

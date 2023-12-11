@@ -1,49 +1,46 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { Careers, Home, Login, Production, Profile, Team } from "./pages";
+import { ReactNode, useContext } from "react";
+import { AuthContext } from "./contexts/AuthContext";
 import { useSession } from "./hooks/useSession";
-import { Loading } from "./components";
+import { Dashboard, Login } from "./pages";
 
-const App = () => {
-  const { loggedIn, loading, error, user } = useSession();
+type ProtectedRouteProps = {
+  children: ReactNode;
+};
 
-  if (error && error === "Not authenticated") {
-    return <Navigate to="/login" replace />;
-  }
-
-  console.log(user);
+const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
+  const { isAuthenticated, loading } = useContext(AuthContext) ?? {};
 
   if (loading) {
-    return <Loading />;
+    return <div>Loading...</div>;
   }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" />;
+  }
+
+  return <>{children}</>;
+};
+
+const App = () => {
+  useSession();
+
+  const { isAuthenticated } = useContext(AuthContext) ?? {};
 
   return (
     <Routes>
       <Route
         path="/login"
-        element={loggedIn ? <Navigate to="/" replace /> : <Login />}
+        element={isAuthenticated ? <Navigate to="/" /> : <Login />}
       />
       <Route
         path="/"
-        element={loggedIn ? <Home /> : <Navigate to="/login" replace />}
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
       />
-      <Route
-        path="/team/*"
-        element={loggedIn ? <Team /> : <Navigate to="/login" replace />}
-      />
-      <Route
-        path="/careers/*"
-        element={loggedIn ? <Careers /> : <Navigate to="/login" replace />}
-      />
-      <Route
-        path="/production/*"
-        element={loggedIn ? <Production /> : <Navigate to="/login" replace />}
-      />
-      <Route
-        path="/profile/:employeeId"
-        element={loggedIn ? <Profile /> : <Navigate to="/login" replace />}
-      />
-
-      <Route path="*" element={<div>Not Found</div>} />
     </Routes>
   );
 };

@@ -31,7 +31,7 @@ const PageHeader = ({
     }
   };
 
-  const formatTabValue = (value: string) => {
+  const formatKebab = (value: string) => {
     return value
       .split("-")
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -80,7 +80,7 @@ const PageHeader = ({
                 }`}
                 onClick={() => setActiveTab(tab.value)}
               >
-                {formatTabValue(tab.value)}
+                {formatKebab(tab.value)}
               </button>
             ))}
           </nav>

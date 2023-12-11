@@ -5,6 +5,9 @@ export { default as Loading } from "./reusable/Loading";
 export { default as PageHeader } from "./reusable/PageHeader";
 export { default as SortButton } from "./reusable/SortButton";
 
+export { default as ApplicantsTable } from "./tables/ApplicantsTable";
+export { default as CareersTable } from "./tables/CareersTable";
+
 export { default as Resources } from "./Resources";
 
 export { default as Downtime } from "./charts/Downtime";

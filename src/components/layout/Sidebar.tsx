@@ -52,9 +52,9 @@ const Sidebar = (props: Props) => {
       ),
     },
     {
-      name: "Production",
-      to: "/production",
-      match: useMatch("/production/*"),
+      name: "Careers",
+      to: "/careers",
+      match: useMatch("/careers/*"),
       icon: (
         <svg
           className="h-5 w-5"
@@ -70,9 +70,9 @@ const Sidebar = (props: Props) => {
       ),
     },
     {
-      name: "Careers",
-      to: "/careers",
-      match: useMatch("/careers/*"),
+      name: "Production",
+      to: "/production",
+      match: useMatch("/production/*"),
       icon: (
         <svg
           className="h-5 w-5"

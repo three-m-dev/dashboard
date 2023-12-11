@@ -1,17 +1,25 @@
 import { useState } from "react";
-import { Layout, PageHeader } from "../components";
+import {
+  ApplicantsTable,
+  CareersTable,
+  Layout,
+  PageHeader,
+} from "../components";
 
 const Careers = () => {
   const [activeTab, setActiveTab] = useState("openings");
 
+  const [careerModalOpen, setCareerModalOpen] = useState(false);
+  const [applicantModalOpen, setApplicantModalOpen] = useState(false);
+
   const renderContent = () => {
     switch (activeTab) {
       case "openings":
-        return <div>Openings</div>;
+        return <CareersTable />;
       case "applicants":
-        return <div>Applicants</div>;
+        return <ApplicantsTable />;
       default:
-        return <div>Openings</div>;
+        return <CareersTable />;
     }
   };
 
@@ -19,19 +27,27 @@ const Careers = () => {
     console.log("Button Clicked");
   };
 
+  const toggleCareerModal = () => {
+    setCareerModalOpen(!careerModalOpen);
+  };
+
+  const toggleApplicantModal = () => {
+    setApplicantModalOpen(!applicantModalOpen);
+  };
+
   const tabs = [
     {
       value: "openings",
       buttons: [
         { label: "filter", onClick: handleClick },
-        { label: "create new", onClick: handleClick },
+        { label: "create new", onClick: toggleCareerModal },
       ],
     },
     {
       value: "applicants",
       buttons: [
         { label: "filter", onClick: handleClick },
-        { label: "create new", onClick: handleClick },
+        { label: "create new", onClick: toggleApplicantModal },
       ],
     },
   ];

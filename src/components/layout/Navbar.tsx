@@ -97,7 +97,7 @@ const Navbar = (props: NavbarProps) => {
           <div className="hidden lg:block">
             <button className="flex items-center">
               <div className="mr-3">
-                <p className="text-sm">Thomas Brown</p>
+                <p className="text-sm">Jacob Reppuhn</p>
                 <p className="text-sm text-gray-500">Developer</p>
               </div>
               <div className="mr-2">

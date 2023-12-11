@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { login, loading, error } = useLogin();
+  const { login } = useLogin();
 
   const navigate = useNavigate();
 
@@ -35,7 +35,7 @@ const Login = () => {
               Password
             </label>
             <input
-              type="text"
+              type="password"
               className="w-full rounded-md border px-3 py-2 text-sm focus:outline-none md:text-base"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -44,20 +44,11 @@ const Login = () => {
 
           <button
             className="block w-full rounded-lg bg-blue-500 py-2.5 font-semibold leading-6 text-white transition duration-200 hover:bg-blue-600"
-            disabled={loading}
             type="submit"
           >
-            {loading && username && password ? "Logging In.." : "Login"}
+            Login
           </button>
         </form>
-      </div>
-
-      <div className="mt-4 h-6">
-        {error && (
-          <p className="text-center font-medium text-red-500 md:text-lg">
-            {error}
-          </p>
-        )}
       </div>
     </div>
   );

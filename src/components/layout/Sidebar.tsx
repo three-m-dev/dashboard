@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useMatch } from "react-router-dom";
-import LogoutModal from "./modals/LogoutModal";
+import LogoutModal from "../modals/LogoutModal";
 
 type Props = {
   isOpen: boolean;

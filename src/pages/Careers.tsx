@@ -5,6 +5,7 @@ import {
   Layout,
   PageHeader,
 } from "../components";
+import CareerModal from "../components/modals/CareerModal";
 
 const Careers = () => {
   const [activeTab, setActiveTab] = useState("openings");
@@ -61,6 +62,9 @@ const Careers = () => {
         setActiveTab={setActiveTab}
       />
       {renderContent()}
+      {careerModalOpen && !applicantModalOpen && (
+        <CareerModal toggleCareerModal={toggleCareerModal} />
+      )}
     </Layout>
   );
 };

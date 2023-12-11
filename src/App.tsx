@@ -2,7 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { ReactNode, useContext } from "react";
 import { AuthContext } from "./contexts/AuthContext";
 import { useSession } from "./hooks/useSession";
-import { Dashboard, Login, Production, Team } from "./pages";
+import { Careers, Dashboard, Login, Production, Team } from "./pages";
 
 type ProtectedRouteProps = {
   children: ReactNode;
@@ -46,6 +46,14 @@ const App = () => {
         element={
           <ProtectedRoute>
             <Team />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/careers"
+        element={
+          <ProtectedRoute>
+            <Careers />
           </ProtectedRoute>
         }
       />

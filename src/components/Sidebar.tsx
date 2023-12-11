@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { Link, useMatch } from "react-router-dom";
+import LogoutModal from "./modals/LogoutModal";
 
 type Props = {
   isOpen: boolean;
@@ -6,6 +8,12 @@ type Props = {
 };
 
 const Sidebar = (props: Props) => {
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
+
+  const toggleLogoutModal = () => {
+    setLogoutModalOpen(!logoutModalOpen);
+  };
+
   const links = [
     {
       name: "Dashboard",
@@ -63,7 +71,7 @@ const Sidebar = (props: Props) => {
     },
     {
       name: "Careers",
-      to: "/careers/openings",
+      to: "/careers",
       match: useMatch("/careers/*"),
       icon: (
         <svg
@@ -97,7 +105,7 @@ const Sidebar = (props: Props) => {
               </a>
               <button className="navbar-burger flex items-center rounded focus:outline-none">
                 <svg
-                  className="block h-8 w-8 rounded bg-indigo-500 p-2 text-white hover:bg-indigo-600"
+                  className="block h-8 w-8 rounded bg-blue-500 p-2 text-white hover:bg-blue-600"
                   viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
@@ -131,14 +139,14 @@ const Sidebar = (props: Props) => {
                       <Link
                         className={
                           `flex items-center rounded py-3 pl-3 pr-2 text-gray-50 hover:bg-gray-900 ` +
-                          (link.match ? "bg-indigo-500" : "")
+                          (link.match ? "bg-blue-500" : "")
                         }
                         to={link.to}
                       >
                         <span
                           className={
                             `mr-3 inline-block ` +
-                            (link.match ? "text-indigo-100" : "text-gray-600")
+                            (link.match ? "text-blue-100" : "text-gray-600")
                           }
                         >
                           {link.icon}
@@ -170,8 +178,8 @@ const Sidebar = (props: Props) => {
                     <span>Settings</span>
                   </a>
                   <button
-                    onClick={() => {}}
-                    className="flex items-center rounded py-3 pl-3 pr-2 text-gray-50 hover:bg-gray-900"
+                    onClick={toggleLogoutModal}
+                    className="flex w-full items-center rounded py-3 pl-3 pr-2 text-gray-50 hover:bg-gray-900"
                   >
                     <span className="mr-4 inline-block">
                       <svg
@@ -195,6 +203,7 @@ const Sidebar = (props: Props) => {
           <div className="mx-auto lg:ml-64"></div>
         </div>
       )}
+      {logoutModalOpen && <LogoutModal toggleLogoutModal={toggleLogoutModal} />}
     </>
   );
 };

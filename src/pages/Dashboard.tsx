@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Layout } from "../components";
-import PageHeader from "../components/reusable/PageHeader";
+import { Layout, PageHeader } from "../components";
+
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("overview");
@@ -45,7 +45,6 @@ const Dashboard = () => {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
       />
-
       {renderContent()}
     </Layout>
   );

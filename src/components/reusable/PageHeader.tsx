@@ -31,12 +31,21 @@ const PageHeader = ({
     }
   };
 
+  const formatTabValue = (value: string) => {
+    return value
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
+
   return (
     <>
       <section className="">
         <div className="flex flex-wrap items-center justify-between">
           <div className="mb-4 flex w-full items-center lg:mb-0 lg:w-auto">
-            <h2 className="text-2xl font-bold h-[36px] flex items-center">{title}</h2>
+            <h2 className="flex h-[36px] items-center text-2xl font-bold">
+              {title}
+            </h2>
           </div>
           <div className="flex gap-2">
             {activeTabData?.search && (
@@ -71,7 +80,7 @@ const PageHeader = ({
                 }`}
                 onClick={() => setActiveTab(tab.value)}
               >
-                {tab.value}
+                {formatTabValue(tab.value)}
               </button>
             ))}
           </nav>

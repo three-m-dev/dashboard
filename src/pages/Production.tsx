@@ -1,131 +1,72 @@
 import { useState } from "react";
-import { Downtime, Layout, Output, PageHeader, Resources } from "../components";
+import { Layout, PageHeader } from "../components";
 
 const Production = () => {
-  const [viewMode, setViewMode] = useState("overview");
+  const [activeTab, setActiveTab] = useState("overview");
 
-  const handleViewChange = (value: string) => {
-    if (viewMode !== value) {
-      setViewMode(value);
-    }
-  };
+  const [downtimeModalOpen, setDowntimeModalOpen] = useState(false);
+  const [resourceModalOpen, setResourceModalOpen] = useState(false);
+  const [operatorModalOpen, setOperatorModalOpen] = useState(false);
 
-  const renderHeader = () => {
-    switch (viewMode) {
+  const renderContent = () => {
+    switch (activeTab) {
       case "overview":
-        return (
-          <PageHeader
-            title="Production"
-            onSearch={() => {
-              console.log("Search button clicked");
-            }}
-          />
-        );
+        return <div>Overview</div>;
+      case "downtime":
+        return <div>Downtime</div>;
       case "resources":
-        return (
-          <PageHeader
-            title="Production"
-            onSearch={() => {
-              console.log("Search button clicked");
-            }}
-            filterButton={{
-              onClick: () => {
-                console.log("Filter button clicked");
-              },
-            }}
-            createButton={{
-              onClick: () => {
-                console.log("Create button clicked");
-              },
-            }}
-          />
-        );
+        return <div>Resources</div>;
       case "operators":
-        return (
-          <PageHeader
-            title="Production"
-            onSearch={() => {
-              console.log("Search button clicked");
-            }}
-            filterButton={{
-              onClick: () => {
-                console.log("Filter button clicked");
-              },
-            }}
-            createButton={{
-              onClick: () => {
-                console.log("Create button clicked");
-              },
-            }}
-          />
-        );
+        return <div>Operators</div>;
       default:
-        return <p>No view selected</p>;
+        return <div>Overview</div>;
     }
   };
 
-  const renderView = () => {
-    if (viewMode === "overview") {
-      return (
-        <>
-          <Output />
-          <Downtime />
-        </>
-      );
-    } else if (viewMode === "resources") {
-      return <Resources />;
-    } else if (viewMode === "operators") {
-      return <div>Operators</div>;
-    }
+  const handleClick = () => {
+    console.log("Button Clicked");
   };
+
+  const tabs = [
+    {
+      value: "overview",
+      buttons: [{ label: "date range", onClick: handleClick }],
+    },
+    {
+      value: "downtime",
+      buttons: [
+        { label: "filter", onClick: handleClick },
+        { label: "create new", onClick: handleClick },
+        { label: "export", onClick: handleClick },
+      ],
+    },
+    {
+      value: "resources",
+      buttons: [
+        { label: "filter", onClick: handleClick },
+        { label: "create new", onClick: handleClick },
+        { label: "export", onClick: handleClick },
+      ],
+    },
+    {
+      value: "operators",
+      buttons: [
+        { label: "filter", onClick: handleClick },
+        { label: "create new", onClick: handleClick },
+        { label: "export", onClick: handleClick },
+      ],
+    },
+  ];
 
   return (
     <Layout>
-      {renderHeader()}
-      <section className="px-6 pt-2">
-        <div className="flex flex-wrap text-center text-sm">
-          <button
-            onClick={() => handleViewChange("overview")}
-            className={
-              `mb-4 inline-block w-full border-b-2  px-4 pb-2  md:w-1/2 lg:mb-0 lg:w-auto ` +
-              `${
-                viewMode === "overview"
-                  ? "border-indigo-500 text-indigo-500"
-                  : "border-transparent text-gray-300 hover:border-gray-300"
-              }`
-            }
-          >
-            Overview
-          </button>
-          <button
-            onClick={() => handleViewChange("resources")}
-            className={
-              `mb-4 inline-block w-full border-b-2  px-4 pb-2  md:w-1/2 lg:mb-0 lg:w-auto ` +
-              `${
-                viewMode === "resources"
-                  ? "border-indigo-500 text-indigo-500"
-                  : "border-transparent text-gray-300 hover:border-gray-300"
-              }`
-            }
-          >
-            Resources
-          </button>
-          <button
-            onClick={() => handleViewChange("operators")}
-            className={
-              `mb-4 inline-block w-full border-b-2  px-4 pb-2  md:w-1/2 lg:mb-0 lg:w-auto ` +
-              `${
-                viewMode === "operators"
-                  ? "border-indigo-500 text-indigo-500"
-                  : "border-transparent text-gray-300 hover:border-gray-300"
-              }`
-            }
-          >
-            Operators
-          </button>
-        </div>
-      </section>
-      {renderView()}
+      <PageHeader
+        title="Production"
+        tabs={tabs}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+      />
+      {renderContent()}
     </Layout>
   );
 };

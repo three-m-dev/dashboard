@@ -1,7 +1,8 @@
 type Button = {
   label: string;
   icon?: JSX.Element;
-  onClick: () => void;
+  mode?: string;
+  onClick: (mode?: string) => void;
 };
 
 type Tab = {
@@ -60,7 +61,7 @@ const PageHeader = ({
               <button
                 key={index}
                 className="flex gap-1 rounded border-2 border-blue-500 bg-white px-4 py-1.5 text-sm font-semibold capitalize text-blue-500 transition-colors hover:bg-blue-500 hover:text-white"
-                onClick={button.onClick}
+                onClick={() => button.onClick(button.mode)}
               >
                 {button.icon && <span>{button.icon}</span>}
                 {button.label}

@@ -5,6 +5,7 @@ export { default as Layout } from "./layout/Layout";
 export { default as CareerModal } from "./modals/CareerModal";
 
 // Reusable
+export { default as BulletTextArea } from "./reusable/BulletTextArea";
 export { default as Button } from "./reusable/Button";
 export { default as Loading } from "./reusable/Loading";
 export { default as PageHeader } from "./reusable/PageHeader";

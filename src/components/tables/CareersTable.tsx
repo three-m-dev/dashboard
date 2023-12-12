@@ -5,7 +5,11 @@ import LeftArrowIcon from "../../assets/icons/LeftArrowIcon";
 import { SortButton } from "..";
 import EllipsisIcon from "../../assets/icons/EllipsisIcon";
 
-const CareersTable = () => {
+type CareersTableProps = {
+  toggleCareerModal: (mode: string) => void;
+};
+
+const CareersTable = ({ toggleCareerModal }: CareersTableProps) => {
   const { careerData, setPage, setPageSize, setSort } = useGetCareers();
   const [actionDropdown, setActionDropdown] = useState(false);
 
@@ -122,7 +126,14 @@ const CareersTable = () => {
                 }`}
               >
                 <td className="col-span-2 flex items-center px-4">
-                  {career.title}
+                  <button
+                    onClick={() => {
+                      toggleCareerModal("view");
+                    }}
+                    className="hover:underline"
+                  >
+                    {career.title}
+                  </button>
                 </td>
                 <td className="flex items-center justify-center">
                   {formatKebab(career.company)}

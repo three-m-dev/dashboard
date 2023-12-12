@@ -10,10 +10,10 @@ const Navbar = (props: NavbarProps) => {
           <div className="mr-auto hidden items-center lg:flex">
             <button
               onClick={props.onToggleSidebar}
-              className="rounded-md bg-indigo-50 px-2 py-3 hover:bg-indigo-100"
+              className="rounded-md bg-blue-50 px-2 py-3 hover:bg-blue-100"
             >
               <svg
-                className="text-indigo-500"
+                className="text-blue-500"
                 width="18"
                 height="10"
                 viewBox="0 0 18 10"
@@ -30,7 +30,7 @@ const Navbar = (props: NavbarProps) => {
           <div className="lg:hidden">
             <button className="flex items-center">
               <svg
-                className="block h-8 w-8 rounded bg-indigo-100 p-2 text-indigo-500"
+                className="block h-8 w-8 rounded bg-blue-100 p-2 text-blue-500"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="currentColor"

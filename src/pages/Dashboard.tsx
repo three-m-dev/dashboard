@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Layout, PageHeader } from "../components";
-
+import Improvements from "../components/Improvements";
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("overview");
@@ -8,13 +8,31 @@ const Dashboard = () => {
   const renderContent = () => {
     switch (activeTab) {
       case "overview":
-        return <div>Overview</div>;
+        return <div className="h-full w-full bg-red-400">Overview</div>;
       case "calendar":
         return <div>Contacts</div>;
       case "improvements":
-        return <div>Improvements</div>;
+        return <Improvements />;
       default:
         return <div>Overview</div>;
+    }
+  };
+
+  const fullscreenDivRef = useRef<HTMLDivElement>(null);
+
+  const toggleFullScreen = () => {
+    const elem = fullscreenDivRef.current;
+
+    if (!elem) return;
+
+    if (!document.fullscreenElement) {
+      elem.requestFullscreen().catch((err) => {
+        console.error(
+          `Error attempting to enable full-screen mode: ${err.message} (${err.name})`,
+        );
+      });
+    } else {
+      document.exitFullscreen();
     }
   };
 
@@ -25,7 +43,7 @@ const Dashboard = () => {
   const tabs = [
     {
       value: "overview",
-      buttons: [{ label: "fullscreen", onClick: handleClick }],
+      buttons: [{ label: "fullscreen", onClick: toggleFullScreen }],
     },
     {
       value: "calendar",

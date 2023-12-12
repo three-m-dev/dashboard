@@ -1,13 +1,13 @@
 const Output = () => {
   return (
-    <section className="py-8">
-      <div className="mx-auto px-6">
+    <section>
+      <div className="mx-auto">
         <div className="overflow-hidden rounded shadow">
-          <div className="bg-indigo-500">
-            <h3 className="p-6 text-xl font-bold text-white">Output</h3>
+          <div className="bg-blue-500">
+            <h3 className="p-4 text-xl font-bold text-white">Output</h3>
             <div className="chart" data-type="area" data-variant="dark-bg" />
           </div>
-          <div className="-m-3 flex flex-wrap bg-white px-6 py-10">
+          <div className="-m-3 flex flex-wrap bg-white px-4 py-4">
             <div className="w-1/2 p-3">
               <div className="rounded border px-6 py-4">
                 <p className="text-xs text-gray-500">

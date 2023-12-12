@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Layout, PageHeader } from "../components";
+import { Downtime, Layout, Output, PageHeader, Resources } from "../components";
 
 const Production = () => {
   const [activeTab, setActiveTab] = useState("overview");
@@ -11,11 +11,16 @@ const Production = () => {
   const renderContent = () => {
     switch (activeTab) {
       case "overview":
-        return <div>Overview</div>;
+        return (
+          <>
+            <Output />
+            <Downtime />
+          </>
+        );
       case "downtime":
         return <div>Downtime</div>;
       case "resources":
-        return <div>Resources</div>;
+        return <Resources />;
       case "operators":
         return <div>Operators</div>;
       default:
@@ -36,7 +41,7 @@ const Production = () => {
       value: "downtime",
       buttons: [
         { label: "filter", onClick: handleClick },
-        { label: "create new", onClick: handleClick },
+        { label: "report", onClick: handleClick },
         { label: "export", onClick: handleClick },
       ],
     },

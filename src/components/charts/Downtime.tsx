@@ -25,8 +25,8 @@ const Downtime = () => {
   const sortedDowntimes = downtimes.sort((a, b) => b.percentage - a.percentage);
 
   return (
-    <section className="py-8">
-      <div className="mx-auto px-6">
+    <section className="py-6">
+      <div className="mx-auto">
         <div className="rounded bg-white py-4">
           <div className="border-b border-blue-50 px-6 pb-6">
             <h3 className="text-xl font-bold">Downtime</h3>
@@ -41,8 +41,8 @@ const Downtime = () => {
                   <p className="text-sm font-medium">{downtime.reason}</p>
                 </div>
                 <div className="w-1/2 px-4">
-                  <div className="flex gap-1 items-center">
-                    <p className="text-xs font-medium text-indigo-500">
+                  <div className="flex items-center gap-1">
+                    <p className="text-xs font-medium text-blue-500">
                       {downtime.percentage}%
                     </p>
                     <p className="text-sm font-medium text-gray-500">
@@ -51,10 +51,10 @@ const Downtime = () => {
                   </div>
 
                   <div className="flex">
-                    <div className="relative h-1 w-full rounded-full bg-indigo-50">
+                    <div className="relative h-1 w-full rounded-full bg-blue-50">
                       <div
                         style={{ width: `${downtime.percentage}%` }}
-                        className="absolute left-0 top-0 h-full rounded-full bg-indigo-500"
+                        className="absolute left-0 top-0 h-full rounded-full bg-blue-500"
                       />
                     </div>
                   </div>

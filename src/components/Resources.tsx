@@ -127,7 +127,7 @@ const Resources = () => {
   };
 
   return (
-    <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-8 px-6">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8">
       {resourceList.map((resource, index) => {
         const statusClass = getStatusClass(resource.status);
         const oeeClass = getOeeClass(resource.oee);
@@ -142,9 +142,13 @@ const Resources = () => {
             >
               <h1 className="font-bold">{resource.name}</h1>
               <div className="flex gap-1 text-sm">
-                <p>{timeAgo(resource.lastStatusUpdate)}</p>
+                <p className="whitespace-nowrap">
+                  {timeAgo(resource.lastStatusUpdate)}
+                </p>
                 <p>·</p>
-                <p>{formatStatus(resource.status)}</p>
+                <p className="min-w-0 flex-1 truncate">
+                  {formatStatus(resource.status)}
+                </p>
               </div>
             </div>
             <div

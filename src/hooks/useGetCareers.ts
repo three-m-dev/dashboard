@@ -16,6 +16,7 @@ const useGetCareers = () => {
   const [pageSize, setPageSize] = useState<number | undefined>(undefined);
   const [fields, setFields] = useState<string[] | undefined>(undefined);
   const [error, setError] = useState<string | null>(null);
+  const [refreshToggle, setRefreshToggle] = useState(false);
 
   useEffect(() => {
     const getCareers = async () => {
@@ -49,7 +50,11 @@ const useGetCareers = () => {
     if (page !== undefined && pageSize !== undefined) {
       getCareers();
     }
-  }, [filter, sort, page, pageSize, fields]);
+  }, [filter, sort, page, pageSize, fields, refreshToggle]);
+
+  const refreshCareers = () => {
+    setRefreshToggle((prev) => !prev);
+  };
 
   return {
     careerData,
@@ -59,6 +64,7 @@ const useGetCareers = () => {
     setPageSize,
     setFields,
     error,
+    refreshCareers,
   };
 };
 

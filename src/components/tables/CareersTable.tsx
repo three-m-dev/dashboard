@@ -7,25 +7,24 @@ import EllipsisIcon from "../../assets/icons/EllipsisIcon";
 
 type CareersTableProps = {
   toggleCareerModal: (mode: string, careerData?: any) => void;
+  refreshData: boolean;
 };
 
-const CareersTable = ({ toggleCareerModal }: CareersTableProps) => {
-  const { careerData, setPage, setPageSize, setSort } = useGetCareers();
+const CareersTable = ({
+  toggleCareerModal,
+  refreshData,
+}: CareersTableProps) => {
   const [actionDropdown, setActionDropdown] = useState(false);
-
-  const toggleActionDropdown = () => {
-    setActionDropdown(!actionDropdown);
-  };
-
   const initialPageSize = 10;
   const [localPage, setLocalPage] = useState<number>(1);
   const [localSort, setLocalSort] = useState<string>("title,ASC");
 
-  useEffect(() => {
-    setPage(localPage);
-    setPageSize(initialPageSize);
-    setSort(localSort);
-  }, [localPage, localSort, setPage, setPageSize, setSort]);
+  const { careerData, setPage, setPageSize, setSort, refreshCareers } =
+    useGetCareers();
+
+  const toggleActionDropdown = () => {
+    setActionDropdown(!actionDropdown);
+  };
 
   const updateSort = (fieldToSort: string) => {
     let newSort = `${fieldToSort},ASC`;
@@ -46,6 +45,16 @@ const CareersTable = ({ toggleCareerModal }: CareersTableProps) => {
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
   };
+
+  useEffect(() => {
+    setPage(localPage);
+    setPageSize(initialPageSize);
+    setSort(localSort);
+  }, [localPage, localSort, setPage, setPageSize, setSort]);
+
+  useEffect(() => {
+    refreshCareers();
+  }, [refreshData]);
 
   return (
     <section>

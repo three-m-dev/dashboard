@@ -20,14 +20,31 @@ const Careers = () => {
   const [selectedCareer, setSelectedCareer] = useState(null);
   const [selectedApplicant, setSelectedApplicant] = useState(null);
 
+  const [refreshData, setRefreshData] = useState(false);
+
+  const triggerDataRefresh = () => {
+    console.log("Refreshing");
+    setRefreshData((prev) => !prev);
+  };
+
   const renderContent = () => {
     switch (activeTab) {
       case "openings":
-        return <CareersTable toggleCareerModal={toggleCareerModal} />;
+        return (
+          <CareersTable
+            toggleCareerModal={toggleCareerModal}
+            refreshData={refreshData} // Pass the refreshData state
+          />
+        );
       case "applicants":
         return <ApplicantsTable toggleApplicantModal={toggleApplicantModal} />;
       default:
-        return <CareersTable toggleCareerModal={toggleCareerModal} />;
+        return (
+          <CareersTable
+            toggleCareerModal={toggleCareerModal}
+            refreshData={refreshData} // Pass the refreshData state
+          />
+        );
     }
   };
 
@@ -81,6 +98,7 @@ const Careers = () => {
           toggleCareerModal={toggleCareerModal}
           careerModalMode={careerModalMode}
           selectedCareer={selectedCareer}
+          triggerDataRefresh={triggerDataRefresh}
         />
       )}
       {applicantModalOpen && !careerModalOpen && (

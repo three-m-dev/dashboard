@@ -2,17 +2,20 @@ import { useEffect, useState } from "react";
 import { BulletTextArea } from "..";
 import useGetTeamMemberByUser from "../../hooks/useGetTeamMemberByUser";
 import { ICareer } from "../../shared/interfaces";
+import { useCreateCareer } from "../../hooks/useCreateCareer";
 
 type CareerModalProps = {
   toggleCareerModal: (mode: string) => void;
   careerModalMode: string;
   selectedCareer: ICareer | null;
+  triggerDataRefresh: () => void;
 };
 
 const CareerModal = ({
   toggleCareerModal,
   careerModalMode,
   selectedCareer,
+  triggerDataRefresh,
 }: CareerModalProps) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -25,20 +28,9 @@ const CareerModal = ({
   const [qualifications, setQualifications] = useState<string>("");
   const [startingAt, setStartingAt] = useState("");
   const [compensationType, setCompensationType] = useState<number>(0);
-
   const [userId, setUserId] = useState("");
 
-  useEffect(() => {
-    if (selectedCareer) {
-      if (careerModalMode === "view" && selectedCareer.updatedBy) {
-        setUserId(selectedCareer.updatedBy);
-      } else {
-        setUserId("");
-      }
-    } else {
-      setUserId("");
-    }
-  }, [careerModalMode, selectedCareer]);
+  const { createCareer, isLoading, error: createError } = useCreateCareer();
 
   const { teamMemberData, error } = useGetTeamMemberByUser(userId);
 
@@ -67,7 +59,42 @@ const CareerModal = ({
     });
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (event: any) => {
+    event.preventDefault();
+
+    const careerData = {
+      title,
+      description,
+      company,
+      location,
+      department,
+      employmentType,
+      benefits: JSON.parse(benefits),
+      responsibilities: JSON.parse(responsibilities),
+      qualifications: JSON.parse(qualifications),
+      startingAt: parseFloat(startingAt.replace(/[^0-9.]/g, "")),
+      compensationType,
+    };
+
+    const career = await createCareer(careerData);
+
+    if (career !== null) {
+      toggleCareerModal("");
+      triggerDataRefresh();
+    }
+  };
+
+  useEffect(() => {
+    if (careerModalMode === "view" && selectedCareer) {
+      if (selectedCareer.updatedBy) {
+        setUserId(selectedCareer.updatedBy);
+      } else {
+        setUserId("");
+      }
+    } else {
+      setUserId("");
+    }
+  }, [careerModalMode, selectedCareer]);
 
   return (
     <div className="fixed inset-0 z-50 flex h-full w-full items-center justify-center overflow-y-auto bg-gray-600 bg-opacity-50 backdrop-blur-sm">
@@ -75,8 +102,8 @@ const CareerModal = ({
         <div className="flex items-center justify-between rounded-t border-b p-4">
           <h3 className="text-lg font-semibold text-gray-900">
             {careerModalMode === "view"
-              ? "View Career Listing"
-              : "Create Career Listing"}
+              ? `${selectedCareer?.title}`
+              : "New Career Opening"}
           </h3>
           <button
             onClick={() => toggleCareerModal("")}

@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { ITeamMember } from "../shared/interfaces";
 
 const useGetTeamMemberByUser = (userId: string) => {
-  const [teamMemberData, setTeamMemberData] = useState(null);
+  const [teamMemberData, setTeamMemberData] = useState<ITeamMember | null>(
+    null,
+  );
   const [error, setError] = useState<string | null>(null);
 
   const baseUrl = "http://localhost:8080/api/v1";

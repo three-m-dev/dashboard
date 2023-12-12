@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { BulletTextArea } from "..";
 import useGetTeamMemberByUser from "../../hooks/useGetTeamMemberByUser";
-import { ITeamMember } from "../../shared/interfaces";
+import { ICareer } from "../../shared/interfaces";
 
 type CareerModalProps = {
   toggleCareerModal: (mode: string) => void;
   careerModalMode: string;
-  selectedCareer: any | null;
+  selectedCareer: ICareer | null;
 };
 
 const CareerModal = ({
@@ -29,8 +29,12 @@ const CareerModal = ({
   const [userId, setUserId] = useState("");
 
   useEffect(() => {
-    if (careerModalMode === "view" && selectedCareer?.updatedBy) {
-      setUserId(selectedCareer.updatedBy);
+    if (selectedCareer) {
+      if (careerModalMode === "view" && selectedCareer.updatedBy) {
+        setUserId(selectedCareer.updatedBy);
+      } else {
+        setUserId("");
+      }
     } else {
       setUserId("");
     }
@@ -315,7 +319,7 @@ const CareerModal = ({
             </div>
           </form>
         )}
-        {careerModalMode === "view" && (
+        {careerModalMode === "view" && selectedCareer && (
           <>
             <form className="max-h-[75vh] overflow-y-auto py-4">
               <div className="grid gap-4 px-4 sm:grid-cols-12">

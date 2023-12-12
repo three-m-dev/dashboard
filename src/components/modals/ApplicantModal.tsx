@@ -1,15 +1,18 @@
 import { useState } from "react";
 import { BulletTextArea } from "..";
+import { IApplication } from "../../shared/interfaces";
 
-type ApplicationModalProps = {
-  toggleApplicationModal: () => void;
-  mode: string;
+type ApplicantModalProps = {
+  toggleApplicantModal: () => void;
+  applicantModalMode: string;
+  selectedApplicant: IApplication | null;
 };
 
 const ApplicantModal = ({
-  toggleApplicationModal,
-  mode,
-}: ApplicationModalProps) => {
+  toggleApplicantModal,
+  applicantModalMode,
+  selectedApplicant,
+}: ApplicantModalProps) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [company, setCompany] = useState<number>(0);
@@ -37,11 +40,9 @@ const ApplicantModal = ({
     <div className="fixed inset-0 z-50 flex h-full w-full items-center justify-center overflow-y-auto bg-gray-600 bg-opacity-50 backdrop-blur-sm">
       <div className="relative mx-4 w-full rounded-md border bg-white p-5 shadow-lg sm:mx-auto sm:max-w-screen-md">
         <div className="mb-4 flex items-center justify-between rounded-t border-b pb-4">
-          <h3 className="text-lg font-semibold text-gray-900">
-            New Career Listing
-          </h3>
+          <h3 className="text-lg font-semibold text-gray-900">New Applicant</h3>
           <button
-            onClick={toggleApplicationModal}
+            onClick={toggleApplicantModal}
             className="rounded-md p-2 text-gray-600 hover:bg-gray-200"
           >
             <svg

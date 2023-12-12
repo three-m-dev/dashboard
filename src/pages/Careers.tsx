@@ -13,18 +13,19 @@ const Careers = () => {
 
   const [careerModalOpen, setCareerModalOpen] = useState(false);
   const [careerModalMode, setCareerModalMode] = useState("");
+
   const [applicantModalOpen, setApplicantModalOpen] = useState(false);
+  const [applicantModalMode, setApplicantModelMode] = useState("");
 
   const [selectedCareer, setSelectedCareer] = useState(null);
-
-  const mode = "create";
+  const [selectedApplicant, setSelectedApplicant] = useState(null);
 
   const renderContent = () => {
     switch (activeTab) {
       case "openings":
         return <CareersTable toggleCareerModal={toggleCareerModal} />;
       case "applicants":
-        return <ApplicantsTable />;
+        return <ApplicantsTable toggleApplicantModal={toggleApplicantModal} />;
       default:
         return <CareersTable toggleCareerModal={toggleCareerModal} />;
     }
@@ -40,7 +41,12 @@ const Careers = () => {
     setCareerModalOpen(!careerModalOpen);
   };
 
-  const toggleApplicantModal = () => {
+  const toggleApplicantModal = (
+    mode: string = "view",
+    applicantData = null,
+  ) => {
+    setApplicantModelMode(mode);
+    setSelectedApplicant(applicantData);
     setApplicantModalOpen(!applicantModalOpen);
   };
 
@@ -56,7 +62,7 @@ const Careers = () => {
       value: "applicants",
       buttons: [
         { label: "filter", onClick: handleClick },
-        { label: "create new", onClick: toggleApplicantModal },
+        { label: "create new", onClick: () => toggleApplicantModal("create") },
       ],
     },
   ];
@@ -79,8 +85,9 @@ const Careers = () => {
       )}
       {applicantModalOpen && !careerModalOpen && (
         <ApplicantModal
-          mode={mode}
-          toggleApplicationModal={toggleApplicantModal}
+          toggleApplicantModal={toggleApplicantModal}
+          applicantModalMode={applicantModalMode}
+          selectedApplicant={selectedApplicant}
         />
       )}
     </Layout>

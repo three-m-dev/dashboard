@@ -5,7 +5,11 @@ import LeftArrowIcon from "../../assets/icons/LeftArrowIcon";
 import { SortButton } from "..";
 import EllipsisIcon from "../../assets/icons/EllipsisIcon";
 
-const ApplicationsTable = () => {
+type ApplicantsTableProps = {
+  toggleApplicantModal: (mode: string, applicantData?: any) => void;
+};
+
+const ApplicationsTable = ({ toggleApplicantModal }: ApplicantsTableProps) => {
   const { applicationData, setPage, setPageSize, setSort } =
     useGetApplications();
   const [actionDropdown, setActionDropdown] = useState(false);
@@ -112,8 +116,13 @@ const ApplicationsTable = () => {
                 }`}
               >
                 <td className="col-span-2 flex items-center px-4">
-                  {application.applicant.firstName}{" "}
-                  {application.applicant.lastName}
+                  <button
+                    onClick={() => toggleApplicantModal("view", application)}
+                    className="hover:underline"
+                  >
+                    {application.applicant.firstName}{" "}
+                    {application.applicant.lastName}
+                  </button>
                 </td>
                 <td className="col-span-2 flex items-center justify-center">
                   {convertToReadableDate(application.createdAt)}

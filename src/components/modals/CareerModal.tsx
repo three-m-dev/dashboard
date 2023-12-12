@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BulletTextArea } from "..";
+import useGetTeamMemberByUser from "../../hooks/useGetTeamMemberByUser";
+import { ITeamMember } from "../../shared/interfaces";
 
 type CareerModalProps = {
   toggleCareerModal: (mode: string) => void;
@@ -24,6 +26,18 @@ const CareerModal = ({
   const [startingAt, setStartingAt] = useState("");
   const [compensationType, setCompensationType] = useState<number>(0);
 
+  const [userId, setUserId] = useState("");
+
+  useEffect(() => {
+    if (careerModalMode === "view" && selectedCareer?.updatedBy) {
+      setUserId(selectedCareer.updatedBy);
+    } else {
+      setUserId("");
+    }
+  }, [careerModalMode, selectedCareer]);
+
+  const { teamMemberData, error } = useGetTeamMemberByUser(userId);
+
   const departments = [
     {
       id: 1,
@@ -40,12 +54,21 @@ const CareerModal = ({
     );
   };
 
+  const formatDate = (dateString: string): string => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
   const handleSubmit = () => {};
 
   return (
     <div className="fixed inset-0 z-50 flex h-full w-full items-center justify-center overflow-y-auto bg-gray-600 bg-opacity-50 backdrop-blur-sm">
-      <div className="relative mx-4 w-full rounded-md border bg-white p-5 shadow-lg sm:mx-auto sm:max-w-screen-md">
-        <div className="mb-4 flex items-center justify-between rounded-t border-b pb-4">
+      <div className="relative mx-4 w-full rounded-md border bg-white shadow-lg sm:mx-auto sm:max-w-screen-md">
+        <div className="flex items-center justify-between rounded-t border-b p-4">
           <h3 className="text-lg font-semibold text-gray-900">
             {careerModalMode === "view"
               ? "View Career Listing"
@@ -72,231 +95,434 @@ const CareerModal = ({
           </button>
         </div>
         {careerModalMode === "create" && (
+          <form onSubmit={handleSubmit} className="p-4">
+            <div className="grid gap-4 sm:grid-cols-12">
+              <div className="sm:col-span-3">
+                <label className="mb-2 block text-sm font-medium text-gray-900">
+                  Company
+                </label>
+                <select
+                  id="company"
+                  className="focus:ring-primary-500 focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
+                  value={company}
+                  onChange={(e) => setCompany(Number(e.target.value))}
+                >
+                  <option>Select Company</option>
+                  <option value={1}>Three M</option>
+                  <option value={2}>Ultra Grip</option>
+                </select>
+              </div>
+
+              <div className="sm:col-span-3">
+                <label className="mb-2 block text-sm font-medium text-gray-900">
+                  Department
+                </label>
+                <select
+                  id="department"
+                  className="focus:ring-primary-500 focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
+                  onChange={(e) => {
+                    setDepartment(e.target.value);
+                  }}
+                  value={department}
+                >
+                  <option>Select Department</option>
+                  {departments.map((department) => (
+                    <option key={department.id} value={department.name}>
+                      {department.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="sm:col-span-3">
+                <label className="mb-2 block text-sm font-medium text-gray-900">
+                  Employment Type
+                </label>
+                <select
+                  id="employmentType"
+                  className="focus:ring-primary-500 focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
+                  value={employmentType}
+                  onChange={(e) => setEmploymentType(Number(e.target.value))}
+                >
+                  <option>Select Type</option>
+                  <option value={1}>Full Time</option>
+                  <option value={2}>Part Time</option>
+                  <option value={3}>Contractor</option>
+                  <option value={4}>Internship</option>
+                </select>
+              </div>
+
+              <div className="sm:col-span-3">
+                <label className="mb-2 block text-sm font-medium text-gray-900">
+                  Location
+                </label>
+                <select
+                  id="location"
+                  className="focus:ring-primary-500 focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
+                  value={location}
+                  onChange={(e) => setLocation(Number(e.target.value))}
+                >
+                  <option>Select Location</option>
+                  <option value={1}>On Site</option>
+                  <option value={2}>Remote</option>
+                  <option value={3}>Hybrid</option>
+                </select>
+              </div>
+
+              <div className="sm:col-span-6">
+                <label className="mb-2 block text-sm font-medium text-gray-900">
+                  Title
+                </label>
+                <input
+                  type="text"
+                  name="title"
+                  id="title"
+                  className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
+                  placeholder="Title"
+                  value={title}
+                  onChange={(e) => {
+                    setTitle(e.target.value);
+                  }}
+                  required
+                  autoComplete="off"
+                />
+              </div>
+
+              <div className="sm:col-span-3">
+                <label className="mb-2 block text-sm font-medium text-gray-900">
+                  Starting At
+                </label>
+                <input
+                  type="text"
+                  name="compensation"
+                  id="compensation"
+                  className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
+                  placeholder="Amount"
+                  value={startingAt}
+                  onChange={(e) => {
+                    let value = e.target.value.replace(/[^\d.,$]/g, "");
+
+                    if (value === "$") {
+                      value = "";
+                    }
+
+                    if (value && !value.startsWith("$")) {
+                      value = "$" + value;
+                    }
+
+                    const numberParts = value.replace(/[$,]/g, "").split(".");
+                    if (numberParts[0]) {
+                      numberParts[0] = parseInt(
+                        numberParts[0],
+                        10,
+                      ).toLocaleString();
+                    }
+                    value = value.startsWith("$")
+                      ? "$" + numberParts.join(".")
+                      : numberParts.join(".");
+
+                    setStartingAt(value);
+                  }}
+                  required
+                  autoComplete="off"
+                />
+              </div>
+
+              <div className="sm:col-span-3">
+                <label className="mb-2 block text-sm font-medium text-gray-900">
+                  Salary/Hourly
+                </label>
+                <select
+                  id="compensationType"
+                  className="focus:ring-primary-500 focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
+                  value={compensationType}
+                  onChange={(e) => setCompensationType(Number(e.target.value))}
+                >
+                  <option>Select Type</option>
+                  <option value={1}>Salary</option>
+                  <option value={2}>Hourly</option>
+                </select>
+              </div>
+
+              <div className="sm:col-span-12">
+                <label className="mb-2 block text-sm font-medium text-gray-900">
+                  Description
+                </label>
+                <textarea
+                  id="description"
+                  rows={3}
+                  className="focus:ring-primary-500 focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
+                  placeholder="Write career description here"
+                  value={description}
+                  onChange={(e) => {
+                    setDescription(e.target.value);
+                  }}
+                ></textarea>
+              </div>
+
+              <div className="sm:col-span-12">
+                <label className="mb-2 block text-sm font-medium text-gray-900">
+                  Benefits
+                </label>
+                <BulletTextArea
+                  placeholder="Write career benefits here"
+                  value={benefits}
+                  onChange={(value: string) =>
+                    setBenefits(parseBulletsToJsonArray(value))
+                  }
+                />
+              </div>
+
+              <div className="sm:col-span-12">
+                <label className="mb-2 block text-sm font-medium text-gray-900">
+                  Responsibilities
+                </label>
+                <BulletTextArea
+                  placeholder="Write career benefits here"
+                  value={responsibilities}
+                  onChange={(value: string) =>
+                    setResponsibilities(parseBulletsToJsonArray(value))
+                  }
+                />
+              </div>
+
+              <div className="sm:col-span-12">
+                <label className="mb-2 block text-sm font-medium text-gray-900">
+                  Qualifications
+                </label>
+                <BulletTextArea
+                  placeholder="Write career benefits here"
+                  value={qualifications}
+                  onChange={(value: string) =>
+                    setQualifications(parseBulletsToJsonArray(value))
+                  }
+                />
+              </div>
+
+              <button
+                onClick={() => toggleCareerModal("")}
+                className="items-center gap-1 rounded-md bg-red-500 py-2.5 text-sm font-medium text-white transition-colors hover:bg-gray-200 hover:text-gray-800 sm:col-span-6"
+              >
+                Cancel
+              </button>
+
+              <button
+                type="submit"
+                className="items-center gap-1 rounded-md bg-blue-500 py-2.5 text-sm font-medium text-white transition-colors hover:bg-gray-200 hover:text-gray-800 sm:col-span-6"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        )}
+        {careerModalMode === "view" && (
           <>
-            <form onSubmit={handleSubmit}>
-              <div className="grid gap-4 sm:grid-cols-12">
+            <form className="max-h-[75vh] overflow-y-auto py-4">
+              <div className="grid gap-4 px-4 sm:grid-cols-12">
                 <div className="sm:col-span-3">
                   <label className="mb-2 block text-sm font-medium text-gray-900">
                     Company
                   </label>
-                  <select
+                  <div
                     id="company"
-                    className="focus:ring-primary-500 focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
-                    value={company}
-                    onChange={(e) => setCompany(Number(e.target.value))}
+                    className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                   >
-                    <option>Select Company</option>
-                    <option value={1}>Three M</option>
-                    <option value={2}>Ultra Grip</option>
-                  </select>
+                    {selectedCareer.company
+                      .split("-")
+                      .map(
+                        (word: string) =>
+                          word.charAt(0).toUpperCase() + word.slice(1),
+                      )
+                      .join(" ")}
+                  </div>
                 </div>
 
                 <div className="sm:col-span-3">
                   <label className="mb-2 block text-sm font-medium text-gray-900">
                     Department
                   </label>
-                  <select
+                  <div
                     id="department"
-                    className="focus:ring-primary-500 focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
-                    onChange={(e) => {
-                      setDepartment(e.target.value);
-                    }}
-                    value={department}
+                    className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                   >
-                    <option>Select Department</option>
-                    {departments.map((department) => (
-                      <option key={department.id} value={department.name}>
-                        {department.name}
-                      </option>
-                    ))}
-                  </select>
+                    {selectedCareer.department}
+                  </div>
                 </div>
 
                 <div className="sm:col-span-3">
                   <label className="mb-2 block text-sm font-medium text-gray-900">
                     Employment Type
                   </label>
-                  <select
+                  <div
                     id="employmentType"
-                    className="focus:ring-primary-500 focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
-                    value={employmentType}
-                    onChange={(e) => setEmploymentType(Number(e.target.value))}
+                    className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                   >
-                    <option>Select Type</option>
-                    <option value={1}>Full Time</option>
-                    <option value={2}>Part Time</option>
-                    <option value={3}>Contractor</option>
-                    <option value={4}>Internship</option>
-                  </select>
+                    {selectedCareer.employmentType
+                      .split("-")
+                      .map(
+                        (word: string) =>
+                          word.charAt(0).toUpperCase() + word.slice(1),
+                      )
+                      .join(" ")}
+                  </div>
                 </div>
 
                 <div className="sm:col-span-3">
                   <label className="mb-2 block text-sm font-medium text-gray-900">
                     Location
                   </label>
-                  <select
+                  <div
                     id="location"
-                    className="focus:ring-primary-500 focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
-                    value={location}
-                    onChange={(e) => setLocation(Number(e.target.value))}
+                    className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                   >
-                    <option>Select Location</option>
-                    <option value={1}>On Site</option>
-                    <option value={2}>Remote</option>
-                    <option value={3}>Hybrid</option>
-                  </select>
+                    {selectedCareer.location
+                      .split("-")
+                      .map(
+                        (word: string) =>
+                          word.charAt(0).toUpperCase() + word.slice(1),
+                      )
+                      .join(" ")}
+                  </div>
                 </div>
 
                 <div className="sm:col-span-6">
                   <label className="mb-2 block text-sm font-medium text-gray-900">
                     Title
                   </label>
-                  <input
-                    type="text"
-                    name="title"
+                  <div
                     id="title"
-                    className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
-                    placeholder="Title"
-                    value={title}
-                    onChange={(e) => {
-                      setTitle(e.target.value);
-                    }}
-                    required
-                    autoComplete="off"
-                  />
+                    className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
+                  >
+                    {selectedCareer.title}
+                  </div>
                 </div>
 
                 <div className="sm:col-span-3">
                   <label className="mb-2 block text-sm font-medium text-gray-900">
                     Starting At
                   </label>
-                  <input
-                    type="text"
-                    name="compensation"
-                    id="compensation"
-                    className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
-                    placeholder="Amount"
-                    value={startingAt}
-                    onChange={(e) => {
-                      let value = e.target.value.replace(/[^\d.,$]/g, "");
-
-                      if (value === "$") {
-                        value = "";
-                      }
-
-                      if (value && !value.startsWith("$")) {
-                        value = "$" + value;
-                      }
-
-                      const numberParts = value.replace(/[$,]/g, "").split(".");
-                      if (numberParts[0]) {
-                        numberParts[0] = parseInt(
-                          numberParts[0],
-                          10,
-                        ).toLocaleString();
-                      }
-                      value = value.startsWith("$")
-                        ? "$" + numberParts.join(".")
-                        : numberParts.join(".");
-
-                      setStartingAt(value);
-                    }}
-                    required
-                    autoComplete="off"
-                  />
+                  <div
+                    id="startingAt"
+                    className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
+                  >
+                    {selectedCareer.startingAt}
+                  </div>
                 </div>
 
                 <div className="sm:col-span-3">
                   <label className="mb-2 block text-sm font-medium text-gray-900">
-                    Salary/Hourly
+                    Compensation Type
                   </label>
-                  <select
+                  <div
                     id="compensationType"
-                    className="focus:ring-primary-500 focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
-                    value={compensationType}
-                    onChange={(e) =>
-                      setCompensationType(Number(e.target.value))
-                    }
+                    className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                   >
-                    <option>Select Type</option>
-                    <option value={1}>Salary</option>
-                    <option value={2}>Hourly</option>
-                  </select>
+                    {selectedCareer.compensationType
+                      .split("-")
+                      .map(
+                        (word: string) =>
+                          word.charAt(0).toUpperCase() + word.slice(1),
+                      )
+                      .join(" ")}
+                  </div>
                 </div>
 
                 <div className="sm:col-span-12">
                   <label className="mb-2 block text-sm font-medium text-gray-900">
                     Description
                   </label>
-                  <textarea
+                  <div
                     id="description"
-                    rows={3}
-                    className="focus:ring-primary-500 focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
-                    placeholder="Write career description here"
-                    value={description}
-                    onChange={(e) => {
-                      setDescription(e.target.value);
-                    }}
-                  ></textarea>
+                    className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
+                    style={{ minHeight: "3em" }}
+                  >
+                    {selectedCareer.description}
+                  </div>
                 </div>
 
                 <div className="sm:col-span-12">
                   <label className="mb-2 block text-sm font-medium text-gray-900">
                     Benefits
                   </label>
-                  <BulletTextArea
-                    placeholder="Write career benefits here"
-                    value={benefits}
-                    onChange={(value: string) =>
-                      setBenefits(parseBulletsToJsonArray(value))
-                    }
-                  />
+                  <div
+                    id="benefits"
+                    className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
+                    style={{ whiteSpace: "pre-line" }}
+                  >
+                    {selectedCareer.benefits &&
+                    selectedCareer.benefits.length > 0
+                      ? selectedCareer.benefits.map(
+                          (benefit: string, index: number) => (
+                            <div key={index}>• {benefit}</div>
+                          ),
+                        )
+                      : "No benefit information available"}
+                  </div>
                 </div>
 
                 <div className="sm:col-span-12">
                   <label className="mb-2 block text-sm font-medium text-gray-900">
-                    Responsibilities
+                    Requirements
                   </label>
-                  <BulletTextArea
-                    placeholder="Write career benefits here"
-                    value={responsibilities}
-                    onChange={(value: string) =>
-                      setResponsibilities(parseBulletsToJsonArray(value))
-                    }
-                  />
+                  <div
+                    id="requirements"
+                    className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
+                    style={{ whiteSpace: "pre-line" }}
+                  >
+                    {selectedCareer.responsibilities &&
+                    selectedCareer.responsibilities.length > 0
+                      ? selectedCareer.responsibilities.map(
+                          (responsibility: string, index: number) => (
+                            <div key={index}>• {responsibility}</div>
+                          ),
+                        )
+                      : "No responsibility information available"}
+                  </div>
                 </div>
 
                 <div className="sm:col-span-12">
                   <label className="mb-2 block text-sm font-medium text-gray-900">
                     Qualifications
                   </label>
-                  <BulletTextArea
-                    placeholder="Write career benefits here"
-                    value={qualifications}
-                    onChange={(value: string) =>
-                      setQualifications(parseBulletsToJsonArray(value))
-                    }
-                  />
+                  <div
+                    id="qualifications"
+                    className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
+                    style={{ whiteSpace: "pre-line" }}
+                  >
+                    {selectedCareer.qualifications &&
+                    selectedCareer.qualifications.length > 0
+                      ? selectedCareer.qualifications.map(
+                          (qualification: string, index: number) => (
+                            <div key={index}>• {qualification}</div>
+                          ),
+                        )
+                      : "No qualification information available"}
+                  </div>
                 </div>
 
-                <button
-                  onClick={() => toggleCareerModal("")}
-                  className="items-center gap-1 rounded-md bg-red-500 py-2.5 text-sm font-medium text-white transition-colors hover:bg-gray-200 hover:text-gray-800 sm:col-span-6"
-                >
-                  Cancel
-                </button>
-
-                <button
-                  type="submit"
-                  className="items-center gap-1 rounded-md bg-blue-500 py-2.5 text-sm font-medium text-white transition-colors hover:bg-gray-200 hover:text-gray-800 sm:col-span-6"
-                >
-                  Submit
-                </button>
+                <div className="col-span-12 flex items-center justify-between">
+                  <div>
+                    <div>
+                      Last updated on{" "}
+                      <span className="font-medium text-blue-500">
+                        {formatDate(selectedCareer.createdAt)}
+                      </span>{" "}
+                      by{" "}
+                      <span className="font-medium text-blue-500">
+                        {teamMemberData?.firstName} {teamMemberData?.lastName}
+                      </span>
+                    </div>
+                  </div>
+                  <div>
+                    <button className="flex gap-1 rounded border-2 border-blue-500 bg-white px-4 py-1.5 text-sm font-semibold capitalize text-blue-500 transition-colors hover:bg-blue-500 hover:text-white">
+                      Edit
+                    </button>
+                  </div>
+                </div>
               </div>
             </form>
           </>
         )}
-        {careerModalMode === "view" && <>{selectedCareer.title}</>}
       </div>
     </div>
   );

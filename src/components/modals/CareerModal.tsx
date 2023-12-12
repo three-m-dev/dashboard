@@ -4,11 +4,13 @@ import { BulletTextArea } from "..";
 type CareerModalProps = {
   toggleCareerModal: (mode: string) => void;
   careerModalMode: string;
+  selectedCareer: any | null;
 };
 
 const CareerModal = ({
   toggleCareerModal,
   careerModalMode,
+  selectedCareer,
 }: CareerModalProps) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -22,7 +24,12 @@ const CareerModal = ({
   const [startingAt, setStartingAt] = useState("");
   const [compensationType, setCompensationType] = useState<number>(0);
 
-  const departments = {};
+  const departments = [
+    {
+      id: 1,
+      name: "Management",
+    },
+  ];
 
   const parseBulletsToJsonArray = (bulletList: string): string => {
     return JSON.stringify(
@@ -97,11 +104,11 @@ const CareerModal = ({
                     value={department}
                   >
                     <option>Select Department</option>
-                    {/* {props.departments.map((department) => (
-                  <option key={department.id} value={department.name}>
-                    {department.name}
-                  </option>
-                ))} */}
+                    {departments.map((department) => (
+                      <option key={department.id} value={department.name}>
+                        {department.name}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
@@ -289,6 +296,7 @@ const CareerModal = ({
             </form>
           </>
         )}
+        {careerModalMode === "view" && <>{selectedCareer.title}</>}
       </div>
     </div>
   );

@@ -15,6 +15,8 @@ const Careers = () => {
   const [careerModalMode, setCareerModalMode] = useState("");
   const [applicantModalOpen, setApplicantModalOpen] = useState(false);
 
+  const [selectedCareer, setSelectedCareer] = useState(null);
+
   const mode = "create";
 
   const renderContent = () => {
@@ -32,8 +34,9 @@ const Careers = () => {
     console.log("Button Clicked");
   };
 
-  const toggleCareerModal = (mode: string = "view") => {
+  const toggleCareerModal = (mode: string = "view", careerData = null) => {
     setCareerModalMode(mode);
+    setSelectedCareer(careerData);
     setCareerModalOpen(!careerModalOpen);
   };
 
@@ -71,6 +74,7 @@ const Careers = () => {
         <CareerModal
           toggleCareerModal={toggleCareerModal}
           careerModalMode={careerModalMode}
+          selectedCareer={selectedCareer}
         />
       )}
       {applicantModalOpen && !careerModalOpen && (

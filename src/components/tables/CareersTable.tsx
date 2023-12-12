@@ -6,7 +6,7 @@ import { SortButton } from "..";
 import EllipsisIcon from "../../assets/icons/EllipsisIcon";
 
 type CareersTableProps = {
-  toggleCareerModal: (mode: string) => void;
+  toggleCareerModal: (mode: string, careerData?: any) => void;
 };
 
 const CareersTable = ({ toggleCareerModal }: CareersTableProps) => {
@@ -127,9 +127,7 @@ const CareersTable = ({ toggleCareerModal }: CareersTableProps) => {
               >
                 <td className="col-span-2 flex items-center px-4">
                   <button
-                    onClick={() => {
-                      toggleCareerModal("view");
-                    }}
+                    onClick={() => toggleCareerModal("view", career)}
                     className="hover:underline"
                   >
                     {career.title}

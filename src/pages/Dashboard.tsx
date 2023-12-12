@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Layout, PageHeader } from "../components";
+import { Calendar, Layout, PageHeader } from "../components";
 import Improvements from "../components/Improvements";
 
 const Dashboard = () => {
@@ -10,7 +10,7 @@ const Dashboard = () => {
       case "overview":
         return <div className="h-full w-full bg-red-400">Overview</div>;
       case "calendar":
-        return <div>Contacts</div>;
+        return <Calendar />;
       case "improvements":
         return <Improvements />;
       default:

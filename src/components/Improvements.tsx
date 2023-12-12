@@ -1,7 +1,7 @@
 const Improvements = () => {
   return (
-    <section className="py-8">
-      <div className="container mx-auto px-4">
+    <section>
+      <div className="mx-auto">
         <div className="-m-4 flex flex-wrap">
           <div className="w-full p-4 lg:w-1/3">
             <div className="mb-6 rounded border-t-4 border-indigo-500 bg-white px-6 pt-3 shadow">

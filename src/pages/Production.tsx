@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { Downtime, Layout, Output, PageHeader, Resources } from "../components";
+import {
+  Downtime,
+  DowntimeTable,
+  Layout,
+  Output,
+  PageHeader,
+  Resources,
+} from "../components";
 
 const Production = () => {
   const [activeTab, setActiveTab] = useState("overview");
@@ -18,7 +25,7 @@ const Production = () => {
           </>
         );
       case "downtime":
-        return <div>Downtime</div>;
+        return <DowntimeTable />;
       case "resources":
         return <Resources />;
       case "operators":

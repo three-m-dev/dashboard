@@ -14,7 +14,9 @@ export { default as SortButton } from "./reusable/SortButton";
 // Tables
 export { default as ApplicantsTable } from "./tables/ApplicantsTable";
 export { default as CareersTable } from "./tables/CareersTable";
+export { default as DowntimeTable } from "./tables/DowntimeTable";
 
+export { default as Calendar } from "./Calendar";
 export { default as Resources } from "./Resources";
 
 export { default as Downtime } from "./charts/Downtime";

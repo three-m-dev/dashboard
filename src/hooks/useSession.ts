@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import axios from "axios";
 import { AuthContext } from "../contexts/AuthContext";
 
-const URL = "http://localhost:8080/api/v1/organization/session";
+const URL = "http://localhost:8080/api/v1/users/session";
 
 export const useSession = () => {
   const { setIsAuthenticated, setLoading } = useContext(AuthContext) ?? {};

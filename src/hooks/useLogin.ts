@@ -2,7 +2,7 @@ import { useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../contexts/AuthContext";
 
-const URL = "http://localhost:8080/api/v1/organization/login";
+const URL = "http://localhost:8080/api/v1/users/login";
 
 export const useLogin = () => {
   const authContext = useContext(AuthContext);

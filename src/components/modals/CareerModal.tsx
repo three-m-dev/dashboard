@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { BulletTextArea } from "..";
-import useGetTeamMemberByUser from "../../hooks/useGetTeamMemberByUser";
-import { ICareer } from "../../shared/interfaces";
+import { IJob } from "../../shared/interfaces";
 import { useCreateCareer } from "../../hooks/useCreateCareer";
 
 type CareerModalProps = {
   toggleCareerModal: (mode: string) => void;
   careerModalMode: string;
-  selectedCareer: ICareer | null;
+  selectedCareer: IJob | null;
   triggerDataRefresh: () => void;
 };
 
@@ -31,8 +30,6 @@ const CareerModal = ({
   const [userId, setUserId] = useState("");
 
   const { createCareer, isLoading, error: createError } = useCreateCareer();
-
-  const { teamMemberData, error } = useGetTeamMemberByUser(userId);
 
   const departments = [
     {
@@ -376,7 +373,7 @@ const CareerModal = ({
                     id="department"
                     className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                   >
-                    {selectedCareer.department}
+                    {selectedCareer.departmentId}
                   </div>
                 </div>
 
@@ -388,7 +385,7 @@ const CareerModal = ({
                     id="employmentType"
                     className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                   >
-                    {selectedCareer.employmentType
+                    {selectedCareer.type
                       .split("-")
                       .map(
                         (word: string) =>
@@ -436,25 +433,19 @@ const CareerModal = ({
                     id="startingAt"
                     className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                   >
-                    {selectedCareer.startingAt}
+                    ${selectedCareer.wage || selectedCareer.salary}
                   </div>
                 </div>
 
                 <div className="sm:col-span-3">
                   <label className="mb-2 block text-sm font-medium text-gray-900">
-                    Compensation Type
+                    Pay Type
                   </label>
                   <div
-                    id="compensationType"
+                    id="startingAt"
                     className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                   >
-                    {selectedCareer.compensationType
-                      .split("-")
-                      .map(
-                        (word: string) =>
-                          word.charAt(0).toUpperCase() + word.slice(1),
-                      )
-                      .join(" ")}
+                    {selectedCareer.wage ? "Hourly" : "Salary"}
                   </div>
                 </div>
 
@@ -500,9 +491,9 @@ const CareerModal = ({
                     className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900"
                     style={{ whiteSpace: "pre-line" }}
                   >
-                    {selectedCareer.responsibilities &&
-                    selectedCareer.responsibilities.length > 0
-                      ? selectedCareer.responsibilities.map(
+                    {selectedCareer.requirements &&
+                    selectedCareer.requirements.length > 0
+                      ? selectedCareer.requirements.map(
                           (responsibility: string, index: number) => (
                             <div key={index}>• {responsibility}</div>
                           ),
@@ -540,7 +531,7 @@ const CareerModal = ({
                       </span>{" "}
                       by{" "}
                       <span className="font-medium text-blue-500">
-                        {teamMemberData?.firstName} {teamMemberData?.lastName}
+                        {selectedCareer.updatedBy || selectedCareer.createdBy}
                       </span>
                     </div>
                   </div>

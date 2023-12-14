@@ -18,6 +18,7 @@ export { default as DowntimeTable } from "./tables/DowntimeTable";
 
 export { default as Calendar } from "./Calendar";
 export { default as Resources } from "./Resources";
+export { default as BlogBuilder } from "./BlogBuilder";
 
 export { default as Downtime } from "./charts/Downtime";
 export { default as Output } from "./charts/Output";

@@ -46,27 +46,15 @@ const Production = () => {
     },
     {
       value: "downtime",
-      buttons: [
-        { label: "filter", onClick: handleClick },
-        { label: "report", onClick: handleClick },
-        { label: "export", onClick: handleClick },
-      ],
+      buttons: [{ label: "create new", onClick: handleClick }],
     },
     {
       value: "resources",
-      buttons: [
-        { label: "filter", onClick: handleClick },
-        { label: "create new", onClick: handleClick },
-        { label: "export", onClick: handleClick },
-      ],
+      buttons: [{ label: "create new", onClick: handleClick }],
     },
     {
       value: "operators",
-      buttons: [
-        { label: "filter", onClick: handleClick },
-        { label: "create new", onClick: handleClick },
-        { label: "export", onClick: handleClick },
-      ],
+      buttons: [{ label: "create new", onClick: handleClick }],
     },
   ];
 

@@ -14,8 +14,6 @@ const Calendar = () => {
   const today = now.getDate();
   const currentMonth = now.getMonth() + 1;
 
-  console.log("currentMonth", currentMonth);
-
   const getFirstDayOfMonth = (year: number, month: number) => {
     return new Date(year, month, 1);
   };
@@ -130,7 +128,7 @@ const Calendar = () => {
           </button>
         </div>
       </div>
-      <div className="grid grid-cols-7 divide-x divide-y divide-gray-100">
+      <div className="grid grid-cols-7 divide-x divide-y divide-gray-50">
         <p>Sunday</p>
         <p>Monday</p>
         <p>Tuesday</p>
@@ -145,31 +143,30 @@ const Calendar = () => {
             <div
               key={index}
               className={
-                `ease flex-grow cursor-pointer overflow-auto border-l border-t border-gray-100 p-1 transition duration-500 hover:bg-gray-200 ` +
+                `ease flex-grow cursor-pointer overflow-auto border-l border-t border-gray-100 p-1 transition duration-500 hover:border-blue-200 hover:bg-blue-200 ` +
                 (date.getMonth() === selectedMonth - 1
                   ? "bg-white"
-                  : "bg-gray-50")
+                  : "bg-gray-100")
               }
             >
               <button>
                 <div className="mx-auto flex h-full flex-col overflow-hidden p-2">
-                  <div className="top h-5 w-full">
+                  <div className="top min-w-2 h-5 w-full">
                     <span
-                      className={`p-2 ${
+                      className={`flex w-8 items-center justify-center rounded ${
                         date.getMonth() === selectedMonth - 1
                           ? "text-gray-600"
                           : "text-gray-400"
                       } ${
                         date.getDate() === today &&
-                        date.getMonth() === currentMonth
-                          ? "bg-red-500"
+                        date.getMonth() === currentMonth - 1
+                          ? "bg-blue-400 text-white"
                           : ""
                       }`}
                     >
                       {date.getDate()}
                     </span>
                   </div>
-                  <div className="bottom h-30 w-full flex-grow cursor-pointer py-1"></div>
                 </div>
               </button>
             </div>

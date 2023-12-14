@@ -1,9 +1,9 @@
-import { Layout } from "../components";
+import { BlogBuilder, Layout } from "../components";
 
 const Content = () => {
   return (
     <Layout>
-      <div></div>
+      <BlogBuilder />
     </Layout>
   );
 };

@@ -60,7 +60,7 @@ const ApplicationsTable = ({ toggleApplicantModal }: ApplicantsTableProps) => {
   return (
     <section>
       <div className="mb-4 overflow-x-auto rounded bg-white p-4 shadow">
-        <table className="w-full min-w-max table-auto">
+        <table className="w-full table-auto">
           <thead>
             <tr className="grid grid-cols-10 text-left text-sm text-gray-500">
               <th className="col-span-2 pb-2 pl-4 font-medium">

@@ -5,13 +5,17 @@ import Improvements from "../components/Improvements";
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("overview");
 
+  const [fullscreen, setFullscreen] = useState(false);
+
   const renderContent = () => {
     switch (activeTab) {
       case "overview":
         return (
           <div
             ref={fullscreenDivRef}
-            className="flex h-full w-full bg-gray-50 p-4"
+            className={
+              `flex h-full w-full bg-gray-50 ` + (fullscreen ? "p-4" : "")
+            }
           >
             <div className="flex-1 rounded border-2 border-blue-500"></div>
           </div>
@@ -38,10 +42,17 @@ const Dashboard = () => {
           `Error attempting to enable full-screen mode: ${err.message} (${err.name})`,
         );
       });
+      setFullscreen(true);
     } else {
       document.exitFullscreen();
     }
   };
+
+  document.addEventListener("fullscreenchange", () => {
+    if (!document.fullscreenElement) {
+      setFullscreen(false);
+    }
+  });
 
   const handleClick = () => {
     console.log("Button Clicked");

@@ -6,6 +6,26 @@ export interface Address {
   addressLine: string;
 }
 
+export interface IEmployee {
+  userId: string;
+  firstName: string;
+  lastName: string;
+  email?: string;
+  phone?: string;
+  addressId?: string;
+  birthDate?: string;
+  title: string;
+  departmentId: string;
+  directReportId: string;
+  type: string;
+  status: string;
+  startDate: string;
+  endDate?: string;
+  notes?: string;
+  createdBy: string;
+  updatedBy?: string;
+}
+
 export interface IJob {
   id: string;
   departmentId: string;
@@ -43,8 +63,8 @@ export interface IApplicant {
 export interface IApplication {
   jobId?: string;
   applicantId: string;
-  phoneScreenDate?: Date;
-  interviewDate?: Date;
+  phoneScreenDate?: string;
+  interviewDate?: string;
   status: string;
   notes?: string;
   ratings?: IRating[];

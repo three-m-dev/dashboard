@@ -3,6 +3,7 @@ export { default as Layout } from "./layout/Layout";
 
 // Modals
 export { default as CareerModal } from "./modals/CareerModal";
+export { default as BulletinModal } from "./modals/BulletinModal";
 
 // Reusable
 export { default as BulletTextArea } from "./reusable/BulletTextArea";
@@ -15,6 +16,7 @@ export { default as SortButton } from "./reusable/SortButton";
 export { default as ApplicantsTable } from "./tables/ApplicationsTable";
 export { default as CareersTable } from "./tables/CareersTable";
 export { default as DowntimeTable } from "./tables/DowntimeTable";
+export { default as EmployeesTable } from "./tables/EmployeesTable";
 
 export { default as Calendar } from "./Calendar";
 export { default as Resources } from "./Resources";

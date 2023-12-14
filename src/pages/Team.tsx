@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Layout, PageHeader } from "../components";
+import { EmployeesTable, Layout, PageHeader } from "../components";
 
 const Team = () => {
   const [activeTab, setActiveTab] = useState("team-members");
@@ -8,7 +8,7 @@ const Team = () => {
   const renderContent = () => {
     switch (activeTab) {
       case "team-members":
-        return <div>Team Members</div>;
+        return <EmployeesTable toggleEmployeeModal={toggleTeamMemberModal} />;
       default:
         return <div>Team Members</div>;
     }

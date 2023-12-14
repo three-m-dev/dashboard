@@ -2,14 +2,15 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { IApplication } from "../shared/interfaces";
 
-const URL = "http://localhost:8080/api/v1/careers/applications";
+const URL = "http://localhost:8080/api/v1/applications";
 
 const useGetApplications = () => {
   const [applicationData, setApplicationData] = useState<{
     applications: IApplication[];
-    totalApplications: number;
-    totalPages: number;
+    total: number;
+    pages: number;
   } | null>(null);
+
   const [filter, setFilter] = useState<string | undefined>(undefined);
   const [sort, setSort] = useState<string | undefined>(undefined);
   const [page, setPage] = useState<number | undefined>(undefined);
@@ -34,8 +35,8 @@ const useGetApplications = () => {
         const data = response.data;
         setApplicationData({
           applications: data.applications,
-          totalApplications: data.totalApplications,
-          totalPages: data.totalPages,
+          total: data.total,
+          pages: data.pages,
         });
       } catch (err) {
         if (axios.isAxiosError(err)) {

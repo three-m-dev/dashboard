@@ -60,7 +60,7 @@ const PageHeader = ({
             {activeTabData?.buttons?.map((button, index) => (
               <button
                 key={index}
-                className="flex gap-1 rounded border-2 border-blue-500 bg-white px-4 py-1.5 text-sm font-semibold capitalize text-blue-500 transition-colors hover:bg-blue-500 hover:text-white"
+                className="flex gap-1 rounded border-2 border-blue-500 bg-blue-500 px-4 py-1.5 text-sm font-semibold capitalize text-white transition-colors hover:bg-white hover:text-blue-500"
                 onClick={() => button.onClick(button.mode)}
               >
                 {button.icon && <span>{button.icon}</span>}

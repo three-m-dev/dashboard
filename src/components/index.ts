@@ -12,7 +12,7 @@ export { default as PageHeader } from "./reusable/PageHeader";
 export { default as SortButton } from "./reusable/SortButton";
 
 // Tables
-export { default as ApplicantsTable } from "./tables/ApplicantsTable";
+export { default as ApplicantsTable } from "./tables/ApplicationsTable";
 export { default as CareersTable } from "./tables/CareersTable";
 export { default as DowntimeTable } from "./tables/DowntimeTable";
 

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import useGetCareers from "../../hooks/useGetCareers";
 import RightArrowIcon from "../../assets/icons/RightArrowIcon";
 import LeftArrowIcon from "../../assets/icons/LeftArrowIcon";
 import { SortButton } from "..";
 import EllipsisIcon from "../../assets/icons/EllipsisIcon";
+import useGetJobs from "../../hooks/useGetJobs";
 
 type CareersTableProps = {
   toggleCareerModal: (mode: string, careerData?: any) => void;
@@ -19,8 +19,7 @@ const CareersTable = ({
   const [localPage, setLocalPage] = useState<number>(1);
   const [localSort, setLocalSort] = useState<string>("title,ASC");
 
-  const { careerData, setPage, setPageSize, setSort, refreshCareers } =
-    useGetCareers();
+  const { jobData, setPage, setPageSize, setSort, refreshJobs } = useGetJobs();
 
   const toggleActionDropdown = () => {
     setActionDropdown(!actionDropdown);
@@ -46,6 +45,19 @@ const CareersTable = ({
       .join(" ");
   };
 
+  const getStatusClass = (status: string) => {
+    switch (status) {
+      case "open":
+        return "bg-green-200 text-green-600";
+      case "closed":
+        return "bg-red-200 text-red-600";
+      case "archived":
+        return "bg-gray-200 text-gray-600";
+      default:
+        return "bg-gray-200 text-gray-600";
+    }
+  };
+
   useEffect(() => {
     setPage(localPage);
     setPageSize(initialPageSize);
@@ -53,72 +65,67 @@ const CareersTable = ({
   }, [localPage, localSort, setPage, setPageSize, setSort]);
 
   useEffect(() => {
-    refreshCareers();
+    refreshJobs();
   }, [refreshData]);
 
   return (
     <section>
       <div className="mb-4 overflow-x-auto rounded bg-white p-4 shadow">
-        <table className="w-full min-w-max table-auto">
+        <table className="w-full table-auto">
           <thead>
             <tr className="grid grid-cols-8 text-left text-sm text-gray-500">
               <th className="col-span-2 pb-2 pl-4 font-medium">
                 <button
                   onClick={() => updateSort("title")}
-                  className="flex items-center gap-2"
+                  className={
+                    (localSort === "title,DESC" ? "text-red-500" : "") +
+                    (localSort === "title,ASC" ? "text-blue-500" : "")
+                  }
                 >
-                  <SortButton
-                    isSorted={localSort.startsWith("title")}
-                    isDesc={localSort === "title,DESC"}
-                  />
                   Title
                 </button>
               </th>
               <th className="flex justify-center pb-2 font-medium">
                 <button
                   onClick={() => updateSort("company")}
-                  className="flex items-center gap-2"
+                  className={
+                    (localSort === "company,DESC" ? "text-red-500" : "") +
+                    (localSort === "company,ASC" ? "text-blue-500" : "")
+                  }
                 >
-                  <SortButton
-                    isSorted={localSort.startsWith("company")}
-                    isDesc={localSort === "company,DESC"}
-                  />
                   Company
                 </button>
               </th>
               <th className="flex justify-center pb-2 font-medium">
                 <button
-                  onClick={() => updateSort("department")}
-                  className="flex items-center gap-2"
+                  onClick={() => updateSort("departmentId")}
+                  className={
+                    (localSort === "departmentId,DESC" ? "text-red-500" : "") +
+                    (localSort === "departmentId,ASC" ? "text-blue-500" : "")
+                  }
                 >
-                  <SortButton
-                    isSorted={localSort.startsWith("department")}
-                    isDesc={localSort === "department,DESC"}
-                  />
                   Department
                 </button>
               </th>
               <th className="flex justify-center pb-2 font-medium">
                 <button
                   onClick={() => updateSort("location")}
-                  className="flex items-center gap-2"
+                  className={
+                    (localSort === "location,DESC" ? "text-red-500" : "") +
+                    (localSort === "location,ASC" ? "text-blue-500" : "")
+                  }
                 >
-                  <SortButton
-                    isSorted={localSort.startsWith("location")}
-                    isDesc={localSort === "location,DESC"}
-                  />
                   Location
                 </button>
               </th>
               <th className="flex justify-center pb-2 font-medium">
                 <button
-                  onClick={() => updateSort("employmentType")}
-                  className="flex items-center gap-2"
+                  onClick={() => updateSort("type")}
+                  className={
+                    (localSort === "type,DESC" ? "text-red-500" : "") +
+                    (localSort === "type,ASC" ? "text-blue-500" : "")
+                  }
                 >
-                  <SortButton
-                    isSorted={localSort.startsWith("employmentType")}
-                    isDesc={localSort === "employmentType,DESC"}
-                  />
                   Type
                 </button>
               </th>
@@ -127,36 +134,40 @@ const CareersTable = ({
             </tr>
           </thead>
           <tbody>
-            {careerData?.careers.map((career, index) => (
+            {jobData?.jobs.map((job, index) => (
               <tr
                 key={index}
-                className={`grid grid-cols-8 rounded py-2.5 text-sm capitalize  ${
+                className={`grid grid-cols-8 rounded py-2 text-sm capitalize  ${
                   index % 2 === 0 ? "bg-gray-100" : "bg-white"
                 }`}
               >
                 <td className="col-span-2 flex items-center px-4">
                   <button
-                    onClick={() => toggleCareerModal("view", career)}
+                    onClick={() => toggleCareerModal("view", job)}
                     className="hover:underline"
                   >
-                    {career.title}
+                    {job.title}
                   </button>
                 </td>
                 <td className="flex items-center justify-center">
-                  {formatKebab(career.company)}
+                  {formatKebab(job.company)}
                 </td>
                 <td className="flex items-center justify-center">
-                  {career.department}
+                  {job.departmentId}
                 </td>
                 <td className="flex items-center justify-center">
-                  {formatKebab(career.location)}
+                  {formatKebab(job.location)}
                 </td>
                 <td className="flex items-center justify-center">
-                  {formatKebab(career.employmentType)}
+                  {formatKebab(job.type)}
                 </td>
                 <td className="flex items-center justify-center">
-                  <span className="rounded bg-green-400 px-2 py-1 text-green-50">
-                    {career.status}
+                  <span
+                    className={
+                      `rounded px-2 py-1 text-xs ` + getStatusClass(job.status)
+                    }
+                  >
+                    {job.status}
                   </span>
                 </td>
                 <td className="flex items-center justify-center">
@@ -189,7 +200,7 @@ const CareersTable = ({
               </button>
             </div>
 
-            {[...Array(careerData?.totalPages).keys()].map((index) => (
+            {[...Array(jobData?.pages).keys()].map((index) => (
               <div key={index} className="w-auto p-0.5">
                 <button
                   className={`flex h-9 w-9 items-center justify-center rounded border-2 ${
@@ -207,12 +218,12 @@ const CareersTable = ({
             <div className="w-auto p-0.5">
               <button
                 className={`flex h-9 w-9 items-center justify-center rounded-sm border-2 ${
-                  localPage === careerData?.totalPages
+                  localPage === jobData?.pages
                     ? "text-gray-400"
                     : "hover:border-neutral-300"
                 }`}
                 onClick={() => setLocalPage(localPage + 1)}
-                disabled={localPage === careerData?.totalPages}
+                disabled={localPage === jobData?.pages}
               >
                 <RightArrowIcon />
               </button>
@@ -221,7 +232,7 @@ const CareersTable = ({
         </div>
         <div className="w-auto p-2">
           <p className="text text-neutral-400">
-            Showing page {localPage} of {careerData?.totalPages}
+            Showing page {localPage} of {jobData?.pages}
           </p>
         </div>
       </div>

@@ -128,7 +128,7 @@ const ApplicationsTable = ({ toggleApplicantModal }: ApplicantsTableProps) => {
                   {convertToReadableDate(application.createdAt)}
                 </td>
                 <td className="col-span-2 flex items-center justify-center">
-                  {application.career.title}
+                  {application.jobId}
                 </td>
                 <td className="col-span-2 flex items-center justify-center">
                   <span className="rounded bg-green-400 px-2 py-1 text-green-50">
@@ -165,7 +165,7 @@ const ApplicationsTable = ({ toggleApplicantModal }: ApplicantsTableProps) => {
               </button>
             </div>
 
-            {[...Array(applicationData?.totalPages).keys()].map((index) => (
+            {[...Array(applicationData?.pages).keys()].map((index) => (
               <div key={index} className="w-auto p-0.5">
                 <button
                   className={`flex h-9 w-9 items-center justify-center rounded border-2 ${
@@ -183,12 +183,12 @@ const ApplicationsTable = ({ toggleApplicantModal }: ApplicantsTableProps) => {
             <div className="w-auto p-0.5">
               <button
                 className={`flex h-9 w-9 items-center justify-center rounded-sm border-2 ${
-                  localPage === applicationData?.totalPages
+                  localPage === applicationData?.pages
                     ? "text-gray-400"
                     : "hover:border-neutral-300"
                 }`}
                 onClick={() => setLocalPage(localPage + 1)}
-                disabled={localPage === applicationData?.totalPages}
+                disabled={localPage === applicationData?.pages}
               >
                 <RightArrowIcon />
               </button>
@@ -197,7 +197,7 @@ const ApplicationsTable = ({ toggleApplicantModal }: ApplicantsTableProps) => {
         </div>
         <div className="w-auto p-2">
           <p className="text text-neutral-400">
-            Showing page {localPage} of {applicationData?.totalPages}
+            Showing page {localPage} of {applicationData?.pages}
           </p>
         </div>
       </div>

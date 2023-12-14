@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { ICareer } from "../shared/interfaces";
+import { IJob } from "../shared/interfaces";
 
-const URL = "http://localhost:8080/api/v1/careers";
+const URL = "http://localhost:8080/api/v1/jobs";
 
-const useGetCareers = () => {
-  const [careerData, setCareerData] = useState<{
-    careers: ICareer[];
-    totalCareers: number;
-    totalPages: number;
+const useGetJobs = () => {
+  const [jobData, setJobData] = useState<{
+    jobs: IJob[];
+    total: number;
+    pages: number;
   } | null>(null);
+
   const [filter, setFilter] = useState<string | undefined>(undefined);
   const [sort, setSort] = useState<string | undefined>(undefined);
   const [page, setPage] = useState<number | undefined>(undefined);
@@ -19,7 +20,7 @@ const useGetCareers = () => {
   const [refreshToggle, setRefreshToggle] = useState(false);
 
   useEffect(() => {
-    const getCareers = async () => {
+    const getJobs = async () => {
       try {
         const response = await axios.get(URL, {
           params: {
@@ -33,10 +34,10 @@ const useGetCareers = () => {
         });
 
         const data = response.data;
-        setCareerData({
-          careers: data.careers,
-          totalCareers: data.totalCareers,
-          totalPages: data.totalPages,
+        setJobData({
+          jobs: data.jobs,
+          total: data.total,
+          pages: data.pages,
         });
       } catch (err) {
         if (axios.isAxiosError(err)) {
@@ -48,24 +49,24 @@ const useGetCareers = () => {
     };
 
     if (page !== undefined && pageSize !== undefined) {
-      getCareers();
+      getJobs();
     }
   }, [filter, sort, page, pageSize, fields, refreshToggle]);
 
-  const refreshCareers = () => {
+  const refreshJobs = () => {
     setRefreshToggle((prev) => !prev);
   };
 
   return {
-    careerData,
+    jobData,
     setFilter,
     setSort,
     setPage,
     setPageSize,
     setFields,
     error,
-    refreshCareers,
+    refreshJobs,
   };
 };
 
-export default useGetCareers;
+export default useGetJobs;

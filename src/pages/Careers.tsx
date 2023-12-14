@@ -71,14 +71,12 @@ const Careers = () => {
     {
       value: "openings",
       buttons: [
-        { label: "filter", onClick: handleClick },
         { label: "create new", onClick: () => toggleCareerModal("create") },
       ],
     },
     {
       value: "applicants",
       buttons: [
-        { label: "filter", onClick: handleClick },
         { label: "create new", onClick: () => toggleApplicantModal("create") },
       ],
     },

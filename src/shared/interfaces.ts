@@ -6,82 +6,55 @@ export interface Address {
   addressLine: string;
 }
 
-export interface ITeamMember {
+export interface IJob {
   id: string;
-  userId: string;
-  firstName: string;
-  middleInitial: string;
-  lastName: string;
-  email: string;
-  phoneNumber: string;
-  address: Address;
-  dateOfBirth: string | null;
+  departmentId: string;
   company: string;
-  department: string;
-  role: string;
-  directReport: string | null;
-  status: string;
-  salary: number | null;
-  notes: string | null;
-  createdBy: string;
-  updatedBy: string;
-  hiredAt: string;
-  terminatedAt: string | null;
-  resignedAt: string | null;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface IDepartment {
-  id: string;
-  name: string;
-  count: number;
-}
-
-export interface ICareer {
-  id: string;
   title: string;
   description: string;
-  company: string;
   location: string;
-  department: string;
-  employmentType: string;
-  responsibilities: string[];
-  qualifications: string[];
-  startingAt: string;
-  compensationType: string;
-  benefits: string[];
+  type: string;
   status: string;
-  applicantCount: number;
+  benefits?: string[];
+  requirements?: string[];
+  qualifications?: string[];
+  schedule?: string[];
+  salary?: number;
+  wage?: number;
+  positionsOpen: number;
   createdBy: string;
-  updatedBy: string;
+  updatedBy?: string;
+  closingAt?: string;
   createdAt: string;
   updatedAt: string;
-}
-
-export interface IAnswers {
-  question: string;
-  answer: string;
 }
 
 export interface IApplicant {
   firstName: string;
   lastName: string;
   email: string;
-  phoneNumber: string;
-  resumeRef: string;
-  answers: IAnswers[];
+  phone: string;
+  resumeRef?: string;
+  resumeLink?: string;
+  answers?: string[];
+  additionalInfo?: string;
 }
 
 export interface IApplication {
-  id: string;
-  careerId: string;
-  career: ICareer;
+  jobId?: string;
+  applicantId: string;
+  phoneScreenDate?: Date;
+  interviewDate?: Date;
   status: string;
-  source: string;
+  notes?: string;
+  ratings?: IRating[];
   applicant: IApplicant;
-  submittedAt: string;
-  processedAt: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface IRating {
+  value: number;
+  notes?: string;
+  createdBy: string;
 }

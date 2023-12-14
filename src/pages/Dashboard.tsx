@@ -8,7 +8,14 @@ const Dashboard = () => {
   const renderContent = () => {
     switch (activeTab) {
       case "overview":
-        return <div className="h-full w-full bg-red-400">Overview</div>;
+        return (
+          <div
+            ref={fullscreenDivRef}
+            className="flex h-full w-full bg-gray-50 p-4"
+          >
+            <div className="flex-1 rounded border-2 border-blue-500"></div>
+          </div>
+        );
       case "calendar":
         return <Calendar />;
       case "improvements":

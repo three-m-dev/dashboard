@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {
   Downtime,
+  DowntimeModal,
   DowntimeTable,
   Layout,
   Output,
@@ -39,6 +40,10 @@ const Production = () => {
     console.log("Button Clicked");
   };
 
+  const toggleDownTimeModal = () => {
+    setDowntimeModalOpen(!downtimeModalOpen);
+  };
+
   const tabs = [
     {
       value: "overview",
@@ -46,7 +51,7 @@ const Production = () => {
     },
     {
       value: "downtime",
-      buttons: [{ label: "create new", onClick: handleClick }],
+      buttons: [{ label: "create new", onClick: toggleDownTimeModal }],
     },
     {
       value: "resources",
@@ -67,6 +72,10 @@ const Production = () => {
         setActiveTab={setActiveTab}
       />
       {renderContent()}
+
+      {downtimeModalOpen && (
+        <DowntimeModal toggleDowntimeModal={toggleDownTimeModal} />
+      )}
     </Layout>
   );
 };

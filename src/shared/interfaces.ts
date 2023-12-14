@@ -6,17 +6,27 @@ export interface Address {
   addressLine: string;
 }
 
+export interface IDepartment {
+  id: string;
+  company: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface IEmployee {
   userId: string;
+  departmentId: string;
+  directReportId: string;
   firstName: string;
   lastName: string;
   email?: string;
   phone?: string;
   addressId?: string;
   birthDate?: string;
+  company: string;
+  department: IDepartment;
   title: string;
-  departmentId: string;
-  directReportId: string;
   type: string;
   status: string;
   startDate: string;

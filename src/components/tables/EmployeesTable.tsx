@@ -35,15 +35,20 @@ const EmployeesTable = ({ toggleEmployeeModal }: EmployeesTableProps) => {
 
   const getStatusClass = (status: string) => {
     switch (status) {
-      case "open":
+      case "active":
         return "bg-green-200 text-green-600";
-      case "closed":
+      case "inactive":
         return "bg-red-200 text-red-600";
-      case "archived":
-        return "bg-gray-200 text-gray-600";
       default:
         return "bg-gray-200 text-gray-600";
     }
+  };
+
+  const formatKebab = (value: string) => {
+    return value
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
   };
 
   useEffect(() => {
@@ -61,7 +66,7 @@ const EmployeesTable = ({ toggleEmployeeModal }: EmployeesTableProps) => {
       <div className="mb-4 overflow-x-auto rounded bg-white p-4 shadow">
         <table className="w-full table-auto">
           <thead>
-            <tr className="grid grid-cols-8 text-left text-sm text-gray-500">
+            <tr className="grid grid-cols-7 text-left text-sm text-gray-500">
               <th className="col-span-2 pb-2 pl-4 font-medium">
                 <button
                   onClick={() => updateSort("firstName")}
@@ -84,40 +89,41 @@ const EmployeesTable = ({ toggleEmployeeModal }: EmployeesTableProps) => {
                   Title
                 </button>
               </th>
-              {/* <th className="flex justify-center pb-2 font-medium">
-                <button
-                  onClick={() => updateSort("email")}
-                  className={
-                    (localSort === "email,DESC" ? "text-red-500" : "") +
-                    (localSort === "email,ASC" ? "text-blue-500" : "")
-                  }
-                >
-                  Email
-                </button>
-              </th> */}
               <th className="flex justify-center pb-2 font-medium">
                 <button
-                  onClick={() => updateSort("location")}
+                  onClick={() => updateSort("company")}
                   className={
-                    (localSort === "location,DESC" ? "text-red-500" : "") +
-                    (localSort === "location,ASC" ? "text-blue-500" : "")
+                    (localSort === "company,DESC" ? "text-red-500" : "") +
+                    (localSort === "company,ASC" ? "text-blue-500" : "")
                   }
                 >
-                  Location
+                  Company
                 </button>
               </th>
               <th className="flex justify-center pb-2 font-medium">
                 <button
-                  onClick={() => updateSort("type")}
+                  onClick={() => updateSort("department.name")}
                   className={
-                    (localSort === "type,DESC" ? "text-red-500" : "") +
-                    (localSort === "type,ASC" ? "text-blue-500" : "")
+                    (localSort === "department.name,DESC"
+                      ? "text-red-500"
+                      : "") +
+                    (localSort === "department.name,ASC" ? "text-blue-500" : "")
                   }
                 >
-                  Type
+                  Department
                 </button>
               </th>
-              <th className="flex justify-center pb-2 font-medium">Status</th>
+              <th className="flex justify-center pb-2 font-medium">
+                <button
+                  onClick={() => updateSort("status")}
+                  className={
+                    (localSort === "status,DESC" ? "text-red-500" : "") +
+                    (localSort === "status,ASC" ? "text-blue-500" : "")
+                  }
+                >
+                  Status
+                </button>
+              </th>
               <th className="flex justify-center pb-2 font-medium">Actions</th>
             </tr>
           </thead>
@@ -125,7 +131,7 @@ const EmployeesTable = ({ toggleEmployeeModal }: EmployeesTableProps) => {
             {employeeData?.employees.map((employee, index) => (
               <tr
                 key={index}
-                className={`grid grid-cols-8 rounded py-2 text-sm  ${
+                className={`grid grid-cols-7 rounded py-2 text-sm  ${
                   index % 2 === 0 ? "bg-gray-100" : "bg-white"
                 }`}
               >
@@ -140,15 +146,12 @@ const EmployeesTable = ({ toggleEmployeeModal }: EmployeesTableProps) => {
                 <td className="flex items-center justify-center">
                   {employee.title}
                 </td>
-                {/* <td className="flex w-max items-center justify-center">
-                  {employee.email}
-                </td> */}
-                {/* <td className="flex items-center justify-center">
-                  {formatKebab(job.location)}
+                <td className="flex items-center justify-center">
+                  {formatKebab(employee.company)}
                 </td>
                 <td className="flex items-center justify-center">
-                  {formatKebab(job.type)}
-                </td> */}
+                  {formatKebab(employee.department.name)}
+                </td>
                 <td className="flex items-center justify-center">
                   <span
                     className={

@@ -5,19 +5,16 @@ import {
   Layout,
   PageHeader,
 } from "../components";
-import CareerModal from "../components/modals/CareerModal";
-import ApplicantModal from "../components/modals/ApplicantModal";
 
 const Careers = () => {
   const [activeTab, setActiveTab] = useState("openings");
 
-  const [careerModalOpen, setCareerModalOpen] = useState(false);
-  const [careerModalMode, setCareerModalMode] = useState("");
+  const [jobModalOpen, setJobModalOpen] = useState(false);
+  const [jobModalMode, setJobModalMode] = useState("");
+  const [selectedJob, setSelectedJob] = useState(null);
 
   const [applicantModalOpen, setApplicantModalOpen] = useState(false);
   const [applicantModalMode, setApplicantModelMode] = useState("");
-
-  const [selectedCareer, setSelectedCareer] = useState(null);
   const [selectedApplicant, setSelectedApplicant] = useState(null);
 
   const [refreshData, setRefreshData] = useState(false);
@@ -32,7 +29,7 @@ const Careers = () => {
       case "openings":
         return (
           <CareersTable
-            toggleCareerModal={toggleCareerModal}
+            toggleCareerModal={toggleJobModal}
             refreshData={refreshData} // Pass the refreshData state
           />
         );
@@ -41,7 +38,7 @@ const Careers = () => {
       default:
         return (
           <CareersTable
-            toggleCareerModal={toggleCareerModal}
+            toggleCareerModal={toggleJobModal}
             refreshData={refreshData} // Pass the refreshData state
           />
         );
@@ -52,10 +49,10 @@ const Careers = () => {
     console.log("Button Clicked");
   };
 
-  const toggleCareerModal = (mode: string = "view", careerData = null) => {
-    setCareerModalMode(mode);
-    setSelectedCareer(careerData);
-    setCareerModalOpen(!careerModalOpen);
+  const toggleJobModal = (mode: string = "view", jobData = null) => {
+    setJobModalMode(mode);
+    setSelectedJob(jobData);
+    setJobModalOpen(!jobModalOpen);
   };
 
   const toggleApplicantModal = (
@@ -71,7 +68,7 @@ const Careers = () => {
     {
       value: "openings",
       buttons: [
-        { label: "create new", onClick: () => toggleCareerModal("create") },
+        { label: "create new", onClick: () => toggleJobModal("create") },
       ],
     },
     {
@@ -91,21 +88,8 @@ const Careers = () => {
         setActiveTab={setActiveTab}
       />
       {renderContent()}
-      {careerModalOpen && !applicantModalOpen && (
-        <CareerModal
-          toggleCareerModal={toggleCareerModal}
-          careerModalMode={careerModalMode}
-          selectedCareer={selectedCareer}
-          triggerDataRefresh={triggerDataRefresh}
-        />
-      )}
-      {applicantModalOpen && !careerModalOpen && (
-        <ApplicantModal
-          toggleApplicantModal={toggleApplicantModal}
-          applicantModalMode={applicantModalMode}
-          selectedApplicant={selectedApplicant}
-        />
-      )}
+      {jobModalOpen && !applicantModalOpen && <></>}
+      {applicantModalOpen && !jobModalOpen && <></>}
     </Layout>
   );
 };

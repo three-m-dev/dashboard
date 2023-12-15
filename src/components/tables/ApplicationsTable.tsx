@@ -48,6 +48,17 @@ const ApplicationsTable = ({ toggleApplicantModal }: ApplicantsTableProps) => {
       .join(" ");
   };
 
+  const getStatusClass = (status: string) => {
+    switch (status) {
+      case "new":
+        return "bg-green-200 text-green-600";
+      case "archived":
+        return "bg-gray-200 text-gray-600";
+      default:
+        return "bg-gray-200 text-gray-600";
+    }
+  };
+
   const convertToReadableDate = (dateString: string): string => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
@@ -131,7 +142,12 @@ const ApplicationsTable = ({ toggleApplicantModal }: ApplicantsTableProps) => {
                   {application.jobId}
                 </td>
                 <td className="col-span-2 flex items-center justify-center">
-                  <span className="rounded bg-green-400 px-2 py-1 text-green-50">
+                  <span
+                    className={
+                      `rounded px-2 py-1 text-xs ` +
+                      getStatusClass(application.status)
+                    }
+                  >
                     {application.status}
                   </span>
                 </td>

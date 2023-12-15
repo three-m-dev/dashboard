@@ -98,7 +98,7 @@ const Navbar = (props: NavbarProps) => {
             <button className="flex items-center">
               <div className="mr-3">
                 <p className="text-sm">Jacob Reppuhn</p>
-                <p className="text-sm text-gray-500">Developer</p>
+                <p className="text-sm text-gray-500">Software Engineer</p>
               </div>
               <div className="mr-2">
                 <img

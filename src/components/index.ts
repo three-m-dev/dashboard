@@ -1,12 +1,6 @@
 // Layout
 export { default as Layout } from "./layout/Layout";
 
-// Modals
-export { default as ApplicantModal } from "./modals/ApplicantModal";
-export { default as DowntimeModal } from "./modals/DowntimeModal";
-export { default as CareerModal } from "./modals/CareerModal";
-export { default as BulletinModal } from "./modals/BulletinModal";
-
 // Reusable
 export { default as BulletTextArea } from "./reusable/BulletTextArea";
 export { default as Button } from "./reusable/Button";

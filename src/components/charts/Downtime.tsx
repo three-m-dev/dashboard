@@ -28,11 +28,11 @@ const Downtime = () => {
     <section className="py-6">
       <div className="mx-auto">
         <div className="rounded bg-white py-4">
-          <div className="border-b border-blue-50 px-6 pb-6">
-            <h3 className="text-xl font-bold">Downtime</h3>
-            <p className="text-sm text-gray-500">
+          <div className="flex justify-between border-b border-blue-50 px-4 pb-4">
+            <h3 className="text-xl font-bold">Operator Downtime</h3>
+            {/* <p className="text-sm text-gray-500">
               The percentage of downtime per reason
-            </p>
+            </p> */}
           </div>
           {sortedDowntimes.map((downtime, index) => (
             <div key={index} className="border-b border-blue-50 p-6">

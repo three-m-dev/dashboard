@@ -25,10 +25,7 @@ const Team = () => {
   const tabs = [
     {
       value: "team-members",
-      buttons: [
-        { label: "filter", onClick: handleClick },
-        { label: "create new", onClick: toggleTeamMemberModal },
-      ],
+      buttons: [{ label: "create new", onClick: toggleTeamMemberModal }],
     },
   ];
 

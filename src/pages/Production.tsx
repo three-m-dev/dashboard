@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {
   Downtime,
-  DowntimeModal,
   DowntimeTable,
   Layout,
   Output,
@@ -73,9 +72,7 @@ const Production = () => {
       />
       {renderContent()}
 
-      {downtimeModalOpen && (
-        <DowntimeModal toggleDowntimeModal={toggleDownTimeModal} />
-      )}
+      {downtimeModalOpen && <></>}
     </Layout>
   );
 };

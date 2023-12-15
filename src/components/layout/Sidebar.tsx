@@ -16,6 +16,7 @@ const Sidebar = (props: Props) => {
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
 
   const toggleLogoutModal = () => {
+    console.log("wtf");
     setLogoutModalOpen(!logoutModalOpen);
   };
 
@@ -144,7 +145,7 @@ const Sidebar = (props: Props) => {
           <div className="mx-auto lg:ml-64"></div>
         </div>
       )}
-      {logoutModalOpen && <LogoutModal toggleLogoutModal={toggleLogoutModal} />}
+      {logoutModalOpen && <LogoutModal onClose={() => toggleLogoutModal} />}
     </>
   );
 };

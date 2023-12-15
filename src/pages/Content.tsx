@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BlogBuilder, BulletinModal, Layout, PageHeader } from "../components";
+import { BlogBuilder, Layout, PageHeader } from "../components";
 import ContentCard from "../components/reusable/ContentCard";
 
 const Content = () => {
@@ -50,9 +50,7 @@ const Content = () => {
         setActiveTab={setActiveTab}
       />
       {renderContent()}
-      {bulletinModalOpen && (
-        <BulletinModal toggleBulletinModal={toggleBulletinModal} />
-      )}
+      {bulletinModalOpen && <></>}
     </Layout>
   );
 };

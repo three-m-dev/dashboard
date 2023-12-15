@@ -66,7 +66,7 @@ const App = () => {
         }
       />
       <Route
-        path="/careers"
+        path="/jobs"
         element={
           <ProtectedRoute>
             <Careers />

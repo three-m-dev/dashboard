@@ -60,12 +60,7 @@ const Sidebar = (props: Props) => {
           <nav className="bg-gray-800 px-6 py-6 lg:hidden">
             <div className="flex items-center justify-between">
               <a className="text-2xl font-semibold text-white" href="#">
-                <img
-                  className="h-10"
-                  src="artemis-assets/logos/artemis-logo.svg"
-                  alt=""
-                  width="auto"
-                />
+                
               </a>
               <button className="navbar-burger flex items-center rounded focus:outline-none">
                 <svg
@@ -94,8 +89,8 @@ const Sidebar = (props: Props) => {
                     Main
                   </h3>
                   <ul className="text-sm font-medium">
-                    {links.map((link) => (
-                      <li>
+                    {links.map((link, index) => (
+                      <li key={index}>
                         <Link
                           className={
                             `flex items-center rounded py-3 pl-3 pr-2 text-gray-50 hover:bg-gray-900 ` +

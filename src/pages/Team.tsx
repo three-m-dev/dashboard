@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { EmployeesTable, Layout, PageHeader } from "../components";
+import { Tab } from "../shared/types";
 
 const Team = () => {
   const [activeTab, setActiveTab] = useState("team-members");
@@ -14,18 +15,25 @@ const Team = () => {
     }
   };
 
-  const handleClick = () => {
-    console.log("Button Clicked");
-  };
-
   const toggleTeamMemberModal = () => {
     setTeamMemberModalOpen(!teamMemberModalOpen);
   };
 
-  const tabs = [
+  const tabs: Tab[] = [
     {
       value: "team-members",
-      buttons: [{ label: "create new", onClick: toggleTeamMemberModal }],
+      buttons: [
+        {
+          text: "New Team Member",
+          type: "button",
+          onClick: toggleTeamMemberModal,
+          theme: "primary",
+          icon: null,
+          destination: null,
+          isLoading: false,
+          isDisabled: false,
+        },
+      ],
     },
   ];
 
@@ -37,7 +45,13 @@ const Team = () => {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
       />
+
       {renderContent()}
+
+      {/* <TeamMemberModal
+        isOpen={teamMemberModalOpen}
+        toggle={toggleTeamMemberModal}
+      /> */}
     </Layout>
   );
 };

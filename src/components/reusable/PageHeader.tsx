@@ -1,22 +1,5 @@
-type Button = {
-  label: string;
-  icon?: JSX.Element;
-  mode?: string;
-  onClick: (mode?: string) => void;
-};
-
-type Tab = {
-  value: string;
-  search?: (searchInput: string) => void;
-  buttons?: Button[];
-};
-
-type PageHeaderProps = {
-  title: string;
-  tabs: Tab[];
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
-};
+import { PageHeaderProps } from "../../shared/types";
+import Button from "../base/Button";
 
 const PageHeader = ({
   title,
@@ -58,14 +41,25 @@ const PageHeader = ({
               />
             )}
             {activeTabData?.buttons?.map((button, index) => (
-              <button
+              // <button
+              //   key={index}
+              //   className="flex gap-1 rounded border-2 border-blue-500 bg-blue-500 px-4 py-1.5 text-sm font-semibold capitalize text-white transition-colors hover:bg-white hover:text-blue-500"
+              //   onClick={() => button.onClick(button.mode)}
+              // >
+              //   {button.icon && <span>{button.icon}</span>}
+              //   {button.label}
+              // </button>
+              <Button
                 key={index}
-                className="flex gap-1 rounded border-2 border-blue-500 bg-blue-500 px-4 py-1.5 text-sm font-semibold capitalize text-white transition-colors hover:bg-white hover:text-blue-500"
-                onClick={() => button.onClick(button.mode)}
-              >
-                {button.icon && <span>{button.icon}</span>}
-                {button.label}
-              </button>
+                text={button.text}
+                type={button.type}
+                onClick={button.onClick}
+                theme={button.theme}
+                icon={button.icon}
+                destination={button.destination}
+                isLoading={button.isLoading}
+                isDisabled={button.isDisabled}
+              />
             ))}
           </div>
         </div>

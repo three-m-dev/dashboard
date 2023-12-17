@@ -5,6 +5,7 @@ import {
   Layout,
   PageHeader,
 } from "../components";
+import { Tab } from "../shared/types";
 
 const Careers = () => {
   const [activeTab, setActiveTab] = useState("openings");
@@ -15,21 +16,6 @@ const Careers = () => {
   const [applicantModalMode, setApplicantModelMode] = useState("");
   const [selectedApplicant, setSelectedApplicant] = useState(null);
   const [refreshData, setRefreshData] = useState(false);
-
-  const tabs = [
-    {
-      value: "openings",
-      buttons: [
-        { label: "create new", onClick: () => toggleJobModal("create") },
-      ],
-    },
-    {
-      value: "applicants",
-      buttons: [
-        { label: "create new", onClick: () => toggleApplicantModal("create") },
-      ],
-    },
-  ];
 
   const toggleJobModal = (mode: string = "view", jobData = null) => {
     setJobModalMode(mode);
@@ -45,6 +31,39 @@ const Careers = () => {
     setSelectedApplicant(applicantData);
     setApplicantModalOpen(!applicantModalOpen);
   };
+
+  const tabs: Tab[] = [
+    {
+      value: "openings",
+      buttons: [
+        {
+          text: "New Opening",
+          type: "button",
+          onClick: () => toggleJobModal("create"),
+          theme: "primary",
+          icon: null,
+          destination: null,
+          isLoading: false,
+          isDisabled: false,
+        },
+      ],
+    },
+    {
+      value: "applicants",
+      buttons: [
+        {
+          text: "New Applicant",
+          type: "button",
+          onClick: () => toggleApplicantModal("create"),
+          theme: "primary",
+          icon: null,
+          destination: null,
+          isLoading: false,
+          isDisabled: false,
+        },
+      ],
+    },
+  ];
 
   const renderContent = () => {
     switch (activeTab) {
@@ -76,8 +95,10 @@ const Careers = () => {
         setActiveTab={setActiveTab}
       />
       {renderContent()}
-      {jobModalOpen && !applicantModalOpen && <></>}
-      {applicantModalOpen && !jobModalOpen && <></>}
+      {jobModalOpen && !applicantModalOpen && <>{jobModalMode} job</>}
+      {applicantModalOpen && !jobModalOpen && (
+        <>{applicantModalMode} applicant</>
+      )}
     </Layout>
   );
 };

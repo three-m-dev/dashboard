@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import RightArrowIcon from "../../assets/icons/RightArrowIcon";
 import LeftArrowIcon from "../../assets/icons/LeftArrowIcon";
-import { SortButton } from "..";
 import EllipsisIcon from "../../assets/icons/EllipsisIcon";
 import useGetJobs from "../../hooks/useGetJobs";
+import { formatKebab } from "../../utils/formatter";
 
 type CareersTableProps = {
   toggleCareerModal: (mode: string, careerData?: any) => void;
@@ -36,13 +36,6 @@ const CareersTable = ({
 
     setLocalSort(newSort);
     setSort(newSort);
-  };
-
-  const formatKebab = (value: string) => {
-    return value
-      .split("-")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
   };
 
   const getStatusClass = (status: string) => {
@@ -85,7 +78,7 @@ const CareersTable = ({
                   Title
                 </button>
               </th>
-              <th className="flex justify-center pb-2 font-medium">
+              <th className="flex pb-2 font-medium">
                 <button
                   onClick={() => updateSort("company")}
                   className={
@@ -96,7 +89,7 @@ const CareersTable = ({
                   Company
                 </button>
               </th>
-              <th className="flex justify-center pb-2 font-medium">
+              <th className="flex pb-2 font-medium">
                 <button
                   onClick={() => updateSort("departmentId")}
                   className={
@@ -107,7 +100,7 @@ const CareersTable = ({
                   Department
                 </button>
               </th>
-              <th className="flex justify-center pb-2 font-medium">
+              <th className="flex pb-2 font-medium">
                 <button
                   onClick={() => updateSort("location")}
                   className={
@@ -118,7 +111,7 @@ const CareersTable = ({
                   Location
                 </button>
               </th>
-              <th className="flex justify-center pb-2 font-medium">
+              <th className="flex pb-2 font-medium">
                 <button
                   onClick={() => updateSort("type")}
                   className={
@@ -129,8 +122,8 @@ const CareersTable = ({
                   Type
                 </button>
               </th>
-              <th className="flex justify-center pb-2 font-medium">Status</th>
-              <th className="flex justify-center pb-2 font-medium">Actions</th>
+              <th className="flex pb-2 font-medium">Status</th>
+              <th className="flex pb-2 font-medium">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -149,19 +142,15 @@ const CareersTable = ({
                     {job.title}
                   </button>
                 </td>
-                <td className="flex items-center justify-center">
+                <td className="flex items-center">
                   {formatKebab(job.company)}
                 </td>
-                <td className="flex items-center justify-center">
-                  {job.departmentId}
-                </td>
-                <td className="flex items-center justify-center">
+                <td className="flex items-center">{job.departmentId}</td>
+                <td className="flex items-center">
                   {formatKebab(job.location)}
                 </td>
-                <td className="flex items-center justify-center">
-                  {formatKebab(job.type)}
-                </td>
-                <td className="flex items-center justify-center">
+                <td className="flex items-center">{formatKebab(job.type)}</td>
+                <td className="flex items-center">
                   <span
                     className={
                       `rounded px-2 py-1 text-xs ` + getStatusClass(job.status)
@@ -170,8 +159,8 @@ const CareersTable = ({
                     {job.status}
                   </span>
                 </td>
-                <td className="flex items-center justify-center">
-                  <div className="flex justify-center gap-2">
+                <td className="flex items-center">
+                  <div className="flex gap-2">
                     <button
                       onClick={toggleActionDropdown}
                       className="text-gray-400 hover:text-blue-500"

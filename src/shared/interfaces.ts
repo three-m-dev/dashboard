@@ -78,6 +78,7 @@ export interface IApplication {
   status: string;
   notes?: string;
   ratings?: IRating[];
+  job?: IJob;
   applicant: IApplicant;
   createdAt: string;
   updatedAt: string;

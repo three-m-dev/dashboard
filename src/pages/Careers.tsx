@@ -2,6 +2,7 @@ import { useState } from "react";
 import {
   ApplicantsTable,
   CareersTable,
+  JobModal,
   Layout,
   PageHeader,
 } from "../components";
@@ -15,7 +16,12 @@ const Careers = () => {
   const [applicantModalOpen, setApplicantModalOpen] = useState(false);
   const [applicantModalMode, setApplicantModelMode] = useState("");
   const [selectedApplicant, setSelectedApplicant] = useState(null);
-  const [refreshData, setRefreshData] = useState(false);
+  const [refreshJobData, setRefreshJobData] = useState(false);
+
+  const triggerJobDataRefresh = () => {
+    console.log("Refreshing");
+    setRefreshJobData((prev) => !prev);
+  };
 
   const toggleJobModal = (mode: string = "view", jobData = null) => {
     setJobModalMode(mode);
@@ -71,7 +77,7 @@ const Careers = () => {
         return (
           <CareersTable
             toggleCareerModal={toggleJobModal}
-            refreshData={refreshData}
+            refreshData={refreshJobData}
           />
         );
       case "applicants":
@@ -80,7 +86,7 @@ const Careers = () => {
         return (
           <CareersTable
             toggleCareerModal={toggleJobModal}
-            refreshData={refreshData}
+            refreshData={refreshJobData}
           />
         );
     }
@@ -95,7 +101,14 @@ const Careers = () => {
         setActiveTab={setActiveTab}
       />
       {renderContent()}
-      {jobModalOpen && !applicantModalOpen && <>{jobModalMode} job</>}
+      {jobModalOpen && !applicantModalOpen && (
+        <JobModal
+          mode={jobModalMode}
+          onClose={toggleJobModal}
+          selectedJob={selectedJob}
+          triggerDataRefresh={triggerJobDataRefresh}
+        />
+      )}
       {applicantModalOpen && !jobModalOpen && (
         <>{applicantModalMode} applicant</>
       )}

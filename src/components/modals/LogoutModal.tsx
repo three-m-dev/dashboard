@@ -1,10 +1,10 @@
 import ModalBase from "../reusable/ModalBase";
 
-type LogoutModalProps = {
+type Props = {
   onClose: () => void;
 };
 
-const LogoutModal = ({ onClose }: LogoutModalProps) => {
+const LogoutModal = ({ onClose }: Props) => {
   return (
     <ModalBase title="Logout" onClose={onClose}>
       <div className="text-center">
@@ -23,7 +23,7 @@ const LogoutModal = ({ onClose }: LogoutModalProps) => {
             d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
           />
         </svg>
-        <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400 w-3/4">
+        <h3 className="mb-5 w-3/4 text-lg font-normal text-gray-500 dark:text-gray-400">
           Are you sure you want to logout?
         </h3>
 

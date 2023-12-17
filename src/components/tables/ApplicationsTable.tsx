@@ -4,6 +4,7 @@ import RightArrowIcon from "../../assets/icons/RightArrowIcon";
 import LeftArrowIcon from "../../assets/icons/LeftArrowIcon";
 import { SortButton } from "..";
 import EllipsisIcon from "../../assets/icons/EllipsisIcon";
+import { formatDate } from "../../utils/formatter";
 
 type ApplicantsTableProps = {
   toggleApplicantModal: (mode: string, applicantData?: any) => void;
@@ -41,13 +42,6 @@ const ApplicationsTable = ({ toggleApplicantModal }: ApplicantsTableProps) => {
     setSort(newSort);
   };
 
-  const formatKebab = (value: string) => {
-    return value
-      .split("-")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
-  };
-
   const getStatusClass = (status: string) => {
     switch (status) {
       case "new":
@@ -57,15 +51,6 @@ const ApplicationsTable = ({ toggleApplicantModal }: ApplicantsTableProps) => {
       default:
         return "bg-gray-200 text-gray-600";
     }
-  };
-
-  const convertToReadableDate = (dateString: string): string => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
   };
 
   return (
@@ -79,50 +64,46 @@ const ApplicationsTable = ({ toggleApplicantModal }: ApplicantsTableProps) => {
                   onClick={() => updateSort("applicant.firstName")}
                   className="flex items-center gap-2"
                 >
+                  Name
                   <SortButton
                     isSorted={localSort.startsWith("applicant.firstName")}
                     isDesc={localSort === "applicant.firstName,DESC"}
                   />
-                  Name
                 </button>
               </th>
-              <th className="col-span-2 flex justify-center pb-2 font-medium">
+              <th className="col-span-2 flex pb-2 font-medium">
                 <button
                   onClick={() => updateSort("createdAt")}
                   className="flex items-center gap-2"
                 >
+                  Applied On
                   <SortButton
                     isSorted={localSort.startsWith("createdAt")}
                     isDesc={localSort === "createdAt,DESC"}
                   />
-                  Applied On
                 </button>
               </th>
-              <th className="col-span-2 flex justify-center pb-2 font-medium">
+              <th className="col-span-2 flex pb-2 font-medium">
                 <button
                   onClick={() => updateSort("career.title")}
                   className="flex items-center gap-2"
                 >
+                  Applied For
                   <SortButton
                     isSorted={localSort.startsWith("career.title")}
                     isDesc={localSort === "career.title,DESC"}
                   />
-                  Applied For
                 </button>
               </th>
-              <th className="col-span-2 flex justify-center pb-2 font-medium">
-                Status
-              </th>
-              <th className="col-span-2 flex justify-center pb-2 font-medium">
-                Actions
-              </th>
+              <th className="col-span-2 flex pb-2 font-medium">Status</th>
+              <th className="col-span-2 flex pb-2 font-medium">Actions</th>
             </tr>
           </thead>
           <tbody>
             {applicationData?.applications.map((application, index) => (
               <tr
                 key={index}
-                className={`grid grid-cols-10 rounded py-2.5 text-sm capitalize  ${
+                className={`grid grid-cols-10 rounded py-2 text-sm capitalize  ${
                   index % 2 === 0 ? "bg-gray-100" : "bg-white"
                 }`}
               >
@@ -135,13 +116,13 @@ const ApplicationsTable = ({ toggleApplicantModal }: ApplicantsTableProps) => {
                     {application.applicant.lastName}
                   </button>
                 </td>
-                <td className="col-span-2 flex items-center justify-center">
-                  {convertToReadableDate(application.createdAt)}
+                <td className="col-span-2 flex items-center">
+                  {formatDate(application.createdAt)}
                 </td>
-                <td className="col-span-2 flex items-center justify-center">
-                  {application.jobId}
+                <td className="col-span-2 flex items-center">
+                  {application.job.title ? application.job.title : "N/A"}
                 </td>
-                <td className="col-span-2 flex items-center justify-center">
+                <td className="col-span-2 flex items-center">
                   <span
                     className={
                       `rounded px-2 py-1 text-xs ` +
@@ -151,7 +132,7 @@ const ApplicationsTable = ({ toggleApplicantModal }: ApplicantsTableProps) => {
                     {application.status}
                   </span>
                 </td>
-                <td className="col-span-2 flex items-center justify-center">
+                <td className="col-span-2 flex items-center">
                   <div className="flex justify-center gap-2">
                     <button
                       onClick={toggleActionDropdown}

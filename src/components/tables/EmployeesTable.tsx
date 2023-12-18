@@ -5,7 +5,7 @@ import LeftArrowIcon from "../../assets/icons/LeftArrowIcon";
 import EllipsisIcon from "../../assets/icons/EllipsisIcon";
 
 type EmployeesTableProps = {
-  toggleEmployeeModal: () => void;
+  toggleEmployeeModal: (mode: string, employeeData?: any) => void;
 };
 
 const EmployeesTable = ({ toggleEmployeeModal }: EmployeesTableProps) => {
@@ -137,7 +137,7 @@ const EmployeesTable = ({ toggleEmployeeModal }: EmployeesTableProps) => {
               >
                 <td className="col-span-2 flex items-center px-4">
                   <button
-                    onClick={() => toggleEmployeeModal()}
+                    onClick={() => toggleEmployeeModal("view", employee)}
                     className="hover:underline"
                   >
                     {employee.firstName} {employee.lastName}

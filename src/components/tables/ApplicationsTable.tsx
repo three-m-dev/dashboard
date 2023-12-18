@@ -62,7 +62,7 @@ const ApplicationsTable = ({ toggleApplicantModal }: ApplicantsTableProps) => {
               <th className="col-span-2 pb-2 pl-4 font-medium">
                 <button
                   onClick={() => updateSort("applicant.firstName")}
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-1"
                 >
                   Name
                   <SortButton
@@ -74,7 +74,7 @@ const ApplicationsTable = ({ toggleApplicantModal }: ApplicantsTableProps) => {
               <th className="col-span-2 flex pb-2 font-medium">
                 <button
                   onClick={() => updateSort("createdAt")}
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-1"
                 >
                   Applied On
                   <SortButton
@@ -86,7 +86,7 @@ const ApplicationsTable = ({ toggleApplicantModal }: ApplicantsTableProps) => {
               <th className="col-span-2 flex pb-2 font-medium">
                 <button
                   onClick={() => updateSort("career.title")}
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-1"
                 >
                   Applied For
                   <SortButton
@@ -95,7 +95,18 @@ const ApplicationsTable = ({ toggleApplicantModal }: ApplicantsTableProps) => {
                   />
                 </button>
               </th>
-              <th className="col-span-2 flex pb-2 font-medium">Status</th>
+              <th className="col-span-2 flex pb-2 font-medium">
+                <button
+                  onClick={() => updateSort("status")}
+                  className="flex items-center gap-1"
+                >
+                  Status
+                  <SortButton
+                    isSorted={localSort.startsWith("status")}
+                    isDesc={localSort === "status,DESC"}
+                  />
+                </button>
+              </th>
               <th className="col-span-2 flex pb-2 font-medium">Actions</th>
             </tr>
           </thead>

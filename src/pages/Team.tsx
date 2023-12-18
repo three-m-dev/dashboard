@@ -1,23 +1,33 @@
 import { useState } from "react";
-import { EmployeesTable, Layout, PageHeader } from "../components";
+import {
+  EmployeeModal,
+  EmployeesTable,
+  Layout,
+  PageHeader,
+} from "../components";
 import { Tab } from "../shared/types";
 import PlusIcon from "../assets/icons/PlusIcon";
 
 const Team = () => {
   const [activeTab, setActiveTab] = useState("team-members");
-  const [teamMemberModalOpen, setTeamMemberModalOpen] = useState(false);
+
+  const [employeeModalOpen, setEmployeeModalOpen] = useState(false);
+  const [employeeModalMode, setEmployeeModalMode] = useState("");
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
+
+  const toggleEmployeeModal = (mode: string = "view", employeeData = null) => {
+    setEmployeeModalMode(mode);
+    setSelectedEmployee(employeeData);
+    setEmployeeModalOpen(!employeeModalOpen);
+  };
 
   const renderContent = () => {
     switch (activeTab) {
       case "team-members":
-        return <EmployeesTable toggleEmployeeModal={toggleTeamMemberModal} />;
+        return <EmployeesTable toggleEmployeeModal={toggleEmployeeModal} />;
       default:
         return <div>Team Members</div>;
     }
-  };
-
-  const toggleTeamMemberModal = () => {
-    setTeamMemberModalOpen(!teamMemberModalOpen);
   };
 
   const tabs: Tab[] = [
@@ -27,7 +37,7 @@ const Team = () => {
         {
           text: "Add Team Member",
           type: "button",
-          onClick: toggleTeamMemberModal,
+          onClick: () => toggleEmployeeModal("create"),
           theme: "primary",
           icon: <PlusIcon />,
           destination: null,
@@ -49,10 +59,13 @@ const Team = () => {
 
       {renderContent()}
 
-      {/* <TeamMemberModal
-        isOpen={teamMemberModalOpen}
-        toggle={toggleTeamMemberModal}
-      /> */}
+      {employeeModalOpen && (
+        <EmployeeModal
+          mode={employeeModalMode}
+          onClose={toggleEmployeeModal}
+          selectedEmployee={selectedEmployee}
+        />
+      )}
     </Layout>
   );
 };

@@ -1,24 +1,49 @@
 const Downtime = () => {
   const downtimes = [
     {
-      reason: "Changeover",
-      duration: "1h 20m",
-      percentage: 20, // Changed to number
-    },
-    {
       reason: "Maintenance",
-      duration: "2h 10m",
-      percentage: 40, // Changed to number
+      duration: "3h",
+      percentage: 25,
     },
     {
-      reason: "Breakdown",
+      reason: "Troubleshooting",
+      duration: "2h 30m",
+      percentage: 20,
+    },
+    {
+      reason: "Programming",
+      duration: "2h 45m",
+      percentage: 22.5,
+    },
+    {
+      reason: "Inspection",
+      duration: "1h 45m",
+      percentage: 15,
+    },
+    {
+      reason: "Break",
+      duration: "30m",
+      percentage: 2.5,
+    },
+    {
+      reason: "Fixturing",
+      duration: "1h 15m",
+      percentage: 10,
+    },
+    {
+      reason: "Set Up/Tear Down",
       duration: "1h 30m",
-      percentage: 30, // Changed to number
+      percentage: 12.5,
+    },
+    {
+      reason: "Training/Meeting",
+      duration: "1h 15m",
+      percentage: 10,
     },
     {
       reason: "Other",
-      duration: "1h 30m",
-      percentage: 10, // Changed to number
+      duration: "45m",
+      percentage: 5,
     },
   ];
 

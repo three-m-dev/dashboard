@@ -8,7 +8,7 @@ type Props = {
   mode: string;
   onClose: () => void;
   selectedJob: IJob | null;
-  triggerDataRefresh: () => void;
+  triggerRefresh: () => void;
 };
 
 const JobModal = ({ mode, onClose, selectedJob }: Props) => {

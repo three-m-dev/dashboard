@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {
   ApplicantsTable,
+  ApplicationModal,
   CareersTable,
   JobModal,
   Layout,
@@ -11,17 +12,26 @@ import PlusIcon from "../assets/icons/PlusIcon";
 
 const Careers = () => {
   const [activeTab, setActiveTab] = useState("openings");
+
   const [jobModalOpen, setJobModalOpen] = useState(false);
   const [jobModalMode, setJobModalMode] = useState("");
   const [selectedJob, setSelectedJob] = useState(null);
-  const [applicantModalOpen, setApplicantModalOpen] = useState(false);
-  const [applicantModalMode, setApplicantModelMode] = useState("");
-  const [selectedApplicant, setSelectedApplicant] = useState(null);
-  const [refreshJobData, setRefreshJobData] = useState(false);
 
-  const triggerJobDataRefresh = () => {
+  const [applicationModalOpen, setApplicationModalOpen] = useState(false);
+  const [applicationModalMode, setApplicationModalMode] = useState("");
+  const [selectedApplication, setSelectedApplication] = useState(null);
+
+  const [refreshJobs, setRefreshJobs] = useState(false);
+  const [refreshApplications, setRefreshApplications] = useState(false);
+
+  const triggerJobRefresh = () => {
     console.log("Refreshing");
-    setRefreshJobData((prev) => !prev);
+    setRefreshJobs((prev) => !prev);
+  };
+
+  const triggerApplicationRefresh = () => {
+    console.log("Refreshing");
+    setRefreshApplications((prev) => !prev);
   };
 
   const toggleJobModal = (mode: string = "view", jobData = null) => {
@@ -30,13 +40,13 @@ const Careers = () => {
     setJobModalOpen(!jobModalOpen);
   };
 
-  const toggleApplicantModal = (
+  const toggleApplicationModal = (
     mode: string = "view",
-    applicantData = null,
+    applicationData = null,
   ) => {
-    setApplicantModelMode(mode);
-    setSelectedApplicant(applicantData);
-    setApplicantModalOpen(!applicantModalOpen);
+    setApplicationModalMode(mode);
+    setSelectedApplication(applicationData);
+    setApplicationModalOpen(!applicationModalOpen);
   };
 
   const tabs: Tab[] = [
@@ -56,12 +66,12 @@ const Careers = () => {
       ],
     },
     {
-      value: "applicants",
+      value: "applications",
       buttons: [
         {
-          text: "Add Applicant",
+          text: "Add Application",
           type: "button",
-          onClick: () => toggleApplicantModal("create"),
+          onClick: () => toggleApplicationModal("create"),
           theme: "primary",
           icon: <PlusIcon />,
           destination: null,
@@ -78,16 +88,18 @@ const Careers = () => {
         return (
           <CareersTable
             toggleCareerModal={toggleJobModal}
-            refreshData={refreshJobData}
+            refreshData={refreshJobs}
           />
         );
-      case "applicants":
-        return <ApplicantsTable toggleApplicantModal={toggleApplicantModal} />;
+      case "applications":
+        return (
+          <ApplicantsTable toggleApplicantModal={toggleApplicationModal} />
+        );
       default:
         return (
           <CareersTable
             toggleCareerModal={toggleJobModal}
-            refreshData={refreshJobData}
+            refreshData={refreshApplications}
           />
         );
     }
@@ -102,16 +114,21 @@ const Careers = () => {
         setActiveTab={setActiveTab}
       />
       {renderContent()}
-      {jobModalOpen && !applicantModalOpen && (
+      {jobModalOpen && !applicationModalOpen && (
         <JobModal
           mode={jobModalMode}
           onClose={toggleJobModal}
           selectedJob={selectedJob}
-          triggerDataRefresh={triggerJobDataRefresh}
+          triggerRefresh={triggerJobRefresh}
         />
       )}
-      {applicantModalOpen && !jobModalOpen && (
-        <>{applicantModalMode} applicant</>
+      {applicationModalOpen && !jobModalOpen && (
+        <ApplicationModal
+          mode={applicationModalMode}
+          onClose={toggleApplicationModal}
+          selectedApplication={selectedApplication}
+          triggerRefresh={triggerApplicationRefresh}
+        />
       )}
     </Layout>
   );

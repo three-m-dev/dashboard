@@ -13,12 +13,13 @@ type Props = {
 const DowntimeModal = ({ mode, onClose, triggerRefresh }: Props) => {
   const reasonOptions = [
     "Maintenance",
-    "Equipment Failure",
-    "Material Shortage",
-    "Operator Error",
-    "Changeover",
-    "Safety Stops",
-    "Quality Checks",
+    "Troubleshooting",
+    "Programming",
+    "Inspection",
+    "Break",
+    "Fixturing",
+    "Set Up/Tear Down",
+    "Training/Meeting",
     "Other",
   ];
 

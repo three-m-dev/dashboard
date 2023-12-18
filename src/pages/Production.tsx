@@ -1,19 +1,30 @@
 import { useState } from "react";
 import {
   Downtime,
+  DowntimeModal,
   DowntimeTable,
   Layout,
   Output,
   PageHeader,
   Resources,
 } from "../components";
+import { Tab } from "../shared/types";
+import PlusIcon from "../assets/icons/PlusIcon";
 
 const Production = () => {
   const [activeTab, setActiveTab] = useState("overview");
 
   const [downtimeModalOpen, setDowntimeModalOpen] = useState(false);
+  const [downtimeModalMode, setDowntimeModalMode] = useState("");
   const [resourceModalOpen, setResourceModalOpen] = useState(false);
   const [operatorModalOpen, setOperatorModalOpen] = useState(false);
+
+  const toggleDownTimeModal = (mode: string = "view") => {
+    setDowntimeModalMode(mode);
+    setDowntimeModalOpen(!downtimeModalOpen);
+  };
+
+  const downtimeRefresh = () => {};
 
   const renderContent = () => {
     switch (activeTab) {
@@ -39,26 +50,64 @@ const Production = () => {
     console.log("Button Clicked");
   };
 
-  const toggleDownTimeModal = () => {
-    setDowntimeModalOpen(!downtimeModalOpen);
-  };
-
-  const tabs = [
+  const tabs: Tab[] = [
     {
       value: "overview",
-      buttons: [{ label: "date range", onClick: handleClick }],
+      buttons: [
+        {
+          text: "Date Range",
+          type: "button",
+          onClick: handleClick,
+          theme: "primary",
+          destination: null,
+          isLoading: false,
+          isDisabled: false,
+        },
+      ],
     },
     {
       value: "downtime",
-      buttons: [{ label: "create new", onClick: toggleDownTimeModal }],
+      buttons: [
+        {
+          text: "Add Downtime",
+          type: "button",
+          onClick: toggleDownTimeModal,
+          theme: "primary",
+          icon: <PlusIcon />,
+          destination: null,
+          isLoading: false,
+          isDisabled: false,
+        },
+      ],
     },
     {
       value: "resources",
-      buttons: [{ label: "create new", onClick: handleClick }],
+      buttons: [
+        {
+          text: "Add Resource",
+          type: "button",
+          onClick: handleClick,
+          theme: "primary",
+          icon: <PlusIcon />,
+          destination: null,
+          isLoading: false,
+          isDisabled: false,
+        },
+      ],
     },
     {
       value: "operators",
-      buttons: [{ label: "create new", onClick: handleClick }],
+      buttons: [
+        {
+          text: "Filter",
+          type: "button",
+          onClick: handleClick,
+          theme: "primary",
+          destination: null,
+          isLoading: false,
+          isDisabled: false,
+        },
+      ],
     },
   ];
 
@@ -72,7 +121,13 @@ const Production = () => {
       />
       {renderContent()}
 
-      {downtimeModalOpen && <></>}
+      {downtimeModalOpen && (
+        <DowntimeModal
+          mode={downtimeModalMode}
+          onClose={toggleDownTimeModal}
+          triggerRefresh={downtimeRefresh}
+        />
+      )}
     </Layout>
   );
 };

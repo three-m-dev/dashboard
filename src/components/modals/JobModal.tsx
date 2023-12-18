@@ -12,7 +12,7 @@ type Props = {
 };
 
 const JobModal = ({ mode, onClose, selectedJob }: Props) => {
-  const [newJobFormData, setNewJobFormData] = useState({
+  const [jobFormData, setJobFormData] = useState({
     title: "",
     description: "",
     location: "",
@@ -26,22 +26,20 @@ const JobModal = ({ mode, onClose, selectedJob }: Props) => {
   // );
 
   const handleNewJobFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewJobFormData({
-      ...newJobFormData,
+    setJobFormData({
+      ...jobFormData,
       [e.target.id]: e.target.value,
     });
   };
 
   const handleNewJobFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(newJobFormData);
+    console.log(jobFormData);
   };
 
   return (
     <ModalBase
-      title={
-        mode === "view" && selectedJob ? selectedJob.title : "New Job Opening"
-      }
+      title={mode === "view" && selectedJob ? selectedJob.title : "Add Opening"}
       onClose={onClose}
     >
       {mode === "view" && selectedJob ? (

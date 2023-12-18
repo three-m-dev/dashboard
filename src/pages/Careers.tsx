@@ -7,6 +7,7 @@ import {
   PageHeader,
 } from "../components";
 import { Tab } from "../shared/types";
+import PlusIcon from "../assets/icons/PlusIcon";
 
 const Careers = () => {
   const [activeTab, setActiveTab] = useState("openings");
@@ -43,11 +44,11 @@ const Careers = () => {
       value: "openings",
       buttons: [
         {
-          text: "New Opening",
+          text: "Add Opening",
           type: "button",
           onClick: () => toggleJobModal("create"),
           theme: "primary",
-          icon: null,
+          icon: <PlusIcon />,
           destination: null,
           isLoading: false,
           isDisabled: false,
@@ -58,11 +59,11 @@ const Careers = () => {
       value: "applicants",
       buttons: [
         {
-          text: "New Applicant",
+          text: "Add Applicant",
           type: "button",
           onClick: () => toggleApplicantModal("create"),
           theme: "primary",
-          icon: null,
+          icon: <PlusIcon />,
           destination: null,
           isLoading: false,
           isDisabled: false,

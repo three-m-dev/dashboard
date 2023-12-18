@@ -21,4 +21,5 @@ export { default as BlogBuilder } from "./BlogBuilder";
 export { default as Downtime } from "./charts/Downtime";
 export { default as Output } from "./charts/Output";
 
+export { default as DowntimeModal } from "./modals/DowntimeModal";
 export { default as JobModal } from "./modals/JobModal";

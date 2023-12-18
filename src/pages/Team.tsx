@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { EmployeesTable, Layout, PageHeader } from "../components";
 import { Tab } from "../shared/types";
+import PlusIcon from "../assets/icons/PlusIcon";
 
 const Team = () => {
   const [activeTab, setActiveTab] = useState("team-members");
@@ -24,11 +25,11 @@ const Team = () => {
       value: "team-members",
       buttons: [
         {
-          text: "New Team Member",
+          text: "Add Team Member",
           type: "button",
           onClick: toggleTeamMemberModal,
           theme: "primary",
-          icon: null,
+          icon: <PlusIcon />,
           destination: null,
           isLoading: false,
           isDisabled: false,

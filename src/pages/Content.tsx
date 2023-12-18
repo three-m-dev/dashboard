@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { BlogBuilder, Layout, PageHeader } from "../components";
 import ContentCard from "../components/reusable/ContentCard";
+import PlusIcon from "../assets/icons/PlusIcon";
+import { Tab } from "../shared/types";
 
 const Content = () => {
   const [activeTab, setActiveTab] = useState("bulletin");
@@ -8,18 +10,51 @@ const Content = () => {
   const [bulletinModalOpen, setBulletinModalOpen] = useState(false);
   const [bulletinModalMode, setBulletinModalMode] = useState("");
 
-  const tabs = [
+  const [newsletterModalOpen, setNewsletterModalOpen] = useState(false);
+  const [newsletterModalMode, setNewsletterModalMode] = useState("");
+
+  const tabs: Tab[] = [
     {
       value: "bulletin",
       buttons: [
-        { label: "create new", onClick: () => toggleBulletinModal("create") },
+        {
+          text: "Add Bulletin",
+          type: "button",
+          onClick: () => toggleBulletinModal("create"),
+          theme: "primary",
+          icon: <PlusIcon />,
+          destination: null,
+          isLoading: false,
+          isDisabled: false,
+        },
       ],
     },
     {
       value: "newsletter",
-      buttons: [{ label: "create new", onClick: () => handleNewNewsletter() }],
+      buttons: [
+        {
+          text: "Add Newsletter",
+          type: "button",
+          onClick: () => toggleNewsletterModal("create"),
+          theme: "primary",
+          icon: <PlusIcon />,
+          destination: null,
+          isLoading: false,
+          isDisabled: false,
+        },
+      ],
     },
   ];
+
+  const toggleBulletinModal = (mode: string = "view") => {
+    setBulletinModalMode(mode);
+    setBulletinModalOpen(!bulletinModalOpen);
+  };
+
+  const toggleNewsletterModal = (mode: string = "view") => {
+    setNewsletterModalMode(mode);
+    setNewsletterModalOpen(!newsletterModalOpen);
+  };
 
   const renderContent = () => {
     switch (activeTab) {
@@ -32,15 +67,6 @@ const Content = () => {
     }
   };
 
-  const toggleBulletinModal = (mode: string = "view") => {
-    setBulletinModalMode(mode);
-    setBulletinModalOpen(!bulletinModalOpen);
-  };
-
-  const handleNewNewsletter = () => {
-    console.log("Button Clicked");
-  };
-
   return (
     <Layout>
       <PageHeader
@@ -50,7 +76,7 @@ const Content = () => {
         setActiveTab={setActiveTab}
       />
       {renderContent()}
-      {bulletinModalOpen && <></>}
+      {bulletinModalOpen && <>123</>}
     </Layout>
   );
 };

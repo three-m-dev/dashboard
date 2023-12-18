@@ -3,6 +3,7 @@ import PlusIcon from "../../assets/icons/PlusIcon";
 import Button from "../base/Button";
 import ModalBase from "../reusable/ModalBase";
 import TrashIcon from "../../assets/icons/TrashIcon";
+import Dropdown from "../base/Dropdown";
 
 type Props = {
   mode: string;
@@ -11,16 +12,22 @@ type Props = {
 };
 
 const DowntimeModal = ({ mode, onClose, triggerRefresh }: Props) => {
-  const reasonOptions = [
-    "Maintenance",
-    "Troubleshooting",
-    "Programming",
-    "Inspection",
-    "Break",
-    "Fixturing",
-    "Set Up/Tear Down",
-    "Training/Meeting",
-    "Other",
+  const operators = [
+    {
+      label: "Operator 1",
+      value: "operator1",
+    },
+  ];
+
+  const reasons = [
+    {
+      label: "Maintenance",
+      value: "maintenance",
+    },
+    {
+      label: "Troubleshooting",
+      value: "troubleshooting",
+    },
   ];
 
   const [downtimeFormData, setDowntimeFormData] = useState({
@@ -89,37 +96,17 @@ const DowntimeModal = ({ mode, onClose, triggerRefresh }: Props) => {
               onChange={handleDowntimeFormChange}
             />
           </div>
-          <div className="col-span-6">
+          <div className="col-span-6 flex flex-col">
             <label className="font-semibold" htmlFor="operator">
               Operator
             </label>
-            <select
-              name="operator"
-              className="h-[40px] w-full rounded border border-gray-300 px-2 py-1"
-              onChange={handleDowntimeFormChange}
-            >
-              {/* Operator options here */}
-              <option value="operator1">Operator 1</option>
-              <option value="operator2">Operator 2</option>
-              <option value="operator3">Operator 3</option>
-            </select>
+            <Dropdown options={operators} onSelect={handleDowntimeFormChange} />
           </div>
-          <div className="col-span-6">
+          <div className="col-span-6 flex flex-col">
             <label className="font-semibold" htmlFor="reason">
               Reason
             </label>
-            <select
-              value={currentReason}
-              className="h-[40px] w-full rounded border border-gray-300 px-2 py-1"
-              onChange={(e) => setCurrentReason(e.target.value)}
-            >
-              <option value="">Select a reason</option>
-              {reasonOptions.map((item, index) => (
-                <option key={index} value={item}>
-                  {item}
-                </option>
-              ))}
-            </select>
+            <Dropdown options={reasons} onSelect={handleDowntimeFormChange} />
           </div>
           <div className="col-span-2">
             <label className="font-semibold" htmlFor="minutes">

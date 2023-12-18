@@ -180,7 +180,7 @@ const Resources = () => {
               <div
                 className={`absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 transform flex-col text-center text-white ${oeeClass.filled}`}
               >
-                <span className="text-sm font-semibold">OEE</span>
+                <span className="text-sm font-semibold">RTP</span>
                 <span className="text-lg font-bold">
                   {Math.round(resource.oee * 100)}%
                 </span>

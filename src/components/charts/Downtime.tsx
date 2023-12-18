@@ -54,7 +54,7 @@ const Downtime = () => {
       <div className="mx-auto">
         <div className="rounded bg-white py-4">
           <div className="flex justify-between border-b border-blue-50 px-4 pb-4">
-            <h3 className="text-xl font-bold">Operator Downtime</h3>
+            <h3 className="text-xl font-bold">Unscheduled Downtime</h3>
             {/* <p className="text-sm text-gray-500">
               The percentage of downtime per reason
             </p> */}

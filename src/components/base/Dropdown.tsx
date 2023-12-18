@@ -25,7 +25,7 @@ const Dropdown = ({ options, onSelect }: Props) => {
   };
 
   return (
-    <div className="relative inline-block text-left">
+    <div className="relative z-50 inline-block text-left">
       <button
         type="button"
         className="inline-flex h-[40px] w-full justify-between rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"

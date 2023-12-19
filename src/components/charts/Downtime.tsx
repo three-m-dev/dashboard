@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -9,10 +9,8 @@ import {
   Title,
   Tooltip,
   Legend,
-  ChartData,
-  ChartOptions,
 } from "chart.js";
-import Dropdown from "../base/Dropdown";
+import useGenerateDowntimeReport from "../../hooks/downtime/useGenerateDowntimeReport";
 
 ChartJS.register(
   CategoryScale,
@@ -24,56 +22,54 @@ ChartJS.register(
   Legend,
 );
 
-interface DowntimeData {
-  date: string;
-  reasons: {
+interface DowntimeDetails {
+  totalDowntime: number;
+  downtime: {
     [key: string]: number;
   };
 }
 
+interface DowntimeReportData {
+  [date: string]: DowntimeDetails;
+}
+
+interface ChartData {
+  labels: string[];
+  datasets: {
+    label: string;
+    data: number[];
+    borderColor: string;
+    tension: number;
+  }[];
+}
+
 const Downtime = () => {
   const [selectedReasons, setSelectedReasons] = useState<string[]>(["Total"]);
-
-  const reasons = [
-    "Total",
-    "Maintenance",
-    "Troubleshooting",
-    "Programming",
-    "Inspection",
-    "Break",
-    "Fixtures",
-    "Set Up/Tear Down",
-    "Training/Meeting",
-    "Other",
-  ];
-
-  const [chartData, setChartData] = useState<ChartData<"line">>({
+  const { downtimeReportData, setFilter, loading, error } =
+    useGenerateDowntimeReport();
+  const [chartData, setChartData] = useState<ChartData>({
     labels: [],
     datasets: [],
   });
 
   useEffect(() => {
-    const sampleData: DowntimeData[] = [
-      { date: "2023-01-01", reasons: { Maintenance: 3, Inspection: 2 } },
-      { date: "2023-01-02", reasons: { Maintenance: 4, Break: 1 } },
-      { date: "2023-01-03", reasons: { Maintenance: 2, Break: 1 } },
-      { date: "2023-01-04", reasons: { Maintenance: 3, Break: 1 } },
-      { date: "2023-01-05", reasons: { Maintenance: 3, Break: 1 } },
-    ];
+    if (downtimeReportData) {
+      const data = downtimeReportData as DowntimeReportData;
+      const labels = Object.keys(data);
+      const totalDowntimes = labels.map((label) => data[label].totalDowntime);
 
-    const labels = sampleData.map((data) => data.date);
-
-    const datasets = Object.keys(sampleData[0].reasons).map((reason) => {
-      return {
-        label: reason,
-        data: sampleData.map((data) => data.reasons[reason] || 0),
-        borderColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
+      const dataset = {
+        label: "Total Downtime",
+        data: totalDowntimes,
+        borderColor: "rgba(255, 99, 132, 1)",
         tension: 0.1,
       };
-    });
 
-    setChartData({ labels, datasets });
-  }, []);
+      setChartData({ labels, datasets: [dataset] });
+    }
+  }, [downtimeReportData]);
+
+  console.log(chartData);
 
   const options = {
     maintainAspectRatio: false,
@@ -184,8 +180,6 @@ const Downtime = () => {
       }
     }
   };
-
-  console.log(selectedReasons);
 
   return (
     <section className="mt-4">

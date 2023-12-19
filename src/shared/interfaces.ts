@@ -101,3 +101,14 @@ export interface IDowntimeEntry {
   createdBy: string;
   updatedBy?: string;
 }
+
+export interface DowntimeDetails {
+  totalDowntime: number;
+  downtime: {
+    [key: string]: number;
+  };
+}
+
+export interface DowntimeReportData {
+  [date: string]: DowntimeDetails;
+}

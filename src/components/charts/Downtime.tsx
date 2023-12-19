@@ -56,20 +56,52 @@ const Downtime = () => {
     if (downtimeReportData) {
       const data = downtimeReportData as DowntimeReportData;
       const labels = Object.keys(data);
-      const totalDowntimes = labels.map((label) => data[label].totalDowntime);
 
-      const dataset = {
-        label: "Total Downtime",
-        data: totalDowntimes,
-        borderColor: "rgba(255, 99, 132, 1)",
-        tension: 0.1,
-      };
+      let datasets = [];
 
-      setChartData({ labels, datasets: [dataset] });
+      if (selectedReasons.includes("Total")) {
+        const totalDowntimes = labels.map((label) => data[label].totalDowntime);
+
+        datasets.push({
+          label: "Total",
+          data: totalDowntimes,
+          borderColor: "rgba(255, 99, 132, 1)",
+          tension: 0.1,
+        });
+      } else {
+        selectedReasons.forEach((reason) => {
+          const reasonData = labels.map(
+            (label) => data[label].downtime[reason] || 0,
+          );
+
+          datasets.push({
+            label: reason,
+            data: reasonData,
+            borderColor: dynamicBorderColor(reason),
+            tension: 0.1,
+          });
+        });
+      }
+
+      setChartData({ labels, datasets });
     }
-  }, [downtimeReportData]);
+  }, [downtimeReportData, selectedReasons]);
 
-  console.log(chartData);
+  function dynamicBorderColor(reason: string): string {
+    const colors: { [key: string]: string } = {
+      Maintenance: "rgba(54, 162, 235, 1)",
+      Troubleshooting: "rgba(255, 206, 86, 1)",
+      Programming: "rgba(75, 192, 192, 1)",
+      Inspection: "rgba(153, 102, 255, 1)",
+      Break: "rgba(255, 159, 64, 1)",
+      Fixtures: "rgba(199, 199, 199, 1)",
+      "Set Up/Tear Down": "rgba(255, 99, 132, 1)",
+      "Training/Meeting": "rgba(255, 205, 86, 1)",
+      Other: "rgba(54, 162, 235, 1)",
+    };
+
+    return colors[reason] || "rgba(201, 203, 207, 1)";
+  }
 
   const options = {
     maintainAspectRatio: false,

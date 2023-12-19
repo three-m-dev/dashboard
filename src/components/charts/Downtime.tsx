@@ -1,79 +1,120 @@
+import { useEffect, useState } from "react";
+import { Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  ChartData,
+  ChartOptions,
+} from "chart.js";
 import Dropdown from "../base/Dropdown";
 
-const Downtime = () => {
-  const getDateRangeValue = (rangeType: string): string => {
-    const today = new Date();
-    const start = new Date();
-    let end = new Date();
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+);
 
-    switch (rangeType) {
-      case "today":
-        break;
-      case "week":
-        start.setDate(today.getDate() - today.getDay());
-        end.setDate(start.getDate() + 6);
-        break;
-      case "month":
-        start.setDate(1);
-        end = new Date(start.getFullYear(), start.getMonth() + 1, 0);
-        break;
-      case "quarter":
-        const currentQuarter = Math.floor(today.getMonth() / 3);
-        start.setMonth(currentQuarter * 3);
-        start.setDate(1);
-        end = new Date(start.getFullYear(), start.getMonth() + 3, 0);
-        break;
-      case "year":
-        start.setMonth(0, 1);
-        end.setMonth(11, 31);
-        break;
-      case "lastWeek":
-        const lastWeek = new Date(
-          today.getFullYear(),
-          today.getMonth(),
-          today.getDate() - 7,
-        );
-        start.setDate(lastWeek.getDate() - lastWeek.getDay());
-        end.setDate(start.getDate() + 6);
-        break;
-      case "lastMonth":
-        start.setMonth(today.getMonth() - 1, 1);
-        end = new Date(start.getFullYear(), start.getMonth() + 1, 0);
-        break;
-      case "lastQuarter":
-        const lastQuarter = Math.floor((today.getMonth() - 3) / 3);
-        start.setMonth(lastQuarter * 3, 1);
-        end = new Date(start.getFullYear(), start.getMonth() + 3, 0);
-        break;
-      case "lastYear":
-        start.setFullYear(today.getFullYear() - 1, 0, 1);
-        end.setFullYear(start.getFullYear(), 11, 31);
-        break;
-      case "all":
-        start.setFullYear(2000, 0, 1);
-        end.setFullYear(2100, 11, 31);
-        break;
-    }
-
-    return `${start.toISOString().split("T")[0]} to ${
-      end.toISOString().split("T")[0]
-    }`;
+interface DowntimeData {
+  date: string;
+  reasons: {
+    [key: string]: number;
   };
+}
 
-  const dateFilters = [
-    { label: "Today", value: getDateRangeValue("today") },
-    { label: "This Week", value: getDateRangeValue("week") },
-    { label: "This Month", value: getDateRangeValue("month") },
-    { label: "This Quarter", value: getDateRangeValue("quarter") },
-    { label: "This Year", value: getDateRangeValue("year") },
-    { label: "Last Week", value: getDateRangeValue("lastWeek") },
-    { label: "Last Month", value: getDateRangeValue("lastMonth") },
-    { label: "Last Quarter", value: getDateRangeValue("lastQuarter") },
-    { label: "Last Year", value: getDateRangeValue("lastYear") },
-    { label: "All Time", value: getDateRangeValue("all") },
+const Downtime = () => {
+  const [selectedReasons, setSelectedReasons] = useState<string[]>(["Total"]);
+
+  const reasons = [
+    "Total",
+    "Maintenance",
+    "Troubleshooting",
+    "Programming",
+    "Inspection",
+    "Break",
+    "Fixtures",
+    "Set Up/Tear Down",
+    "Training/Meeting",
+    "Other",
   ];
 
+  const [chartData, setChartData] = useState<ChartData<"line">>({
+    labels: [],
+    datasets: [],
+  });
+
+  useEffect(() => {
+    const sampleData: DowntimeData[] = [
+      { date: "2023-01-01", reasons: { Maintenance: 3, Inspection: 2 } },
+      { date: "2023-01-02", reasons: { Maintenance: 4, Break: 1 } },
+      { date: "2023-01-03", reasons: { Maintenance: 2, Break: 1 } },
+      { date: "2023-01-04", reasons: { Maintenance: 3, Break: 1 } },
+      { date: "2023-01-05", reasons: { Maintenance: 3, Break: 1 } },
+    ];
+
+    const labels = sampleData.map((data) => data.date);
+
+    const datasets = Object.keys(sampleData[0].reasons).map((reason) => {
+      return {
+        label: reason,
+        data: sampleData.map((data) => data.reasons[reason] || 0),
+        borderColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
+        tension: 0.1,
+      };
+    });
+
+    setChartData({ labels, datasets });
+  }, []);
+
+  const options = {
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        grid: {
+          display: false,
+        },
+        ticks: {
+          color: "black",
+        },
+      },
+      y: {
+        grid: {
+          display: false,
+        },
+        ticks: {
+          color: "black",
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        labels: {
+          color: "black",
+        },
+      },
+    },
+    interaction: {
+      mode: "nearest" as const,
+      axis: "x" as const,
+      intersect: false,
+    },
+  };
+
   const downtimes = [
+    {
+      reason: "Total",
+      duration: "10h",
+      percentage: 100,
+    },
     {
       reason: "Maintenance",
       duration: "3h",
@@ -100,7 +141,7 @@ const Downtime = () => {
       percentage: 2.5,
     },
     {
-      reason: "Fixturing",
+      reason: "Fixtures",
       duration: "1h 15m",
       percentage: 10,
     },
@@ -123,42 +164,77 @@ const Downtime = () => {
 
   const sortedDowntimes = downtimes.sort((a, b) => b.percentage - a.percentage);
 
-  return (
-    <section className="mt-6">
-      <div className="mx-auto">
-        <div className="rounded bg-white py-4">
-          <div className="flex justify-between border-b border-blue-50 px-4 pb-4">
-            <h3 className="text-xl font-bold">Unscheduled Downtime</h3>
-            <Dropdown options={dateFilters} />
-          </div>
-          {sortedDowntimes.map((downtime, index) => (
-            <div key={index} className="border-b border-blue-50 p-6">
-              <div className="-mx-4 flex">
-                <div className="flex w-1/2 items-center px-4">
-                  <p className="text-sm font-medium">{downtime.reason}</p>
-                </div>
-                <div className="w-1/2 px-4">
-                  <div className="flex items-center gap-1">
-                    <p className="text-xs font-medium text-blue-500">
-                      {downtime.percentage}%
-                    </p>
-                    <p className="text-sm font-medium text-gray-500">
-                      {downtime.duration}
-                    </p>
-                  </div>
+  const handleReasonChange = (reason: string) => {
+    if (reason === "Total") {
+      setSelectedReasons(["Total"]);
+    } else {
+      if (selectedReasons.includes("Total")) {
+        setSelectedReasons([reason]);
+      } else {
+        if (selectedReasons.includes(reason)) {
+          const newSelectedReasons = selectedReasons.filter(
+            (r) => r !== reason,
+          );
+          setSelectedReasons(
+            newSelectedReasons.length > 0 ? newSelectedReasons : ["Total"],
+          );
+        } else {
+          setSelectedReasons([...selectedReasons, reason]);
+        }
+      }
+    }
+  };
 
-                  <div className="flex">
-                    <div className="relative h-1 w-full rounded-full bg-blue-50">
-                      <div
-                        style={{ width: `${downtime.percentage}%` }}
-                        className="absolute left-0 top-0 h-full rounded-full bg-blue-500"
-                      />
+  console.log(selectedReasons);
+
+  return (
+    <section className="mt-4">
+      <div className="mx-auto">
+        <div className="rounded bg-white">
+          <div className="flex items-center justify-between p-4">
+            <h3 className="text-lg font-bold">Unscheduled Downtime</h3>
+          </div>
+          <div className="grid grid-cols-12 gap-4 pb-4">
+            <div className="col-span-4">
+              {sortedDowntimes.map((downtime, index) => (
+                <div
+                  key={index}
+                  className={
+                    `border-b border-blue-50 ` +
+                    (selectedReasons.includes(downtime.reason)
+                      ? "bg-gray-50"
+                      : "bg-white")
+                  }
+                >
+                  <button
+                    onClick={() => handleReasonChange(`${downtime.reason}`)}
+                    className="h-full w-full p-3"
+                  >
+                    <div className="flex w-full justify-between gap-2">
+                      <div className="flex items-center px-2">
+                        <p className="whitespace-nowrap text-xs font-medium">
+                          {downtime.reason}
+                        </p>
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-1">
+                          <p className="whitespace-nowrap text-xs font-medium text-blue-500">
+                            {downtime.percentage}%
+                          </p>
+                          <p className="whitespace-nowrap text-xs font-medium text-gray-500">
+                            {downtime.duration}
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  </button>
                 </div>
-              </div>
+              ))}
             </div>
-          ))}
+            <div className="col-span-8">
+              <Line data={chartData} options={options} />
+            </div>
+          </div>
         </div>
       </div>
     </section>

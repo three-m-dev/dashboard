@@ -27,7 +27,7 @@ const PageHeader = ({
       <section className="">
         <div className="flex flex-wrap items-center justify-between">
           <div className="mb-4 flex w-full items-center lg:mb-0 lg:w-auto">
-            <h2 className="flex h-[36px] items-center text-2xl font-bold">
+            <h2 className="flex h-[40px] items-center text-2xl font-bold">
               {title}
             </h2>
           </div>

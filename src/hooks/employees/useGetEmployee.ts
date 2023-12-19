@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { IEmployee } from "../shared/interfaces";
-
-const URL = "http://localhost:8080/api/v1/employees";
+import { IEmployee } from "../../shared/interfaces";
+import { baseUrl } from "../../utils/config";
 
 const useGetEmployee = (id: string) => {
   const [employee, setEmployee] = useState<IEmployee | null>(null);
@@ -11,7 +10,7 @@ const useGetEmployee = (id: string) => {
   useEffect(() => {
     const getEmployee = async () => {
       try {
-        const response = await axios.get(`${URL}/${id}`, {
+        const response = await axios.get(`${baseUrl}/employees/${id}`, {
           withCredentials: true,
         });
 

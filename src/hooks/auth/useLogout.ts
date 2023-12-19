@@ -1,8 +1,7 @@
 import { useContext } from "react";
 import axios from "axios";
-import { AuthContext } from "../contexts/AuthContext";
-
-const URL = "http://localhost:8080/api/v1/users/logout";
+import { AuthContext } from "../../contexts/AuthContext";
+import { baseUrl } from "../../utils/config";
 
 export const useLogout = () => {
   const authContext = useContext(AuthContext);
@@ -15,7 +14,11 @@ export const useLogout = () => {
 
   const logout = async () => {
     try {
-      await axios.post(URL, {}, { withCredentials: true });
+      await axios.post(
+        `${baseUrl}/users/logout`,
+        {},
+        { withCredentials: true },
+      );
       setIsAuthenticated(false);
     } catch (error) {
       console.error("Logout failed:", error);

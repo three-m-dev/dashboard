@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { IApplication } from "../shared/interfaces";
+import { IJob } from "../../shared/interfaces";
+import { baseUrl } from "../../utils/config";
 
-const URL = "http://localhost:8080/api/v1/applications";
-
-const useGetApplications = () => {
-  const [applicationData, setApplicationData] = useState<{
-    applications: IApplication[];
+const useGetJobs = () => {
+  const [jobData, setJobData] = useState<{
+    jobs: IJob[];
     total: number;
     pages: number;
   } | null>(null);
@@ -17,11 +16,12 @@ const useGetApplications = () => {
   const [pageSize, setPageSize] = useState<number | undefined>(undefined);
   const [fields, setFields] = useState<string[] | undefined>(undefined);
   const [error, setError] = useState<string | null>(null);
+  const [refreshToggle, setRefreshToggle] = useState(false);
 
   useEffect(() => {
-    const getApplications = async () => {
+    const getJobs = async () => {
       try {
-        const response = await axios.get(URL, {
+        const response = await axios.get(`${baseUrl}/jobs`, {
           params: {
             filter: filter ? JSON.stringify(filter) : undefined,
             sort,
@@ -33,8 +33,8 @@ const useGetApplications = () => {
         });
 
         const data = response.data;
-        setApplicationData({
-          applications: data.applications,
+        setJobData({
+          jobs: data.jobs,
           total: data.total,
           pages: data.pages,
         });
@@ -48,19 +48,24 @@ const useGetApplications = () => {
     };
 
     if (page !== undefined && pageSize !== undefined) {
-      getApplications();
+      getJobs();
     }
-  }, [filter, sort, page, pageSize, fields]);
+  }, [filter, sort, page, pageSize, fields, refreshToggle]);
+
+  const refreshJobs = () => {
+    setRefreshToggle((prev) => !prev);
+  };
 
   return {
-    applicationData,
+    jobData,
     setFilter,
     setSort,
     setPage,
     setPageSize,
     setFields,
     error,
+    refreshJobs,
   };
 };
 
-export default useGetApplications;
+export default useGetJobs;

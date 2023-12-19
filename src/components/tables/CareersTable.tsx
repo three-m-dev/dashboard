@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import RightArrowIcon from "../../assets/icons/RightArrowIcon";
 import LeftArrowIcon from "../../assets/icons/LeftArrowIcon";
 import EllipsisIcon from "../../assets/icons/EllipsisIcon";
-import useGetJobs from "../../hooks/useGetJobs";
+import useGetJobs from "../../hooks/jobs/useGetJobs";
 import { formatKebab } from "../../utils/formatter";
 
 type CareersTableProps = {

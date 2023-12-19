@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import useGetApplications from "../../hooks/useGetApplications";
+import useGetApplications from "../../hooks/applications/useGetApplications";
 import RightArrowIcon from "../../assets/icons/RightArrowIcon";
 import LeftArrowIcon from "../../assets/icons/LeftArrowIcon";
 import { SortButton } from "..";
@@ -131,7 +131,7 @@ const ApplicationsTable = ({ toggleApplicantModal }: ApplicantsTableProps) => {
                   {formatDate(application.createdAt)}
                 </td>
                 <td className="col-span-2 flex items-center">
-                  {application.job.title ? application.job.title : "N/A"}
+                  {application.job ? application.job.title : "N/A"}
                 </td>
                 <td className="col-span-2 flex items-center">
                   <span

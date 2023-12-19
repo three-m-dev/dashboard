@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import useGetEmployees from "../../hooks/useGetEmployees";
+import useGetEmployees from "../../hooks/employees/useGetEmployees";
 import RightArrowIcon from "../../assets/icons/RightArrowIcon";
 import LeftArrowIcon from "../../assets/icons/LeftArrowIcon";
 import EllipsisIcon from "../../assets/icons/EllipsisIcon";

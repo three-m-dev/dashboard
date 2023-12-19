@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { IJob } from "../shared/interfaces";
+import { baseUrl } from "../../utils/config";
+import { IDowntimeEntry } from "../../shared/interfaces";
 
-const URL = "http://localhost:8080/api/v1/jobs";
-
-const useGetJobs = () => {
-  const [jobData, setJobData] = useState<{
-    jobs: IJob[];
+const useGetDowntimeEntries = () => {
+  const [downtimeEntryData, setDowntimeEntryData] = useState<{
+    downtimeEntries: IDowntimeEntry[];
     total: number;
     pages: number;
   } | null>(null);
@@ -17,12 +16,11 @@ const useGetJobs = () => {
   const [pageSize, setPageSize] = useState<number | undefined>(undefined);
   const [fields, setFields] = useState<string[] | undefined>(undefined);
   const [error, setError] = useState<string | null>(null);
-  const [refreshToggle, setRefreshToggle] = useState(false);
 
   useEffect(() => {
-    const getJobs = async () => {
+    const getDowntimeEntries = async () => {
       try {
-        const response = await axios.get(URL, {
+        const response = await axios.get(`${baseUrl}/downtime`, {
           params: {
             filter: filter ? JSON.stringify(filter) : undefined,
             sort,
@@ -34,8 +32,8 @@ const useGetJobs = () => {
         });
 
         const data = response.data;
-        setJobData({
-          jobs: data.jobs,
+        setDowntimeEntryData({
+          downtimeEntries: data.downtimeEntries,
           total: data.total,
           pages: data.pages,
         });
@@ -49,24 +47,19 @@ const useGetJobs = () => {
     };
 
     if (page !== undefined && pageSize !== undefined) {
-      getJobs();
+      getDowntimeEntries();
     }
-  }, [filter, sort, page, pageSize, fields, refreshToggle]);
-
-  const refreshJobs = () => {
-    setRefreshToggle((prev) => !prev);
-  };
+  }, [filter, sort, page, pageSize, fields]);
 
   return {
-    jobData,
+    downtimeEntryData,
     setFilter,
     setSort,
     setPage,
     setPageSize,
     setFields,
     error,
-    refreshJobs,
   };
 };
 
-export default useGetJobs;
+export default useGetDowntimeEntries;

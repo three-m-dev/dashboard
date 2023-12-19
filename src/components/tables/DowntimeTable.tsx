@@ -1,20 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SortButton } from "..";
+import useGetDowntimeEntries from "../../hooks/downtime/useGetDowntimeEntries";
 
 type Props = {
-  toggleDowntimeModal?: () => void;
+  toggleDowntimeModal: (mode: string, downtimeEntryData?: any) => void;
 };
 
 const DowntimeTable = ({ toggleDowntimeModal }: Props) => {
+  const { downtimeEntryData, setPage, setPageSize, setSort } =
+    useGetDowntimeEntries();
+
   const [actionDropdown, setActionDropdown] = useState(false);
 
   const toggleActionDropdown = () => {
     setActionDropdown(!actionDropdown);
   };
 
-  const intitialPageSize = 10;
+  const initialPageSize = 10;
   const [localPage, setLocalPage] = useState<number>(1);
   const [localSort, setLocalSort] = useState<string>("date,ASC");
+
+  useEffect(() => {
+    setPage(localPage);
+    setPageSize(initialPageSize);
+    setSort(localSort);
+  }, [localPage, localSort, setPage, setPageSize, setSort]);
 
   const updateSort = (fieldToSort: string) => {
     let newSort = `${fieldToSort},ASC`;
@@ -26,7 +36,7 @@ const DowntimeTable = ({ toggleDowntimeModal }: Props) => {
     }
 
     setLocalSort(newSort);
-    // setSort(newSort);
+    setSort(newSort);
   };
 
   return (
@@ -49,13 +59,13 @@ const DowntimeTable = ({ toggleDowntimeModal }: Props) => {
               </th>
               <th className="col-span-2 pb-2 pl-4 font-medium">
                 <button
-                  onClick={() => updateSort("operator")}
+                  onClick={() => updateSort("operatorId")}
                   className="flex items-center gap-1"
                 >
                   Operator
                   <SortButton
-                    isSorted={localSort.startsWith("operator")}
-                    isDesc={localSort === "operator,DESC"}
+                    isSorted={localSort.startsWith("operatorId")}
+                    isDesc={localSort === "operatorId,DESC"}
                   />
                 </button>
               </th>
@@ -86,6 +96,28 @@ const DowntimeTable = ({ toggleDowntimeModal }: Props) => {
               <th className="col-span-2 flex pb-2 font-medium">Actions</th>
             </tr>
           </thead>
+          <tbody>
+            {downtimeEntryData?.downtimeEntries.map((downtimeEntry, index) => (
+              <tr
+                key={index}
+                className={`grid grid-cols-10 rounded py-2 text-sm capitalize  ${
+                  index % 2 === 0 ? "bg-gray-100" : "bg-white"
+                }`}
+              >
+                <td className="col-span-2 flex items-center px-4">
+                  <button
+                    onClick={() => toggleDowntimeModal("view", downtimeEntry)}
+                    className="hover:underline"
+                  >
+                    {downtimeEntry.date}{" "}
+                  </button>
+                </td>
+                <td className="col-span-2 flex items-center px-4">
+                  {downtimeEntry.operatorId}
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </div>
     </section>

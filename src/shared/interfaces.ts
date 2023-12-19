@@ -89,3 +89,15 @@ export interface IRating {
   notes?: string;
   createdBy: string;
 }
+
+export interface IDowntimeEntry {
+  id: string;
+  operatorId: string;
+  date: string;
+  downtime: {
+    [reason: string]: number;
+  };
+  notes?: string;
+  createdBy: string;
+  updatedBy?: string;
+}

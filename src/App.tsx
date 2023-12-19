@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ReactNode, useContext } from "react";
 import { AuthContext } from "./contexts/AuthContext";
-import { useSession } from "./hooks/useSession";
+import { useSession } from "./hooks/auth/useSession";
 import { Careers, Content, Dashboard, Login, Production, Team } from "./pages";
 
 type ProtectedRouteProps = {

@@ -192,8 +192,8 @@ const Output = () => {
               <Line data={chartData} options={options} />
             </div>
 
-            <div className="-m-3 flex flex-wrap bg-white">
-              <div className="w-1/2 p-3">
+            <div className="grid grid-cols-12 gap-4 bg-white">
+              <div className="col-span-3">
                 <div className="rounded border px-6 py-4">
                   <p className="text-xs text-gray-500">
                     This week's expected output
@@ -201,7 +201,7 @@ const Output = () => {
                   <h3 className="text-3xl font-bold">$245,000</h3>
                 </div>
               </div>
-              <div className="w-1/2 p-3">
+              <div className="col-span-3">
                 <div className="rounded border px-6 py-4">
                   <p className="text-xs text-gray-500">
                     This week's actual output
@@ -209,7 +209,7 @@ const Output = () => {
                   <h3 className="text-3xl font-bold">$190,000</h3>
                 </div>
               </div>
-              <div className="w-1/2 p-3">
+              <div className="col-span-3">
                 <div className="rounded border px-6 py-4">
                   <p className="text-xs text-gray-500">
                     Last week's expected output
@@ -217,7 +217,7 @@ const Output = () => {
                   <h3 className="text-3xl font-bold">$220,000</h3>
                 </div>
               </div>
-              <div className="w-1/2 p-3">
+              <div className="col-span-3">
                 <div className="rounded border px-6 py-4">
                   <p className="text-xs text-gray-500">
                     Last week's actual output

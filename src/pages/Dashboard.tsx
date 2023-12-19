@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
 import { Calendar, Layout, PageHeader } from "../components";
 import Improvements from "../components/Improvements";
+import { Tab } from "../shared/types";
+import FullScreenIcon from "../assets/icons/FullScreenIcon";
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("overview");
@@ -58,18 +60,51 @@ const Dashboard = () => {
     console.log("Button Clicked");
   };
 
-  const tabs = [
+  const tabs: Tab[] = [
     {
       value: "overview",
-      buttons: [{ label: "fullscreen", onClick: toggleFullScreen }],
+      buttons: [
+        {
+          text: "Fullscreen",
+          type: "button",
+          onClick: () => toggleFullScreen(),
+          theme: "primary",
+          icon: <FullScreenIcon />,
+          destination: null,
+          isLoading: false,
+          isDisabled: false,
+        },
+      ],
     },
     {
       value: "calendar",
-      buttons: [{ label: "fullscreen", onClick: handleClick }],
+      buttons: [
+        {
+          text: "Fullscreen",
+          type: "button",
+          onClick: () => toggleFullScreen(),
+          theme: "primary",
+          icon: <FullScreenIcon />,
+          destination: null,
+          isLoading: false,
+          isDisabled: false,
+        },
+      ],
     },
     {
       value: "improvements",
-      buttons: [{ label: "fullscreen", onClick: handleClick }],
+      buttons: [
+        {
+          text: "Fullscreen",
+          type: "button",
+          onClick: () => toggleFullScreen(),
+          theme: "primary",
+          icon: <FullScreenIcon />,
+          destination: null,
+          isLoading: false,
+          isDisabled: false,
+        },
+      ],
     },
   ];
 

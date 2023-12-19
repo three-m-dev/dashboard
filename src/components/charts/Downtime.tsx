@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -71,7 +71,7 @@ const Downtime = () => {
       } else {
         selectedReasons.forEach((reason) => {
           const reasonData = labels.map(
-            (label) => data[label].downtime[reason] || 0,
+            (label) => data[label].downtime[reason.toLowerCase()] || 0,
           );
 
           datasets.push({
@@ -87,21 +87,33 @@ const Downtime = () => {
     }
   }, [downtimeReportData, selectedReasons]);
 
-  function dynamicBorderColor(reason: string): string {
+  const dynamicBorderColor = (reason: string): string => {
     const colors: { [key: string]: string } = {
       Maintenance: "rgba(54, 162, 235, 1)",
       Troubleshooting: "rgba(255, 206, 86, 1)",
       Programming: "rgba(75, 192, 192, 1)",
       Inspection: "rgba(153, 102, 255, 1)",
       Break: "rgba(255, 159, 64, 1)",
-      Fixtures: "rgba(199, 199, 199, 1)",
-      "Set Up/Tear Down": "rgba(255, 99, 132, 1)",
-      "Training/Meeting": "rgba(255, 205, 86, 1)",
+      Fixturing: "rgba(199, 199, 199, 1)",
+      Changeover: "rgba(255, 99, 132, 1)",
+      Training: "rgba(255, 205, 86, 1)",
       Other: "rgba(54, 162, 235, 1)",
     };
 
     return colors[reason] || "rgba(201, 203, 207, 1)";
-  }
+  };
+
+  const getMonday = (dateString: string) => {
+    const date = new Date(dateString);
+    const day = date.getDay();
+    const diff = date.getDate() - day + (day === 0 ? -6 : 1);
+    const monday = new Date(date.setDate(diff));
+    const month = `${monday.getMonth() + 1}`.padStart(2, "0");
+    const dayOfMonth = `${monday.getDate()}`.padStart(2, "0");
+    const year = monday.getFullYear();
+
+    return `${month}/${dayOfMonth}/${year}`;
+  };
 
   const options = {
     maintainAspectRatio: false,
@@ -129,68 +141,32 @@ const Downtime = () => {
           color: "black",
         },
       },
-    },
-    interaction: {
-      mode: "nearest" as const,
-      axis: "x" as const,
-      intersect: false,
+      tooltip: {
+        mode: "nearest",
+        axis: "x",
+        intersect: false,
+        callbacks: {
+          title: function (context: any) {
+            const title = context[0].label;
+            return getMonday(title) + " - " + title;
+          },
+        },
+      },
     },
   };
 
-  const downtimes = [
-    {
-      reason: "Total",
-      duration: "10h",
-      percentage: 100,
-    },
-    {
-      reason: "Maintenance",
-      duration: "3h",
-      percentage: 25,
-    },
-    {
-      reason: "Troubleshooting",
-      duration: "2h 30m",
-      percentage: 20,
-    },
-    {
-      reason: "Programming",
-      duration: "2h 45m",
-      percentage: 22.5,
-    },
-    {
-      reason: "Inspection",
-      duration: "1h 45m",
-      percentage: 15,
-    },
-    {
-      reason: "Break",
-      duration: "30m",
-      percentage: 2.5,
-    },
-    {
-      reason: "Fixtures",
-      duration: "1h 15m",
-      percentage: 10,
-    },
-    {
-      reason: "Set Up/Tear Down",
-      duration: "1h 30m",
-      percentage: 12.5,
-    },
-    {
-      reason: "Training/Meeting",
-      duration: "1h 15m",
-      percentage: 10,
-    },
-    {
-      reason: "Other",
-      duration: "45m",
-      percentage: 5,
-    },
+  const reasons = [
+    "Total",
+    "Maintenance",
+    "Troubleshooting",
+    "Programming",
+    "Inspection",
+    "Break",
+    "Fixturing",
+    "Changeover",
+    "Training",
+    "Other",
   ];
-
-  const sortedDowntimes = downtimes.sort((a, b) => b.percentage - a.percentage);
 
   const handleReasonChange = (reason: string) => {
     if (reason === "Total") {
@@ -222,33 +198,33 @@ const Downtime = () => {
           </div>
           <div className="grid grid-cols-12 gap-4 pb-4">
             <div className="col-span-4">
-              {sortedDowntimes.map((downtime, index) => (
+              {reasons.map((reason, index) => (
                 <div
                   key={index}
                   className={
                     `border-b border-blue-50 ` +
-                    (selectedReasons.includes(downtime.reason)
+                    (selectedReasons.includes(reason)
                       ? "bg-gray-50"
                       : "bg-white")
                   }
                 >
                   <button
-                    onClick={() => handleReasonChange(`${downtime.reason}`)}
+                    onClick={() => handleReasonChange(`${reason}`)}
                     className="h-full w-full p-3"
                   >
                     <div className="flex w-full justify-between gap-2">
                       <div className="flex items-center px-2">
                         <p className="whitespace-nowrap text-xs font-medium">
-                          {downtime.reason}
+                          {reason}
                         </p>
                       </div>
                       <div>
                         <div className="flex items-center gap-1">
                           <p className="whitespace-nowrap text-xs font-medium text-blue-500">
-                            {downtime.percentage}%
+                            5%
                           </p>
                           <p className="whitespace-nowrap text-xs font-medium text-gray-500">
-                            {downtime.duration}
+                            5
                           </p>
                         </div>
                       </div>

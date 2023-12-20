@@ -64,10 +64,10 @@ export interface IDowntimeEntry {
 }
 
 export interface IDowntimeDetails {
-  totalDowntime: number;
   downtime: {
     [key: string]: number;
   };
+  total: number;
 }
 
 export interface IDowntimeReportData {

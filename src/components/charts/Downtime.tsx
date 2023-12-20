@@ -41,6 +41,7 @@ const Downtime = () => {
 
   const reasons = [
     "Total",
+    "Tooling",
     "Maintenance",
     "Troubleshooting",
     "Programming",

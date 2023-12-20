@@ -20,8 +20,16 @@ const DowntimeModal = ({ mode, onClose, triggerRefresh }: Props) => {
   ];
 
   const reasons = [
+    { label: "Tooling", value: "tooling" },
     { label: "Maintenance", value: "maintenance" },
     { label: "Troubleshooting", value: "troubleshooting" },
+    { label: "Programming", value: "programming" },
+    { label: "Inspection", value: "inspection" },
+    { label: "Break", value: "break" },
+    { label: "Fixturing", value: "fixturing" },
+    { label: "Changeover", value: "changeover" },
+    { label: "Training", value: "training" },
+    { label: "Other", value: "other" },
   ];
 
   const [downtimeFormData, setDowntimeFormData] = useState({

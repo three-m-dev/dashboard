@@ -57,25 +57,7 @@ const Sidebar = (props: Props) => {
     <>
       {props.isOpen && (
         <div>
-          <nav className="bg-gray-800 px-6 py-6 lg:hidden">
-            <div className="flex items-center justify-between">
-              <a className="text-2xl font-semibold text-white" href="#">
-                
-              </a>
-              <button className="navbar-burger flex items-center rounded focus:outline-none">
-                <svg
-                  className="block h-8 w-8 rounded bg-blue-500 p-2 text-white hover:bg-blue-600"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                >
-                  <title>Mobile menu</title>
-                  <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
-                </svg>
-              </button>
-            </div>
-          </nav>
-          <div className="navbar-menu relative z-50 hidden lg:block">
+          <div className="navbar-menu relative z-50">
             <div className="navbar-backdrop fixed inset-0 bg-gray-800 opacity-10 lg:hidden"></div>
             <nav className="fixed bottom-0 left-0 top-0 flex w-3/4 flex-col overflow-y-auto bg-gray-800 py-4 sm:max-w-xs lg:w-64">
               <div className="mb-4 flex w-full items-center justify-center border-gray-700 pb-4 lg:border-b">
@@ -137,7 +119,7 @@ const Sidebar = (props: Props) => {
               </div>
             </nav>
           </div>
-          <div className="mx-auto lg:ml-64"></div>
+          <div className="ml-64"></div>
         </div>
       )}
       {logoutModalOpen && <LogoutModal onClose={() => toggleLogoutModal} />}

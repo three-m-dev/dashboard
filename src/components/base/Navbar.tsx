@@ -1,3 +1,6 @@
+import ListIcon from "../../assets/icons/ListIcon";
+import SearchIcon from "../../assets/icons/SearchIcon";
+
 type NavbarProps = {
   onToggleSidebar: () => void;
 };
@@ -7,53 +10,19 @@ const Navbar = (props: NavbarProps) => {
     <section className="bg-white p-4">
       <nav className="relative">
         <div className="flex items-center">
-          <div className="mr-auto hidden items-center lg:flex">
+          <div className="mr-auto items-center">
             <button
               onClick={props.onToggleSidebar}
-              className="rounded-md bg-blue-50 px-2 py-3 hover:bg-blue-100"
+              className="rounded-md bg-blue-50 px-2.5 py-2.5 text-primary hover:bg-blue-100"
             >
-              <svg
-                className="text-blue-500"
-                width="18"
-                height="10"
-                viewBox="0 0 18 10"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M1.50002 1.66667H16.5C16.721 1.66667 16.933 1.57887 17.0893 1.42259C17.2456 1.26631 17.3334 1.05435 17.3334 0.833333C17.3334 0.61232 17.2456 0.400358 17.0893 0.244078C16.933 0.0877975 16.721 0 16.5 0H1.50002C1.27901 0 1.06704 0.0877975 0.910765 0.244078C0.754484 0.400358 0.666687 0.61232 0.666687 0.833333C0.666687 1.05435 0.754484 1.26631 0.910765 1.42259C1.06704 1.57887 1.27901 1.66667 1.50002 1.66667V1.66667ZM16.5 8.33333H1.50002C1.27901 8.33333 1.06704 8.42113 0.910765 8.57741C0.754484 8.73369 0.666687 8.94565 0.666687 9.16667C0.666687 9.38768 0.754484 9.59964 0.910765 9.75592C1.06704 9.9122 1.27901 10 1.50002 10H16.5C16.721 10 16.933 9.9122 17.0893 9.75592C17.2456 9.59964 17.3334 9.38768 17.3334 9.16667C17.3334 8.94565 17.2456 8.73369 17.0893 8.57741C16.933 8.42113 16.721 8.33333 16.5 8.33333ZM16.5 4.16667H1.50002C1.27901 4.16667 1.06704 4.25446 0.910765 4.41074C0.754484 4.56702 0.666687 4.77899 0.666687 5C0.666687 5.22101 0.754484 5.43298 0.910765 5.58926C1.06704 5.74554 1.27901 5.83333 1.50002 5.83333H16.5C16.721 5.83333 16.933 5.74554 17.0893 5.58926C17.2456 5.43298 17.3334 5.22101 17.3334 5C17.3334 4.77899 17.2456 4.56702 17.0893 4.41074C16.933 4.25446 16.721 4.16667 16.5 4.16667Z"
-                  fill="currentColor"
-                ></path>
-              </svg>
+              <ListIcon />
             </button>
           </div>
-          <div className="lg:hidden">
-            <button className="flex items-center">
-              <svg
-                className="block h-8 w-8 rounded bg-blue-100 p-2 text-blue-500"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-              >
-                <title>Mobile menu</title>
-                <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
-              </svg>
-            </button>
-          </div>
-          <div className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 transform lg:flex lg:w-auto lg:space-x-10">
+
+          {/* <div className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 transform lg:flex lg:w-auto lg:space-x-10">
             <div className="mr-auto hidden items-center rounded border pl-4 lg:flex">
               <button className="mr-2 text-gray-200 hover:text-gray-300">
-                <svg
-                  className="h-5 w-5"
-                  viewBox="0 0 21 21"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M20.7 19.3L17 15.6C20.1 11.7 19.5 6 15.6 2.9C11.7 -0.2 5.99999 0.5 2.89999 4.3C-0.200006 8.2 0.499995 13.9 4.29999 17C7.59999 19.6 12.3 19.6 15.6 17L19.3 20.7C19.7 21.1 20.3 21.1 20.7 20.7C21.1 20.3 21.1 19.7 20.7 19.3ZM9.99999 17C6.09999 17 2.99999 13.9 2.99999 10C2.99999 6.1 6.09999 3 9.99999 3C13.9 3 17 6.1 17 10C17 13.9 13.9 17 9.99999 17Z"
-                    fill="currentColor"
-                  ></path>
-                </svg>
+                <SearchIcon />
               </button>
               <input
                 className="py-3 pl-2 text-sm text-gray-200"
@@ -61,23 +30,8 @@ const Navbar = (props: NavbarProps) => {
                 placeholder="Type to search..."
               />
             </div>
-          </div>
+          </div> */}
           <ul className="mr-6 hidden lg:flex lg:justify-end">
-            <li className="mr-6">
-              <a className="text-gray-200 hover:text-gray-300" href="#">
-                <svg
-                  className="h-5 w-5"
-                  viewBox="0 0 18 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M15 0H3C2.20435 0 1.44129 0.316071 0.87868 0.87868C0.316071 1.44129 0 2.20435 0 3V14C0 14.7956 0.316071 15.5587 0.87868 16.1213C1.44129 16.6839 2.20435 17 3 17H5.59L8.29 19.71C8.38344 19.8027 8.49426 19.876 8.61609 19.9258C8.73793 19.9755 8.86839 20.0008 9 20C9.23834 20 9.46886 19.9149 9.65 19.76L12.87 17H15C15.7956 17 16.5587 16.6839 17.1213 16.1213C17.6839 15.5587 18 14.7956 18 14V3C18 2.20435 17.6839 1.44129 17.1213 0.87868C16.5587 0.316071 15.7956 0 15 0ZM16 14C16 14.2652 15.8946 14.5196 15.7071 14.7071C15.5196 14.8946 15.2652 15 15 15H12.5C12.2617 15 12.0311 15.0851 11.85 15.24L9.05 17.64L6.71 15.29C6.61656 15.1973 6.50574 15.124 6.38391 15.0742C6.26207 15.0245 6.13161 14.9992 6 15H3C2.73478 15 2.48043 14.8946 2.29289 14.7071C2.10536 14.5196 2 14.2652 2 14V3C2 2.73478 2.10536 2.48043 2.29289 2.29289C2.48043 2.10536 2.73478 2 3 2H15C15.2652 2 15.5196 2.10536 15.7071 2.29289C15.8946 2.48043 16 2.73478 16 3V14Z"
-                    fill="currentColor"
-                  ></path>
-                </svg>
-              </a>
-            </li>
             <li>
               <a className="text-gray-200 hover:text-gray-300" href="#">
                 <svg
@@ -100,28 +54,9 @@ const Navbar = (props: NavbarProps) => {
                 <p className="text-sm">Jacob Reppuhn</p>
                 <p className="text-sm text-gray-500">Software Engineer</p>
               </div>
-              <div className="mr-2">
-                <img
-                  className="h-10 w-10 rounded-full object-cover object-right"
-                  src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80"
-                  alt=""
-                />
+              <div className="flex h-[40px] w-[40px] items-center justify-center rounded-full bg-gray-100 text-lg text-gray-400">
+                JR
               </div>
-              <span>
-                <svg
-                  className="text-gray-400"
-                  width="10"
-                  height="6"
-                  viewBox="0 0 10 6"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M9.08335 0.666657C8.75002 0.333323 8.25002 0.333323 7.91669 0.666657L5.00002 3.58332L2.08335 0.666657C1.75002 0.333323 1.25002 0.333323 0.916687 0.666657C0.583354 0.99999 0.583354 1.49999 0.916687 1.83332L4.41669 5.33332C4.58335 5.49999 4.75002 5.58332 5.00002 5.58332C5.25002 5.58332 5.41669 5.49999 5.58335 5.33332L9.08335 1.83332C9.41669 1.49999 9.41669 0.99999 9.08335 0.666657Z"
-                    fill="currentColor"
-                  ></path>
-                </svg>
-              </span>
             </button>
           </div>
         </div>

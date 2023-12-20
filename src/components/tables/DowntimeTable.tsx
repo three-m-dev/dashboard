@@ -1,30 +1,27 @@
 import { useEffect, useState } from "react";
 import { SortButton } from "..";
 import useGetDowntimeEntries from "../../hooks/downtime/useGetDowntimeEntries";
+import { formatDate } from "../../utils/formatter";
 
 type Props = {
   toggleDowntimeModal: (mode: string, downtimeEntryData?: any) => void;
+  refreshData: boolean;
 };
 
-const DowntimeTable = ({ toggleDowntimeModal }: Props) => {
-  const { downtimeEntryData, setPage, setPageSize, setSort } =
-    useGetDowntimeEntries();
-
+const DowntimeTable = ({ toggleDowntimeModal, refreshData }: Props) => {
   const [actionDropdown, setActionDropdown] = useState(false);
-
-  const toggleActionDropdown = () => {
-    setActionDropdown(!actionDropdown);
-  };
 
   const initialPageSize = 10;
   const [localPage, setLocalPage] = useState<number>(1);
   const [localSort, setLocalSort] = useState<string>("date,ASC");
 
-  useEffect(() => {
-    setPage(localPage);
-    setPageSize(initialPageSize);
-    setSort(localSort);
-  }, [localPage, localSort, setPage, setPageSize, setSort]);
+  const {
+    downtimeEntryData,
+    setPage,
+    setPageSize,
+    setSort,
+    refreshDowntimeEntries,
+  } = useGetDowntimeEntries();
 
   const updateSort = (fieldToSort: string) => {
     let newSort = `${fieldToSort},ASC`;
@@ -38,6 +35,20 @@ const DowntimeTable = ({ toggleDowntimeModal }: Props) => {
     setLocalSort(newSort);
     setSort(newSort);
   };
+
+  const toggleActionDropdown = () => {
+    setActionDropdown(!actionDropdown);
+  };
+
+  useEffect(() => {
+    setPage(localPage);
+    setPageSize(initialPageSize);
+    setSort(localSort);
+  }, [localPage, localSort, setPage, setPageSize, setSort]);
+
+  useEffect(() => {
+    refreshDowntimeEntries();
+  }, [refreshData]);
 
   return (
     <section>
@@ -109,7 +120,7 @@ const DowntimeTable = ({ toggleDowntimeModal }: Props) => {
                     onClick={() => toggleDowntimeModal("view", downtimeEntry)}
                     className="hover:underline"
                   >
-                    {downtimeEntry.date}{" "}
+                    {formatDate(downtimeEntry.date)}
                   </button>
                 </td>
                 <td className="col-span-2 flex items-center px-4">

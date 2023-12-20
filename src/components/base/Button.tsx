@@ -4,7 +4,7 @@ import { ButtonSpinner } from "../../assets";
 type Props = {
   text: string;
   type: "button" | "link";
-  onClick?: () => void;
+  onClick?: (event: React.MouseEvent<HTMLElement>) => void;
   theme?: "primary" | "secondary";
   icon?: React.ReactNode;
   destination?: string | null;

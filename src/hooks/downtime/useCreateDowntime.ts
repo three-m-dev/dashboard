@@ -26,6 +26,7 @@ export const useCreateDowntimeEntry = () => {
       setDowntimeEntry(response.data);
     } catch (error: any) {
       setError(error.response ? error.response.data.message : error.message);
+      throw error;
     } finally {
       setLoading(false);
     }

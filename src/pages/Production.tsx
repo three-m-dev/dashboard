@@ -16,15 +16,20 @@ const Production = () => {
 
   const [downtimeModalOpen, setDowntimeModalOpen] = useState(false);
   const [downtimeModalMode, setDowntimeModalMode] = useState("");
+
   const [resourceModalOpen, setResourceModalOpen] = useState(false);
   const [operatorModalOpen, setOperatorModalOpen] = useState(false);
+
+  const [refreshDowntime, setRefreshDowntime] = useState(false);
 
   const toggleDownTimeModal = (mode: string = "view") => {
     setDowntimeModalMode(mode);
     setDowntimeModalOpen(!downtimeModalOpen);
   };
 
-  const downtimeRefresh = () => {};
+  const triggerDowntimeRefresh = () => {
+    setRefreshDowntime((prev) => !prev);
+  };
 
   const renderContent = () => {
     switch (activeTab) {
@@ -36,7 +41,12 @@ const Production = () => {
           </>
         );
       case "downtime":
-        return <DowntimeTable toggleDowntimeModal={() => handleClick()} />;
+        return (
+          <DowntimeTable
+            toggleDowntimeModal={() => handleClick()}
+            refreshData={refreshDowntime}
+          />
+        );
       case "resources":
         return <Resources />;
       case "operators":
@@ -125,7 +135,7 @@ const Production = () => {
         <DowntimeModal
           mode={downtimeModalMode}
           onClose={toggleDownTimeModal}
-          triggerRefresh={downtimeRefresh}
+          triggerRefresh={triggerDowntimeRefresh}
         />
       )}
     </Layout>

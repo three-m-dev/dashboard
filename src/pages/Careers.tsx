@@ -25,12 +25,10 @@ const Careers = () => {
   const [refreshApplications, setRefreshApplications] = useState(false);
 
   const triggerJobRefresh = () => {
-    console.log("Refreshing");
     setRefreshJobs((prev) => !prev);
   };
 
   const triggerApplicationRefresh = () => {
-    console.log("Refreshing");
     setRefreshApplications((prev) => !prev);
   };
 

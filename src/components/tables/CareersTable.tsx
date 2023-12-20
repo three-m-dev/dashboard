@@ -15,15 +15,12 @@ const CareersTable = ({
   refreshData,
 }: CareersTableProps) => {
   const [actionDropdown, setActionDropdown] = useState(false);
+
   const initialPageSize = 10;
   const [localPage, setLocalPage] = useState<number>(1);
   const [localSort, setLocalSort] = useState<string>("title,ASC");
 
   const { jobData, setPage, setPageSize, setSort, refreshJobs } = useGetJobs();
-
-  const toggleActionDropdown = () => {
-    setActionDropdown(!actionDropdown);
-  };
 
   const updateSort = (fieldToSort: string) => {
     let newSort = `${fieldToSort},ASC`;
@@ -49,6 +46,10 @@ const CareersTable = ({
       default:
         return "bg-gray-200 text-gray-600";
     }
+  };
+
+  const toggleActionDropdown = () => {
+    setActionDropdown(!actionDropdown);
   };
 
   useEffect(() => {

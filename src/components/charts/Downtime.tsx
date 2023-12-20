@@ -12,6 +12,7 @@ import {
 } from "chart.js";
 import useGenerateDowntimeReport from "../../hooks/downtime/useGenerateDowntimeReport";
 import { IChartData, IDowntimeReportData } from "../../shared/interfaces";
+import { formatMinutes } from "../../utils/formatter";
 
 ChartJS.register(
   CategoryScale,
@@ -117,20 +118,6 @@ const Downtime = () => {
         }
       }
     }
-  };
-
-  const getHoursAndMinutes = (duration: number): string => {
-    if (isNaN(duration) || duration < 0) {
-      return "Invalid input";
-    }
-
-    const hours = Math.floor(duration / 60);
-    const remainingMinutes = duration % 60;
-
-    if (hours > 0) {
-      return `${hours}h ${remainingMinutes}m`;
-    }
-    return `${remainingMinutes}m`;
   };
 
   const getBorderColor = (reason: string): string => {
@@ -252,7 +239,7 @@ const Downtime = () => {
                               {reason !== "Total" ? percentage : ""}
                             </p>
                             <p className="whitespace-nowrap text-xs font-medium text-gray-500">
-                              {getHoursAndMinutes(total)}
+                              {formatMinutes(total)}
                             </p>
                           </div>
                         </div>

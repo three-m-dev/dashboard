@@ -15,7 +15,9 @@ type Props = {
 const DowntimeModal = ({ mode, onClose, triggerRefresh }: Props) => {
   const { createDowntimeEntry, loading, error } = useCreateDowntimeEntry();
 
-  const operators = [{ label: "Jacob Reppuhn", value: "12345" }];
+  const operators = [
+    { label: "Jacob Reppuhn", value: "4f16d561-29de-44d9-a2bd-3771ef173a13" },
+  ];
 
   const reasons = [
     { label: "Maintenance", value: "maintenance" },
@@ -25,7 +27,7 @@ const DowntimeModal = ({ mode, onClose, triggerRefresh }: Props) => {
   const [downtimeFormData, setDowntimeFormData] = useState({
     operatorId: "",
     date: "",
-    downtime: [] as { reason: string; minutes: number }[],
+    downtime: [] as { [key: string]: number }[],
     notes: "",
   });
 
@@ -36,10 +38,7 @@ const DowntimeModal = ({ mode, onClose, triggerRefresh }: Props) => {
     if (currentReason && currentMinutes > 0) {
       setDowntimeFormData((prevData) => ({
         ...prevData,
-        downtime: [
-          ...prevData.downtime,
-          { reason: currentReason, minutes: currentMinutes },
-        ],
+        downtime: [...prevData.downtime, { [currentReason]: currentMinutes }],
       }));
       setCurrentReason("");
       setCurrentMinutes(0);
@@ -80,11 +79,10 @@ const DowntimeModal = ({ mode, onClose, triggerRefresh }: Props) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(downtimeFormData);
 
     try {
       await createDowntimeEntry(downtimeFormData);
-      console.log("Entry created successfully");
+      console.log(downtimeFormData);
       onClose();
       triggerRefresh();
     } catch (err) {
@@ -134,13 +132,19 @@ const DowntimeModal = ({ mode, onClose, triggerRefresh }: Props) => {
             Minutes
           </label>
           <input
-            type="number"
+            type="text"
             name="minutes"
+            pattern="\d*"
             className="h-[40px] w-full rounded border border-gray-300 px-2 py-1"
             value={currentMinutes}
-            onChange={(e) => setCurrentMinutes(Number(e.target.value))}
+            onChange={(e) => {
+              if (e.target.value === "" || /^\d+$/.test(e.target.value)) {
+                setCurrentMinutes(Number(e.target.value));
+              }
+            }}
           />
         </div>
+
         <div className="col-span-4 flex items-end">
           <Button
             text="Add"
@@ -155,17 +159,22 @@ const DowntimeModal = ({ mode, onClose, triggerRefresh }: Props) => {
         </div>
         <div className="col-span-12">
           <ul>
-            {downtimeFormData.downtime.map((item, index) => (
-              <li key={index} className="flex items-center gap-2">
-                {item.reason} - {item.minutes} minutes
-                <button
-                  onClick={() => deleteReason(index)}
-                  className="hover:text-red-500"
-                >
-                  <TrashIcon />
-                </button>
-              </li>
-            ))}
+            {downtimeFormData.downtime.map((downtime, index) => {
+              const [reason, minutes] = Object.entries(downtime)[0];
+              return (
+                <li key={index} className="flex items-center">
+                  <span className="capitalize">{reason}</span>: {minutes}{" "}
+                  minutes
+                  <button
+                    type="button"
+                    onClick={() => deleteReason(index)}
+                    className="text-red-500 hover:text-red-700"
+                  >
+                    <TrashIcon />
+                  </button>
+                </li>
+              );
+            })}
           </ul>
         </div>
         <div className="col-span-12">

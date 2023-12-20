@@ -52,10 +52,12 @@ export interface IDepartment {
 export interface IDowntimeEntry {
   id: string;
   operatorId: string;
+  operator: Partial<IEmployee>;
   date: string;
   downtime: {
     [reason: string]: number;
   };
+  total: number;
   notes?: string;
   createdBy: string;
   updatedBy?: string;

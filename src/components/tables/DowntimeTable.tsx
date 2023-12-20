@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { SortButton } from "..";
 import useGetDowntimeEntries from "../../hooks/downtime/useGetDowntimeEntries";
-import { formatDate } from "../../utils/formatter";
+import { formatDate, formatMinutes } from "../../utils/formatter";
 
 type Props = {
   toggleDowntimeModal: (mode: string, downtimeEntryData?: any) => void;
@@ -70,13 +70,13 @@ const DowntimeTable = ({ toggleDowntimeModal, refreshData }: Props) => {
               </th>
               <th className="col-span-2 pb-2 pl-4 font-medium">
                 <button
-                  onClick={() => updateSort("operatorId")}
+                  onClick={() => updateSort("operator.firstName")}
                   className="flex items-center gap-1"
                 >
                   Operator
                   <SortButton
-                    isSorted={localSort.startsWith("operatorId")}
-                    isDesc={localSort === "operatorId,DESC"}
+                    isSorted={localSort.startsWith("operator.firstName")}
+                    isDesc={localSort === "operator.firstName,DESC"}
                   />
                 </button>
               </th>
@@ -97,7 +97,7 @@ const DowntimeTable = ({ toggleDowntimeModal, refreshData }: Props) => {
                   onClick={() => updateSort("total")}
                   className="flex items-center gap-1"
                 >
-                  Total
+                  Highest Reason
                   <SortButton
                     isSorted={localSort.startsWith("total")}
                     isDesc={localSort === "total,DESC"}
@@ -124,7 +124,12 @@ const DowntimeTable = ({ toggleDowntimeModal, refreshData }: Props) => {
                   </button>
                 </td>
                 <td className="col-span-2 flex items-center px-4">
-                  {downtimeEntry.operatorId}
+                  {downtimeEntry.operator.firstName +
+                    " " +
+                    downtimeEntry.operator.lastName}
+                </td>
+                <td className="col-span-2 flex items-center px-4">
+                  {formatMinutes(downtimeEntry.total)}
                 </td>
               </tr>
             ))}

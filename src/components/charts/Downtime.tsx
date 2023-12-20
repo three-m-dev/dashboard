@@ -91,6 +91,11 @@ const Downtime = () => {
         },
       },
     },
+    interaction: {
+      mode: "nearest" as const,
+      axis: "x" as const,
+      intersect: false,
+    },
   };
 
   const handleReasonChange = (reason: string) => {

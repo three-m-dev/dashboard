@@ -10,7 +10,6 @@ import {
   Legend,
   Filler,
 } from "chart.js";
-import Dropdown from "../base/Dropdown";
 
 ChartJS.register(
   CategoryScale,
@@ -25,13 +24,10 @@ ChartJS.register(
 
 const Output = () => {
   const sampleData = [
-    { weekOf: "12/03/2023", projected: 0, actual: 0 },
-    { weekOf: "12/10/2023", projected: 119305, actual: 110000 },
-    { weekOf: "12/17/2023", projected: 176670, actual: 100000 },
-    { weekOf: "12/24/2023", projected: 106748, actual: 106000 },
+    { weekOf: "12/10/2023", projected: 119305, actual: 93572, goal: 106000 },
+    { weekOf: "12/17/2023", projected: 176670, actual: 157340, goal: 106000 },
+    { weekOf: "12/24/2023", projected: 106748, actual: 0, goal: 106000 },
   ];
-
-  const goalValue = 106000;
 
   const getDateRangeValue = (rangeType: string): string => {
     const today = new Date();
@@ -107,6 +103,7 @@ const Output = () => {
 
   const options = {
     maintainAspectRatio: false,
+    responsive: true,
     scales: {
       x: {
         grid: {
@@ -117,6 +114,7 @@ const Output = () => {
         },
       },
       y: {
+        beginAtZero: true,
         grid: {
           display: false,
         },
@@ -131,6 +129,15 @@ const Output = () => {
           color: "black",
         },
       },
+      tooltip: {
+        intersect: false,
+        callbacks: {
+          title: function (context: any) {
+            const title = context[0].label;
+            return getMonday(title) + " - " + title;
+          },
+        },
+      },
     },
     interaction: {
       mode: "nearest" as const,
@@ -143,7 +150,7 @@ const Output = () => {
     labels: sampleData.map((data) => data.weekOf),
     datasets: [
       {
-        label: "Actual Output",
+        label: "Actual",
         data: sampleData.map((data) => data.actual),
         borderColor: "rgba(54, 162, 235, 0.5)",
         backgroundColor: "rgba(54, 162, 235, .5)",
@@ -154,7 +161,7 @@ const Output = () => {
         pointBorderWidth: 2,
       },
       {
-        label: "Projected Output",
+        label: "Projected",
         data: sampleData.map((data) => data.projected),
         borderColor: "rgba(255, 99, 132, 0.5)",
         backgroundColor: "rgba(255, 99, 132, .5)",
@@ -165,8 +172,8 @@ const Output = () => {
         pointBorderWidth: 2,
       },
       {
-        label: "Goal Output",
-        data: Array(sampleData.length).fill(goalValue),
+        label: "Goal",
+        data: sampleData.map((data) => data.goal),
         borderColor: "rgba(128, 128, 128, 1)",
         backgroundColor: "rgba(128, 128, 128, 0.2)",
         borderDash: [5, 5],
@@ -179,6 +186,17 @@ const Output = () => {
     ],
   };
 
+  const getMonday = (dateString: string) => {
+    const date = new Date(dateString);
+    const day = date.getDay();
+    const diff = date.getDate() - day + (day === 0 ? -6 : 1);
+    const monday = new Date(date.setDate(diff));
+    const month = `${monday.getMonth() + 1}`.padStart(2, "0");
+    const dayOfMonth = `${monday.getDate()}`.padStart(2, "0");
+    const year = monday.getFullYear();
+    return `${month}/${dayOfMonth}/${year}`;
+  };
+
   return (
     <section>
       <div className="mx-auto">
@@ -186,7 +204,6 @@ const Output = () => {
           <div className="bg-white p-4">
             <div className="flex justify-between">
               <h3 className="text-xl font-bold text-gray-800">Output</h3>
-              <Dropdown options={dateFilters} />
             </div>
             <div className="mb-4 h-96">
               <Line data={chartData} options={options} />

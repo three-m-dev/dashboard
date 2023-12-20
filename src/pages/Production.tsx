@@ -36,7 +36,7 @@ const Production = () => {
           </>
         );
       case "downtime":
-        return <DowntimeTable />;
+        return <DowntimeTable toggleDowntimeModal={() => handleClick()} />;
       case "resources":
         return <Resources />;
       case "operators":
@@ -53,6 +53,17 @@ const Production = () => {
   const tabs: Tab[] = [
     {
       value: "overview",
+      buttons: [
+        {
+          text: "Date Range",
+          type: "button",
+          onClick: () => handleClick(),
+          theme: "primary",
+          destination: null,
+          isLoading: false,
+          isDisabled: false,
+        },
+      ],
     },
     {
       value: "downtime",

@@ -232,7 +232,7 @@ const Downtime = () => {
                     className={
                       `border-b border-blue-50 ` +
                       (selectedReasons.includes(reason)
-                        ? "bg-gray-50"
+                        ? "bg-blue-100"
                         : "bg-white")
                     }
                   >

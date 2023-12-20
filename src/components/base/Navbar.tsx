@@ -4,7 +4,7 @@ type NavbarProps = {
 
 const Navbar = (props: NavbarProps) => {
   return (
-    <section className="bg-white px-4 py-5 shadow">
+    <section className="bg-white p-4">
       <nav className="relative">
         <div className="flex items-center">
           <div className="mr-auto hidden items-center lg:flex">

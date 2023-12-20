@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { IJob } from "../../shared/interfaces";
 import { baseUrl } from "../../utils/config";
+import { IJob } from "../../shared/interfaces";
 
 const useGetJobs = () => {
   const [jobData, setJobData] = useState<{
@@ -15,11 +15,17 @@ const useGetJobs = () => {
   const [page, setPage] = useState<number | undefined>(undefined);
   const [pageSize, setPageSize] = useState<number | undefined>(undefined);
   const [fields, setFields] = useState<string[] | undefined>(undefined);
+
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+
   const [refreshToggle, setRefreshToggle] = useState(false);
 
   useEffect(() => {
     const getJobs = async () => {
+      setLoading(true);
+      setError(null);
+
       try {
         const response = await axios.get(`${baseUrl}/jobs`, {
           params: {
@@ -44,6 +50,8 @@ const useGetJobs = () => {
         } else {
           setError("An error occurred");
         }
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -63,6 +71,7 @@ const useGetJobs = () => {
     setPage,
     setPageSize,
     setFields,
+    loading,
     error,
     refreshJobs,
   };

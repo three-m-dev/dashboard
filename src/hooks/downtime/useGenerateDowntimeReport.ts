@@ -4,14 +4,17 @@ import { baseUrl } from "../../utils/config";
 
 const useGenerateDowntimeReport = () => {
   const [downtimeReportData, setDowntimeReportData] = useState(null);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
 
   const [filter, setFilter] = useState<string | undefined>(undefined);
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const generateDowntimeReport = async () => {
       setLoading(true);
+      setError(null);
+
       try {
         const response = await axios.get(`${baseUrl}/downtime/report`, {
           params: {
@@ -23,16 +26,14 @@ const useGenerateDowntimeReport = () => {
         const data = response.data;
 
         setDowntimeReportData(data);
-
-        setLoading(false);
       } catch (err) {
         if (axios.isAxiosError(err)) {
           setError(err.response?.data?.message || "An error occurred");
-          setLoading(false);
         } else {
           setError("An error occurred");
-          setLoading(false);
         }
+      } finally {
+        setLoading(false);
       }
     };
 

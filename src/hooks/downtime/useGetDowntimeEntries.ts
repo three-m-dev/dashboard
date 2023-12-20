@@ -15,10 +15,17 @@ const useGetDowntimeEntries = () => {
   const [page, setPage] = useState<number | undefined>(undefined);
   const [pageSize, setPageSize] = useState<number | undefined>(undefined);
   const [fields, setFields] = useState<string[] | undefined>(undefined);
+
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+
+  const [refreshToggle, setRefreshToggle] = useState(false);
 
   useEffect(() => {
     const getDowntimeEntries = async () => {
+      setLoading(true);
+      setError(null);
+
       try {
         const response = await axios.get(`${baseUrl}/downtime`, {
           params: {
@@ -43,13 +50,19 @@ const useGetDowntimeEntries = () => {
         } else {
           setError("An error occurred");
         }
+      } finally {
+        setLoading(true);
       }
     };
 
     if (page !== undefined && pageSize !== undefined) {
       getDowntimeEntries();
     }
-  }, [filter, sort, page, pageSize, fields]);
+  }, [filter, sort, page, pageSize, fields, refreshToggle]);
+
+  const refreshDowntimeEntries = () => {
+    setRefreshToggle((prev) => !prev);
+  };
 
   return {
     downtimeEntryData,
@@ -58,7 +71,9 @@ const useGetDowntimeEntries = () => {
     setPage,
     setPageSize,
     setFields,
+    loading,
     error,
+    refreshDowntimeEntries,
   };
 };
 

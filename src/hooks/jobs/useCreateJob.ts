@@ -1,15 +1,16 @@
 import { useState } from "react";
 import axios from "axios";
-import { IJob } from "../../shared/interfaces";
 import { baseUrl } from "../../utils/config";
+import { IJob } from "../../shared/interfaces";
 
 export const useCreateJob = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [job, setJob] = useState<IJob | null>(null);
 
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
   const createJob = async (jobData: any) => {
-    setIsLoading(true);
+    setLoading(true);
     setError(null);
 
     try {
@@ -20,9 +21,9 @@ export const useCreateJob = () => {
     } catch (error: any) {
       setError(error.response ? error.response.data.message : error.message);
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
-  return { createJob, job, isLoading, error };
+  return { createJob, job, loading, error };
 };

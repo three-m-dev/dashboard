@@ -157,7 +157,7 @@ const Downtime = () => {
       let localGrandTotal = 0;
 
       labels.forEach((label) => {
-        localGrandTotal += data[label].totalDowntime;
+        localGrandTotal += data[label].total;
         Object.entries(data[label].downtime).forEach(([reason, value]) => {
           if (!reasonTotals[reason]) reasonTotals[reason] = 0;
           reasonTotals[reason] += value;
@@ -168,7 +168,7 @@ const Downtime = () => {
       setGrandTotal(localGrandTotal);
 
       if (selectedReasons.includes("Total")) {
-        const totalDowntimes = labels.map((label) => data[label].totalDowntime);
+        const totalDowntimes = labels.map((label) => data[label].total);
 
         datasets.push({
           label: "Total",

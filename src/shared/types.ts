@@ -9,15 +9,20 @@ export type Button = {
   isDisabled?: boolean;
 };
 
+export type Option = {
+  text: string;
+  value: string;
+};
+
+export type Dropdown = {
+  text: string;
+  options: Option[];
+  onSelect: (option: Option) => void;
+};
+
 export type Tab = {
   value: string;
   search?: (searchInput: string) => void;
   buttons?: Button[];
-};
-
-export type PageHeaderProps = {
-  title: string;
-  tabs: Tab[];
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
+  dropdowns?: Dropdown[];
 };

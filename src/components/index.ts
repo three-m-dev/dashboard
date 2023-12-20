@@ -1,10 +1,14 @@
-// Layout
-export { default as Layout } from "./layout/Layout";
+// Base
+export { default as Button } from "./base/Button";
+export { default as Dropdown } from "./base/Dropdown";
+export { default as Input } from "./base/Input";
+export { default as Layout } from "./base/Layout";
+export { default as Loading } from "./base/Loading";
+export { default as TextArea } from "./base/TextArea";
 
 // Reusable
 export { default as BulletTextArea } from "./reusable/BulletTextArea";
-export { default as Button } from "./reusable/Button";
-export { default as Loading } from "./reusable/Loading";
+
 export { default as PageHeader } from "./reusable/PageHeader";
 export { default as SortButton } from "./reusable/SortButton";
 
@@ -14,8 +18,8 @@ export { default as CareersTable } from "./tables/CareersTable";
 export { default as DowntimeTable } from "./tables/DowntimeTable";
 export { default as EmployeesTable } from "./tables/EmployeesTable";
 
-export { default as Calendar } from "./Calendar";
-export { default as Resources } from "./Resources";
+export { default as Calendar } from "./displays/Calendar";
+export { default as Resources } from "./displays/Resources";
 export { default as BlogBuilder } from "./BlogBuilder";
 
 export { default as Downtime } from "./charts/Downtime";

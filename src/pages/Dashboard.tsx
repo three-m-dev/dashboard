@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { Calendar, Layout, PageHeader } from "../components";
-import Improvements from "../components/Improvements";
+import Improvements from "../components/displays/Improvements";
 import { Tab } from "../shared/types";
 import FullScreenIcon from "../assets/icons/FullScreenIcon";
 

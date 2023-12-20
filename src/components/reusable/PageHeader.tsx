@@ -1,12 +1,14 @@
-import { PageHeaderProps } from "../../shared/types";
+import { Tab } from "../../shared/types";
 import Button from "../base/Button";
 
-const PageHeader = ({
-  title,
-  tabs,
-  activeTab,
-  setActiveTab,
-}: PageHeaderProps) => {
+type Props = {
+  title: string;
+  tabs: Tab[];
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+};
+
+const PageHeader = ({ title, tabs, activeTab, setActiveTab }: Props) => {
   const activeTabData = tabs.find((tab) => tab.value === activeTab);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {

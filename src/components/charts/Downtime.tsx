@@ -24,7 +24,14 @@ ChartJS.register(
   Legend,
 );
 
-const Downtime = () => {
+type Props = {
+  dateRange: {
+    start: string | null;
+    end: string | null;
+  };
+};
+
+const Downtime = ({ dateRange }: Props) => {
   const [selectedReasons, setSelectedReasons] = useState<string[]>(["Total"]);
 
   const { downtimeReportData, setFilter, loading, error } =

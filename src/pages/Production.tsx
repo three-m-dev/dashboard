@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Downtime,
   DowntimeModal,
@@ -8,70 +8,86 @@ import {
   PageHeader,
   Resources,
 } from "../components";
-import { Tab } from "../shared/types";
+import { Option, Tab } from "../shared/types";
 import PlusIcon from "../assets/icons/PlusIcon";
+import { formatDate } from "../utils/formatter";
 
 const Production = () => {
   const [activeTab, setActiveTab] = useState("overview");
+  const [dateRange, setDateRange] = useState<{
+    start: string | null;
+    end: string | null;
+  }>({ start: null, end: null });
 
   const [downtimeModalOpen, setDowntimeModalOpen] = useState(false);
   const [downtimeModalMode, setDowntimeModalMode] = useState("");
-
-  const [resourceModalOpen, setResourceModalOpen] = useState(false);
-  const [operatorModalOpen, setOperatorModalOpen] = useState(false);
-
   const [refreshDowntime, setRefreshDowntime] = useState(false);
 
-  const toggleDownTimeModal = (mode: string = "view") => {
+  const toggleDownTimeModal = (mode = "view") => {
     setDowntimeModalMode(mode);
     setDowntimeModalOpen(!downtimeModalOpen);
-  };
-
-  const triggerDowntimeRefresh = () => {
-    setRefreshDowntime((prev) => !prev);
-  };
-
-  const renderContent = () => {
-    switch (activeTab) {
-      case "overview":
-        return (
-          <>
-            <Output />
-            <Downtime />
-          </>
-        );
-      case "downtime":
-        return (
-          <DowntimeTable
-            toggleDowntimeModal={() => handleClick()}
-            refreshData={refreshDowntime}
-          />
-        );
-      case "resources":
-        return <Resources />;
-      case "operators":
-        return <div>Operators</div>;
-      default:
-        return <div>Overview</div>;
-    }
   };
 
   const handleClick = () => {
     console.log("Button Clicked");
   };
 
+  const getDateRange = (period: string) => {
+    const now = new Date();
+    let start, end;
+    switch (period) {
+      case "This Week":
+        start = new Date(now.setDate(now.getDate() - now.getDay() + 1));
+        end = new Date(start);
+        end.setDate(start.getDate() + 6);
+        break;
+      case "This Month":
+        start = new Date(now.getFullYear(), now.getMonth(), 1);
+        end = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+        break;
+      case "This Quarter":
+        const quarter = Math.floor(now.getMonth() / 3);
+        start = new Date(now.getFullYear(), quarter * 3, 1);
+        end = new Date(now.getFullYear(), quarter * 3 + 3, 0);
+        break;
+      case "This Year":
+        start = new Date(now.getFullYear(), 0, 1);
+        end = new Date(now.getFullYear() + 1, 0, 0);
+        break;
+      case "All Time":
+        start = new Date(2000, 4, 22); // Adjust the start date as needed
+        end = new Date();
+        break;
+      default:
+        start = new Date();
+        end = new Date();
+        break;
+    }
+    return {
+      start: formatDate(start.toISOString()),
+      end: formatDate(end.toISOString()),
+    };
+  };
+
+  const handleDropdownSelect = (option: Option) => {
+    const range = getDateRange(option.label);
+    setDateRange(range);
+  };
+
   const tabs: Tab[] = [
     {
       value: "overview",
-      buttons: [
+      dropdowns: [
         {
           text: "Date Range",
-          type: "button",
-          onClick: () => handleClick(),
-          theme: "primary",
-          destination: null,
-          isLoading: false,
-          isDisabled: false,
+          onSelect: handleDropdownSelect,
+          options: [
+            { label: "This Week", value: "This Week" },
+            { label: "This Month", value: "This Month" },
+            { label: "This Quarter", value: "This Quarter" },
+            { label: "This Year", value: "This Year" },
+            { label: "All Time", value: "All Time" },
+          ],
         },
       ],
     },
@@ -81,12 +97,9 @@ const Production = () => {
         {
           text: "Add Downtime",
           type: "button",
-          onClick: toggleDownTimeModal,
+          onClick: () => toggleDownTimeModal("add"),
           theme: "primary",
           icon: <PlusIcon />,
-          destination: null,
-          isLoading: false,
-          isDisabled: false,
         },
       ],
     },
@@ -99,27 +112,46 @@ const Production = () => {
           onClick: handleClick,
           theme: "primary",
           icon: <PlusIcon />,
-          destination: null,
-          isLoading: false,
-          isDisabled: false,
-        },
-      ],
-    },
-    {
-      value: "operators",
-      buttons: [
-        {
-          text: "Filter",
-          type: "button",
-          onClick: handleClick,
-          theme: "primary",
-          destination: null,
-          isLoading: false,
-          isDisabled: false,
         },
       ],
     },
   ];
+
+  const triggerDowntimeRefresh = () => {
+    setRefreshDowntime((prev) => !prev);
+  };
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case "overview":
+        return (
+          <>
+            <Output dateRange={dateRange} />
+            <Downtime dateRange={dateRange} />
+          </>
+        );
+      case "downtime":
+        return (
+          <DowntimeTable
+            toggleDowntimeModal={toggleDownTimeModal}
+            refreshData={refreshDowntime}
+          />
+        );
+      case "resources":
+        return <Resources />;
+      default:
+        return (
+          <>
+            <Output dateRange={dateRange} />
+            <Downtime dateRange={dateRange} />
+          </>
+        );
+    }
+  };
+
+  useEffect(() => {
+    handleDropdownSelect({ label: "This Week", value: "This Week" });
+  }, []);
 
   return (
     <Layout>

@@ -1,31 +1,42 @@
-import { useState } from "react";
-
-type Option = {
-  value: string;
-  label: string;
-};
+import { useState, useRef, useEffect } from "react";
+import { Option } from "../../shared/types";
 
 type Props = {
   options: Option[];
   onSelect: (option: Option) => void;
 };
 
-const Dropdown = ({ options, onSelect }: Props) => {
+const Dropdown = (props: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const toggleDropdown = () => setIsOpen(!isOpen);
 
   const handleOptionClick = (option: Option) => {
     setSelectedOption(option);
     setIsOpen(false);
-    onSelect(option);
+    props.onSelect(option);
   };
 
   return (
-    <div className="relative z-50 inline-block text-left">
+    <div ref={wrapperRef} className="relative z-50 inline-block text-left">
       <button
         type="button"
         className="inline-flex h-[40px] w-full justify-between rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
@@ -55,7 +66,7 @@ const Dropdown = ({ options, onSelect }: Props) => {
             aria-orientation="vertical"
             aria-labelledby="options-menu"
           >
-            {options.map((option) => (
+            {props.options.map((option) => (
               <button
                 key={option.value}
                 onClick={() => handleOptionClick(option)}

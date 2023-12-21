@@ -1,5 +1,5 @@
+import { Button, Dropdown } from "..";
 import { Tab } from "../../shared/types";
-import Button from "../base/Button";
 
 type Props = {
   title: string;
@@ -53,6 +53,13 @@ const PageHeader = ({ title, tabs, activeTab, setActiveTab }: Props) => {
                 destination={button.destination}
                 isLoading={button.isLoading}
                 isDisabled={button.isDisabled}
+              />
+            ))}
+            {activeTabData?.dropdowns?.map((dropdown, index) => (
+              <Dropdown
+                key={index}
+                options={dropdown.options || []}
+                onSelect={dropdown.onSelect!} // Asserting that onSelect is not undefined
               />
             ))}
           </div>

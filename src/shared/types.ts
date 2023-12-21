@@ -10,14 +10,14 @@ export type Button = {
 };
 
 export type Option = {
-  text: string;
   value: string;
+  label: string;
 };
 
 export type Dropdown = {
   text: string;
-  options: Option[];
-  onSelect: (option: Option) => void;
+  options?: Option[];
+  onSelect?: (option: Option) => void;
 };
 
 export type Tab = {

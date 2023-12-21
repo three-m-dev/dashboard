@@ -2,11 +2,16 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../../utils/config";
 
+type FilterType = {
+  dateRange: {
+    start: string | null;
+    end: string | null;
+  } | null;
+};
+
 const useGenerateDowntimeReport = () => {
   const [downtimeReportData, setDowntimeReportData] = useState(null);
-
-  const [filter, setFilter] = useState<string | undefined>(undefined);
-
+  const [filter, setFilter] = useState<FilterType>({ dateRange: null });
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -18,13 +23,14 @@ const useGenerateDowntimeReport = () => {
       try {
         const response = await axios.get(`${baseUrl}/downtime/report`, {
           params: {
-            filter: filter ? JSON.stringify(filter) : undefined,
+            filter: filter.dateRange
+              ? JSON.stringify({ dateRange: filter.dateRange })
+              : undefined,
           },
           withCredentials: true,
         });
 
         const data = response.data;
-
         setDowntimeReportData(data);
       } catch (err) {
         if (axios.isAxiosError(err)) {
@@ -37,7 +43,9 @@ const useGenerateDowntimeReport = () => {
       }
     };
 
-    generateDowntimeReport();
+    if (filter.dateRange) {
+      generateDowntimeReport();
+    }
   }, [filter]);
 
   return {

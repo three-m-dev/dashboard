@@ -155,6 +155,10 @@ const Downtime = ({ dateRange }: Props) => {
   };
 
   useEffect(() => {
+    setFilter({ dateRange });
+  }, [dateRange, setFilter]);
+
+  useEffect(() => {
     if (downtimeReportData) {
       const data = downtimeReportData as IDowntimeReportData;
       const labels = Object.keys(data);

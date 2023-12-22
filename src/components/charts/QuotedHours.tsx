@@ -72,7 +72,7 @@ const QuotedHours = (props: Props) => {
 
   return (
     <div className="flex h-full w-full flex-col">
-      <h3 className="text-lg font-semibold text-gray-800">Quoted vs Actual</h3>
+      <h3 className="text-lg font-semibold text-gray-800">Quoted Hours</h3>
       <div className="flex-grow">
         <Bar data={data} options={options} />
       </div>

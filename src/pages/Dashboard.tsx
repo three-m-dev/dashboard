@@ -3,6 +3,7 @@ import { Calendar, Layout, PageHeader } from "../components";
 import Improvements from "../components/displays/Improvements";
 import { Tab } from "../shared/types";
 import FullScreenIcon from "../assets/icons/FullScreenIcon";
+import CameraDisplay from "../components/CameraDisplay";
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("overview");
@@ -26,6 +27,8 @@ const Dashboard = () => {
         return <Calendar />;
       case "improvements":
         return <Improvements />;
+      case "security":
+        return <CameraDisplay viewSize="small" />;
       default:
         return <div>Overview</div>;
     }
@@ -90,6 +93,9 @@ const Dashboard = () => {
           isDisabled: false,
         },
       ],
+    },
+    {
+      value: "security",
     },
     // {
     //   value: "improvements",

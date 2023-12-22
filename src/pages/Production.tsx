@@ -173,12 +173,7 @@ const Production = () => {
       case "resources":
         return <Resources />;
       default:
-        return (
-          <>
-            <Output dateRange={dateRange} />
-            <Downtime dateRange={dateRange} />
-          </>
-        );
+        return <></>;
     }
   };
 

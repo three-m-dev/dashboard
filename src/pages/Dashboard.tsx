@@ -91,21 +91,21 @@ const Dashboard = () => {
         },
       ],
     },
-    {
-      value: "improvements",
-      buttons: [
-        {
-          text: "Fullscreen",
-          type: "button",
-          onClick: () => toggleFullScreen(),
-          theme: "primary",
-          icon: <FullScreenIcon />,
-          destination: null,
-          isLoading: false,
-          isDisabled: false,
-        },
-      ],
-    },
+    // {
+    //   value: "improvements",
+    //   buttons: [
+    //     {
+    //       text: "Fullscreen",
+    //       type: "button",
+    //       onClick: () => toggleFullScreen(),
+    //       theme: "primary",
+    //       icon: <FullScreenIcon />,
+    //       destination: null,
+    //       isLoading: false,
+    //       isDisabled: false,
+    //     },
+    //   ],
+    // },
   ];
 
   return (

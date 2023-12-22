@@ -31,9 +31,10 @@ type Props = {
 
 const Output = ({ dateRange }: Props) => {
   const sampleData = [
-    { weekOf: "12/10/2023", projected: 119305, actual: 93572, goal: 106000 },
-    { weekOf: "12/17/2023", projected: 176670, actual: 157340, goal: 106000 },
-    { weekOf: "12/24/2023", projected: 106748, actual: 0, goal: 106000 },
+    { weekOf: "12-3-2023", projected: 286547, actual: 31555, goal: 106000 },
+    { weekOf: "12-10-2023", projected: 119305, actual: 93572, goal: 106000 },
+    { weekOf: "12-17-2023", projected: 176670, actual: 157340, goal: 106000 },
+    { weekOf: "12-24-2023", projected: 106748, actual: 0, goal: 106000 },
   ];
 
   const options = {
@@ -87,36 +88,36 @@ const Output = ({ dateRange }: Props) => {
       {
         label: "Goal",
         data: sampleData.map((data) => data.goal),
-        borderColor: "#6b7280",
+        borderColor: "#000000",
         backgroundColor: "#e5e7eb",
         borderDash: [5, 5],
         tension: 0.4,
-        pointBorderColor: "#6b7280",
         pointBackgroundColor: "white",
         pointBorderWidth: 2,
+        borderWidth: 2,
         fill: false,
       },
       {
         label: "Actual",
         data: sampleData.map((data) => data.actual),
         borderColor: "#3b82f6",
-        backgroundColor: "#60a5fa",
+        backgroundColor: "#93c5fd",
         tension: 0.4,
         fill: true,
-        pointBorderColor: "#3b82f6",
         pointBackgroundColor: "white",
         pointBorderWidth: 2,
+        borderWidth: 2,
       },
       {
         label: "Projected",
         data: sampleData.map((data) => data.projected),
-        borderColor: "#ef4444",
-        backgroundColor: "#f87171",
+        borderColor: "#9ca3af",
+        backgroundColor: "#e5e7eb",
         tension: 0.4,
         fill: true,
-        pointBorderColor: "#ef4444",
         pointBackgroundColor: "white",
         pointBorderWidth: 2,
+        borderWidth: 2,
       },
     ],
   };
@@ -138,13 +139,13 @@ const Output = ({ dateRange }: Props) => {
         <div className="overflow-hidden rounded shadow">
           <div className="bg-white p-4">
             <div className="flex justify-between">
-              <h3 className="text-xl font-bold text-gray-800">Output</h3>
+              <h3 className="text-lg font-semibold text-gray-800">Output</h3>
             </div>
-            <div className="mb-4 h-96">
+            <div className="h-96">
               <Line data={chartData} options={options} />
             </div>
 
-            <div className="grid grid-cols-12 gap-4 bg-white">
+            {/* <div className="grid grid-cols-12 gap-4 bg-white">
               <div className="col-span-3">
                 <div className="rounded border px-6 py-4">
                   <p className="text-xs text-gray-500">
@@ -177,7 +178,7 @@ const Output = ({ dateRange }: Props) => {
                   <h3 className="text-3xl font-bold">$205,000</h3>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

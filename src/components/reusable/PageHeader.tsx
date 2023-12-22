@@ -29,7 +29,7 @@ const PageHeader = ({ title, tabs, activeTab, setActiveTab }: Props) => {
       <section className="">
         <div className="flex flex-wrap items-center justify-between">
           <div className="mb-4 flex w-full items-center lg:mb-0 lg:w-auto">
-            <h2 className="flex h-[40px] items-center text-2xl font-bold">
+            <h2 className="flex h-[40px] items-center text-2xl font-semibold text-gray-800">
               {title}
             </h2>
           </div>

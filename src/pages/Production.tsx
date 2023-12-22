@@ -3,9 +3,11 @@ import {
   Downtime,
   DowntimeModal,
   DowntimeTable,
+  IndirectHours,
   Layout,
   Output,
   PageHeader,
+  QuotedHours,
   Resources,
 } from "../components";
 import { Option, Tab } from "../shared/types";
@@ -112,6 +114,9 @@ const Production = () => {
       ],
     },
     {
+      value: "Capacity",
+    },
+    {
       value: "downtime",
       buttons: [
         {
@@ -147,7 +152,14 @@ const Production = () => {
         return (
           <div className="flex flex-col gap-4">
             <Output dateRange={dateRange} />
-            {/* <div className="flex h-96 w-full bg-red-500">123</div> */}
+            <div className="flex h-96 w-full gap-4">
+              <div className="flex-1 rounded bg-white p-4 shadow">
+                <QuotedHours />
+              </div>
+              <div className="flex-1 rounded bg-white p-4 shadow">
+                <IndirectHours />
+              </div>
+            </div>
             <Downtime dateRange={dateRange} />
           </div>
         );

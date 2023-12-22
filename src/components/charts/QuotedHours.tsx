@@ -1,4 +1,3 @@
-import React from "react";
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -21,20 +20,20 @@ ChartJS.register(
 
 type Props = {};
 
-const IndirectHours = (props: Props) => {
+const QuotedHours = (props: Props) => {
   const data = {
     labels: ["12-3-2023", "12-10-2023", "12-17-2023", "12-24-2023"],
     datasets: [
       {
-        label: "Indirect Hours",
-        data: [424, 500, 398, 0],
+        label: "Quoted Hours",
+        data: [15, 20, 25, 30],
         borderColor: "#9ca3af",
         backgroundColor: "#e5e7eb",
         borderWidth: 2,
       },
       {
-        label: "Total Hours",
-        data: [1063.5, 1073.25, 1043.25, 0],
+        label: "Actual Hours",
+        data: [10, 18, 22, 28],
         borderColor: "#3b82f6",
         backgroundColor: "#93c5fd",
         borderWidth: 2,
@@ -73,7 +72,7 @@ const IndirectHours = (props: Props) => {
 
   return (
     <div className="flex h-full w-full flex-col">
-      <h3 className="text-lg font-semibold text-gray-800">Indirect Hours</h3>
+      <h3 className="text-lg font-semibold text-gray-800">Quoted vs Actual</h3>
       <div className="flex-grow">
         <Bar data={data} options={options} />
       </div>
@@ -81,4 +80,4 @@ const IndirectHours = (props: Props) => {
   );
 };
 
-export default IndirectHours;
+export default QuotedHours;

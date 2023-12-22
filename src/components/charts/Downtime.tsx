@@ -203,6 +203,8 @@ const Downtime = ({ dateRange }: Props) => {
           data: totalDowntimes,
           borderColor: "#3b82f6",
           backgroundColor: "#60a5fa",
+          pointBackgroundColor: "white",
+          pointBorderWidth: 2,
           tension: 0.1,
         });
       } else {
@@ -216,6 +218,8 @@ const Downtime = ({ dateRange }: Props) => {
             data: reasonData,
             borderColor: getBorderColor(reason),
             backgroundColor: getBackgroundColor(reason),
+            pointBackgroundColor: "white",
+            pointBorderWidth: 2,
             tension: 0.1,
           });
         });
@@ -230,7 +234,9 @@ const Downtime = ({ dateRange }: Props) => {
       <div className="mx-auto">
         <div className="rounded bg-white">
           <div className="flex items-center justify-between p-4">
-            <h3 className="text-lg font-bold">Unscheduled Downtime</h3>
+            <h3 className="text-lg font-semibold text-gray-800">
+              Unscheduled Downtime
+            </h3>
           </div>
           <div className="grid grid-cols-12 gap-4 pb-4">
             <div className="col-span-4">

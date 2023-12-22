@@ -23,7 +23,9 @@ export { default as Resources } from "./displays/Resources";
 export { default as BlogBuilder } from "./BlogBuilder";
 
 export { default as Downtime } from "./charts/Downtime";
+export { default as IndirectHours } from "./charts/IndirectHours";
 export { default as Output } from "./charts/Output";
+export { default as QuotedHours } from "./charts/QuotedHours";
 
 export { default as ApplicationModal } from "./modals/ApplicationModal";
 export { default as DowntimeModal } from "./modals/DowntimeModal";

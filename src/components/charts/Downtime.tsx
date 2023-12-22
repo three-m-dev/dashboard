@@ -138,7 +138,7 @@ const Downtime = ({ dateRange }: Props) => {
       Break: "#6366f1",
       Fixturing: "#14b8a6",
       Changeover: "#84cc16",
-      Training: "#6b7280",
+      Training: "#9ca3af",
       Other: "#ef4444",
     };
     return colors[reason] || "#030712";
@@ -146,16 +146,16 @@ const Downtime = ({ dateRange }: Props) => {
 
   const getBackgroundColor = (reason: string): string => {
     const colors: { [key: string]: string } = {
-      Tooling: "#4ade80",
-      Maintenance: "#38bdf8",
-      Troubleshooting: "#facc15",
-      Programming: "#fb923c",
-      Inspection: "#c084fc",
-      Break: "#818cf8",
-      Fixturing: "#2dd4bf",
-      Changeover: "#a3e635",
-      Training: "#9ca3af",
-      Other: "#f87171",
+      Tooling: "#86efac",
+      Maintenance: "#7dd3fc",
+      Troubleshooting: "#fde047",
+      Programming: "#fdba74",
+      Inspection: "#d8b4fe",
+      Break: "#a5b4fc",
+      Fixturing: "#5eead4",
+      Changeover: "#bef264",
+      Training: "#e5e7eb",
+      Other: "#fca5a5",
     };
     return colors[reason] || "#111827";
   };
@@ -202,9 +202,10 @@ const Downtime = ({ dateRange }: Props) => {
           label: "Total",
           data: totalDowntimes,
           borderColor: "#3b82f6",
-          backgroundColor: "#60a5fa",
+          backgroundColor: "#93c5fd",
           pointBackgroundColor: "white",
           pointBorderWidth: 2,
+          borderWidth: 2,
           tension: 0.1,
         });
       } else {
@@ -220,6 +221,7 @@ const Downtime = ({ dateRange }: Props) => {
             backgroundColor: getBackgroundColor(reason),
             pointBackgroundColor: "white",
             pointBorderWidth: 2,
+            borderWidth: 2,
             tension: 0.1,
           });
         });

@@ -58,8 +58,9 @@ const PageHeader = ({ title, tabs, activeTab, setActiveTab }: Props) => {
             {activeTabData?.dropdowns?.map((dropdown, index) => (
               <Dropdown
                 key={index}
+                text={dropdown.text}
                 options={dropdown.options || []}
-                onSelect={dropdown.onSelect!} // Asserting that onSelect is not undefined
+                onSelect={dropdown.onSelect!}
               />
             ))}
           </div>

@@ -32,18 +32,35 @@ const Production = () => {
     console.log("Button Clicked");
   };
 
-  const getDateRange = (period: string) => {
+  const getStartOfWeek = (date: any) => {
+    const day = date.getDay();
+    const diff = date.getDate() - day + (day === 0 ? -6 : 1);
+    return new Date(date.setDate(diff));
+  };
+
+  const getDateRange = (period: any) => {
     const now = new Date();
     let start, end;
+
     switch (period) {
       case "This Week":
-        start = new Date(now.setDate(now.getDate() - now.getDay() + 1));
+        start = getStartOfWeek(new Date());
+        start.setDate(start.getDate() - 7);
         end = new Date(start);
-        end.setDate(start.getDate() + 6);
+        end.setDate(end.getDate() + 13);
+        break;
+      case "Last 4 Weeks":
+        start = getStartOfWeek(new Date());
+        start.setDate(start.getDate() - 28);
+        end = new Date();
         break;
       case "This Month":
         start = new Date(now.getFullYear(), now.getMonth(), 1);
         end = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+        break;
+      case "Previous Month":
+        start = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+        end = new Date(now.getFullYear(), now.getMonth(), 0);
         break;
       case "This Quarter":
         const quarter = Math.floor(now.getMonth() / 3);
@@ -55,7 +72,7 @@ const Production = () => {
         end = new Date(now.getFullYear() + 1, 0, 0);
         break;
       case "All Time":
-        start = new Date(2000, 4, 22); // Adjust the start date as needed
+        start = new Date(2000, 0, 1);
         end = new Date();
         break;
       default:
@@ -63,6 +80,7 @@ const Production = () => {
         end = new Date();
         break;
     }
+
     return {
       start: formatDate(start.toISOString()),
       end: formatDate(end.toISOString()),
@@ -83,7 +101,9 @@ const Production = () => {
           onSelect: handleDropdownSelect,
           options: [
             { label: "This Week", value: "This Week" },
+            { label: "Last 4 Weeks", value: "Last 4 Weeks" },
             { label: "This Month", value: "This Month" },
+            { label: "Previous Month", value: "Previous Month" },
             { label: "This Quarter", value: "This Quarter" },
             { label: "This Year", value: "This Year" },
             { label: "All Time", value: "All Time" },
@@ -125,10 +145,11 @@ const Production = () => {
     switch (activeTab) {
       case "overview":
         return (
-          <>
+          <div className="flex flex-col gap-4">
             <Output dateRange={dateRange} />
+            {/* <div className="flex h-96 w-full bg-red-500">123</div> */}
             <Downtime dateRange={dateRange} />
-          </>
+          </div>
         );
       case "downtime":
         return (

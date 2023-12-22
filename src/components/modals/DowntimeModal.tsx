@@ -69,7 +69,7 @@ const DowntimeModal = ({ mode, onClose, triggerRefresh }: Props) => {
 
     if (e.target.name === "date" && value) {
       const dateParts = value.split("-");
-      value = `${dateParts[1]}/${dateParts[2]}/${dateParts[0]}`;
+      value = `${dateParts[1]}-${dateParts[2]}-${dateParts[0]}`;
     }
 
     setDowntimeFormData({
@@ -120,6 +120,7 @@ const DowntimeModal = ({ mode, onClose, triggerRefresh }: Props) => {
             Operator
           </label>
           <Dropdown
+            text="Select Operator"
             options={operators}
             onSelect={(option) =>
               handleDropdownChange("operatorId", option.value)
@@ -131,6 +132,7 @@ const DowntimeModal = ({ mode, onClose, triggerRefresh }: Props) => {
             Reason
           </label>
           <Dropdown
+            text="Select Reason"
             options={reasons}
             onSelect={(option) => setCurrentReason(option.value)}
           />

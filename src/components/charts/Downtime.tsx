@@ -130,17 +130,34 @@ const Downtime = ({ dateRange }: Props) => {
 
   const getBorderColor = (reason: string): string => {
     const colors: { [key: string]: string } = {
-      Maintenance: "rgba(54, 162, 235, 1)",
-      Troubleshooting: "rgba(255, 206, 86, 1)",
-      Programming: "rgba(75, 192, 192, 1)",
-      Inspection: "rgba(153, 102, 255, 1)",
-      Break: "rgba(255, 159, 64, 1)",
-      Fixturing: "rgba(199, 199, 199, 1)",
-      Changeover: "rgba(255, 99, 132, 1)",
-      Training: "rgba(255, 205, 86, 1)",
-      Other: "rgba(54, 162, 235, 1)",
+      Tooling: "#22c55e",
+      Maintenance: "#0ea5e9",
+      Troubleshooting: "#eab308",
+      Programming: "#f97316",
+      Inspection: "#a855f7",
+      Break: "#6366f1",
+      Fixturing: "#14b8a6",
+      Changeover: "#84cc16",
+      Training: "#6b7280",
+      Other: "#ef4444",
     };
-    return colors[reason] || "rgba(201, 203, 207, 1)";
+    return colors[reason] || "#030712";
+  };
+
+  const getBackgroundColor = (reason: string): string => {
+    const colors: { [key: string]: string } = {
+      Tooling: "#4ade80",
+      Maintenance: "#38bdf8",
+      Troubleshooting: "#facc15",
+      Programming: "#fb923c",
+      Inspection: "#c084fc",
+      Break: "#818cf8",
+      Fixturing: "#2dd4bf",
+      Changeover: "#a3e635",
+      Training: "#9ca3af",
+      Other: "#f87171",
+    };
+    return colors[reason] || "#111827";
   };
 
   const getMonday = (dateString: string) => {
@@ -151,7 +168,7 @@ const Downtime = ({ dateRange }: Props) => {
     const month = `${monday.getMonth() + 1}`.padStart(2, "0");
     const dayOfMonth = `${monday.getDate()}`.padStart(2, "0");
     const year = monday.getFullYear();
-    return `${month}/${dayOfMonth}/${year}`;
+    return `${month}-${dayOfMonth}-${year}`;
   };
 
   useEffect(() => {
@@ -184,7 +201,8 @@ const Downtime = ({ dateRange }: Props) => {
         datasets.push({
           label: "Total",
           data: totalDowntimes,
-          borderColor: "rgba(255, 99, 132, 1)",
+          borderColor: "#3b82f6",
+          backgroundColor: "#60a5fa",
           tension: 0.1,
         });
       } else {
@@ -197,6 +215,7 @@ const Downtime = ({ dateRange }: Props) => {
             label: reason,
             data: reasonData,
             borderColor: getBorderColor(reason),
+            backgroundColor: getBackgroundColor(reason),
             tension: 0.1,
           });
         });
@@ -207,7 +226,7 @@ const Downtime = ({ dateRange }: Props) => {
   }, [downtimeReportData, selectedReasons]);
 
   return (
-    <section className="mt-4">
+    <section>
       <div className="mx-auto">
         <div className="rounded bg-white">
           <div className="flex items-center justify-between p-4">

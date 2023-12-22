@@ -4,7 +4,7 @@ export const formatDate = (dateStr: string): string => {
   const day = String(date.getDate()).padStart(2, "0");
   const year = date.getFullYear();
 
-  return `${month}/${day}/${year}`;
+  return `${month}-${day}-${year}`;
 };
 
 export const formatPhoneNumber = (phone: string): string => {

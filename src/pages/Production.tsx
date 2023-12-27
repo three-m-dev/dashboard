@@ -7,23 +7,49 @@ import {
   Layout,
   Output,
   PageHeader,
+  ProductionLogModal,
   QuotedHours,
   Resources,
 } from "../components";
 import { Option, Tab } from "../shared/types";
 import PlusIcon from "../assets/icons/PlusIcon";
 import { formatDate } from "../utils/formatter";
+import useGetProductionLogs from "../hooks/production/useGetProductionLogs";
 
 const Production = () => {
+  const {
+    productionLogData,
+    setSort,
+    setPage,
+    loading,
+    error,
+    refreshProductionLogs,
+  } = useGetProductionLogs();
+
+  useEffect(() => {
+    setPage(1);
+    setSort("weekOf,DESC");
+  }, [setPage, setSort]);
+
+  console.log(productionLogData);
+
   const [activeTab, setActiveTab] = useState("overview");
   const [dateRange, setDateRange] = useState<{
     start: string | null;
     end: string | null;
   }>({ start: null, end: null });
 
+  const [productionLogModalOpen, setProductionLogModalOpen] = useState(false);
+  const [productionLogModalMode, setProductionLogModalMode] = useState("");
+
   const [downtimeModalOpen, setDowntimeModalOpen] = useState(false);
   const [downtimeModalMode, setDowntimeModalMode] = useState("");
   const [refreshDowntime, setRefreshDowntime] = useState(false);
+
+  const toggleProductionLogModal = (mode = "view") => {
+    setProductionLogModalMode(mode);
+    setProductionLogModalOpen(!productionLogModalOpen);
+  };
 
   const toggleDownTimeModal = (mode = "view") => {
     setDowntimeModalMode(mode);
@@ -97,6 +123,14 @@ const Production = () => {
   const tabs: Tab[] = [
     {
       value: "overview",
+      buttons: [
+        {
+          text: "Production Logs",
+          type: "button",
+          onClick: () => toggleProductionLogModal("view"),
+          theme: "primary",
+        },
+      ],
       dropdowns: [
         {
           text: "Date Range",
@@ -186,7 +220,16 @@ const Production = () => {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
       />
+
       {renderContent()}
+
+      {productionLogModalOpen && (
+        <ProductionLogModal
+          mode={productionLogModalMode}
+          onClose={toggleProductionLogModal}
+          productionLogData={productionLogData?.productionLogs}
+        />
+      )}
 
       {downtimeModalOpen && (
         <DowntimeModal

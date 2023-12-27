@@ -1,20 +1,17 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../../utils/config";
-import { IDowntimeEntry } from "../../shared/interfaces";
+import { IProductionLog } from "../../shared/interfaces";
 
-const useGetDowntimeEntries = () => {
-  const [downtimeEntryData, setDowntimeEntryData] = useState<{
-    downtimeEntries: IDowntimeEntry[];
+const useGetProductionLogs = () => {
+  const [productionLogData, setProductionLogData] = useState<{
+    productionLogs: IProductionLog[];
     total: number;
     pages: number;
   } | null>(null);
 
-  const [filter, setFilter] = useState<string | undefined>(undefined);
   const [sort, setSort] = useState<string | undefined>(undefined);
   const [page, setPage] = useState<number | undefined>(undefined);
-  const [pageSize, setPageSize] = useState<number | undefined>(undefined);
-  const [fields, setFields] = useState<string[] | undefined>(undefined);
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -22,26 +19,23 @@ const useGetDowntimeEntries = () => {
   const [refreshToggle, setRefreshToggle] = useState(false);
 
   useEffect(() => {
-    const getDowntimeEntries = async () => {
+    const getProductionLogs = async () => {
       setLoading(true);
       setError(null);
 
       try {
-        const response = await axios.get(`${baseUrl}/downtime`, {
+        const response = await axios.get(`${baseUrl}/production/logs`, {
           params: {
-            filter: filter ? JSON.stringify(filter) : undefined,
             sort,
             page,
-            pageSize,
-            fields: fields ? fields.join(",") : undefined,
           },
           withCredentials: true,
         });
 
         const data = response.data;
 
-        setDowntimeEntryData({
-          downtimeEntries: data.downtimeEntries,
+        setProductionLogData({
+          productionLogs: data.productionLogs,
           total: data.total,
           pages: data.pages,
         });
@@ -56,26 +50,23 @@ const useGetDowntimeEntries = () => {
       }
     };
 
-    if (page !== undefined && pageSize !== undefined) {
-      getDowntimeEntries();
+    if (page !== undefined) {
+      getProductionLogs();
     }
-  }, [filter, sort, page, pageSize, fields, refreshToggle]);
+  }, [sort, page, refreshToggle]);
 
-  const refreshDowntimeEntries = () => {
+  const refreshProductionLogs = () => {
     setRefreshToggle((prev) => !prev);
   };
 
   return {
-    downtimeEntryData,
-    setFilter,
+    productionLogData,
     setSort,
     setPage,
-    setPageSize,
-    setFields,
     loading,
     error,
-    refreshDowntimeEntries,
+    refreshProductionLogs,
   };
 };
 
-export default useGetDowntimeEntries;
+export default useGetProductionLogs;

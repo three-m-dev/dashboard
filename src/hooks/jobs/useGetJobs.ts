@@ -39,6 +39,7 @@ const useGetJobs = () => {
         });
 
         const data = response.data;
+        
         setJobData({
           jobs: data.jobs,
           total: data.total,

@@ -119,6 +119,22 @@ export interface IJob {
   updatedAt: string;
 }
 
+export interface IProductionLog {
+  id: string;
+  weekOf: string;
+  projectedOutput: number;
+  actualOutput: number;
+  outputGoal: number;
+  quotedHours?: number;
+  actualHours?: number;
+  indirectHours?: number;
+  notes?: string;
+  createdBy: string;
+  updatedBy?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface IRating {
   value: number;
   notes?: string;

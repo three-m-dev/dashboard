@@ -6,9 +6,6 @@ export { default as Layout } from "./base/Layout";
 export { default as Loading } from "./base/Loading";
 export { default as TextArea } from "./base/TextArea";
 
-// Reusable
-export { default as BulletTextArea } from "./reusable/BulletTextArea";
-
 export { default as PageHeader } from "./reusable/PageHeader";
 export { default as SortButton } from "./reusable/SortButton";
 
@@ -31,3 +28,5 @@ export { default as ApplicationModal } from "./modals/ApplicationModal";
 export { default as DowntimeModal } from "./modals/DowntimeModal";
 export { default as EmployeeModal } from "./modals/EmployeeModal";
 export { default as JobModal } from "./modals/JobModal";
+export { default as LogoutModal } from "./modals/LogoutModal";
+export { default as ProductionLogModal } from "./modals/ProductionLogModal";

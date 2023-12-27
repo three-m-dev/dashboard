@@ -168,7 +168,7 @@ const Downtime = ({ dateRange }: Props) => {
     const month = `${monday.getMonth() + 1}`.padStart(2, "0");
     const dayOfMonth = `${monday.getDate()}`.padStart(2, "0");
     const year = monday.getFullYear();
-    return `${month}-${dayOfMonth}-${year}`;
+    return `${month}/${dayOfMonth}/${year}`;
   };
 
   useEffect(() => {

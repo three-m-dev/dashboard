@@ -21,15 +21,14 @@ const Production = () => {
     productionLogData,
     setFilter,
     setSort,
-    setPage,
+
     loading,
     error,
     refreshProductionLogs,
   } = useGetProductionLogs();
 
-  console.log(productionLogData);
-
   const [activeTab, setActiveTab] = useState("overview");
+
   const [dateRange, setDateRange] = useState<{
     start: string | null;
     end: string | null;
@@ -205,22 +204,9 @@ const Production = () => {
   };
 
   useEffect(() => {
-    const formattedStart = dateRange.start
-      ? dateRange.start.split("-").join("/")
-      : "";
-    const formattedEnd = dateRange.end
-      ? dateRange.end.split("-").join("/")
-      : "";
-    const jsonString =
-      `{"dateRange":{"start":"${formattedStart}","end":"${formattedEnd}"}}`.replace(
-        /\n/g,
-        "",
-      );
-
-    setFilter(jsonString);
-    setPage(1);
-    setSort("weekOf,DESC");
-  }, [dateRange, setFilter, setPage, setSort]);
+    setFilter({ dateRange });
+    setSort("weekOf,ASC");
+  }, [dateRange, setFilter, setSort]);
 
   useEffect(() => {
     handleDropdownSelect({ label: "This Week", value: "This Week" });

@@ -3,6 +3,13 @@ import axios from "axios";
 import { baseUrl } from "../../utils/config";
 import { IProductionLog } from "../../shared/interfaces";
 
+type FilterType = {
+  dateRange: {
+    start: string | null;
+    end: string | null;
+  } | null;
+};
+
 const useGetProductionLogs = () => {
   const [productionLogData, setProductionLogData] = useState<{
     productionLogs: IProductionLog[];
@@ -10,7 +17,7 @@ const useGetProductionLogs = () => {
     pages: number;
   } | null>(null);
 
-  const [filter, setFilter] = useState<string | undefined>(undefined);
+  const [filter, setFilter] = useState<FilterType>({ dateRange: null });
   const [sort, setSort] = useState<string | undefined>(undefined);
   const [page, setPage] = useState<number | undefined>(undefined);
 
@@ -27,7 +34,9 @@ const useGetProductionLogs = () => {
       try {
         const response = await axios.get(`${baseUrl}/production/logs`, {
           params: {
-            filter: filter ? JSON.stringify(filter) : undefined,
+            filter: filter.dateRange
+              ? JSON.stringify({ dateRange: filter.dateRange })
+              : undefined,
             sort,
             page,
           },
@@ -52,7 +61,7 @@ const useGetProductionLogs = () => {
       }
     };
 
-    if (page !== undefined) {
+    if (filter.dateRange) {
       getProductionLogs();
     }
   }, [filter, sort, page, refreshToggle]);

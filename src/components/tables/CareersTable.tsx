@@ -67,7 +67,7 @@ const CareersTable = ({
       <div className="mb-4 overflow-x-auto rounded bg-white p-4 shadow">
         <table className="w-full table-auto">
           <thead>
-            <tr className="grid grid-cols-8 text-left text-sm text-gray-500">
+            <tr className="grid grid-cols-7 text-left text-sm text-gray-500">
               <th className="col-span-2 pb-2 pl-4 font-medium">
                 <button
                   onClick={() => updateSort("title")}
@@ -124,14 +124,13 @@ const CareersTable = ({
                 </button>
               </th>
               <th className="flex pb-2 font-medium">Status</th>
-              <th className="flex pb-2 font-medium">Actions</th>
             </tr>
           </thead>
           <tbody>
             {jobData?.jobs.map((job, index) => (
               <tr
                 key={index}
-                className={`grid grid-cols-8 rounded py-2 text-sm capitalize  ${
+                className={`grid grid-cols-7 rounded py-2 text-sm capitalize  ${
                   index % 2 === 0 ? "bg-gray-100" : "bg-white"
                 }`}
               >
@@ -159,16 +158,6 @@ const CareersTable = ({
                   >
                     {job.status}
                   </span>
-                </td>
-                <td className="flex items-center">
-                  <div className="flex gap-2">
-                    <button
-                      onClick={toggleActionDropdown}
-                      className="text-gray-400 hover:text-blue-500"
-                    >
-                      <EllipsisIcon />
-                    </button>
-                  </div>
                 </td>
               </tr>
             ))}

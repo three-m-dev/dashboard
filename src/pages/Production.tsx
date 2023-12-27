@@ -114,9 +114,6 @@ const Production = () => {
       ],
     },
     {
-      value: "Capacity",
-    },
-    {
       value: "downtime",
       buttons: [
         {

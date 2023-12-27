@@ -2,7 +2,7 @@ import { useState } from "react";
 import { IJob } from "../../shared/interfaces";
 import ModalBase from "../reusable/ModalBase";
 import { formatKebab } from "../../utils/formatter";
-// import useGetEmployee from "../../hooks/useGetEmployee";
+import { Button, TextArea } from "..";
 
 type Props = {
   mode: string;
@@ -14,16 +14,18 @@ type Props = {
 const JobModal = ({ mode, onClose, selectedJob }: Props) => {
   const [jobFormData, setJobFormData] = useState({
     title: "",
+    company: 0,
+    departmentId: "",
+    location: 0,
+    type: 0,
+    salary: null,
+    wage: null,
     description: "",
-    location: "",
-    salary: "",
+    requirements: [],
+    qualifications: [],
+    benefits: [],
+    schedule: [],
   });
-
-  // const { employee } = useGetEmployee(
-  //   selectedJob?.updatedBy
-  //     ? selectedJob.updatedBy
-  //     : selectedJob?.createdBy || "",
-  // );
 
   const handleNewJobFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setJobFormData({
@@ -39,7 +41,7 @@ const JobModal = ({ mode, onClose, selectedJob }: Props) => {
 
   return (
     <ModalBase
-      title={mode === "view" && selectedJob ? selectedJob.title : "Add Opening"}
+      title={mode === "view" && selectedJob ? "Career Details" : "Add Career"}
       onClose={onClose}
     >
       {mode === "view" && selectedJob ? (
@@ -155,21 +157,6 @@ const JobModal = ({ mode, onClose, selectedJob }: Props) => {
               <p>No schedule information available.</p>
             )}
           </div>
-
-          {/* <div className="col-span-12">
-            <p>
-              Last updated on{" "}
-              <span className="text-primary">
-                {formatDate(selectedJob.updatedAt)}
-              </span>{" "}
-              by{" "}
-              <span className="text-primary">
-                {employee?.firstName
-                  ? employee.firstName + " " + employee.lastName
-                  : "Unknown"}
-              </span>
-            </p>
-          </div> */}
         </div>
       ) : (
         <form onSubmit={handleNewJobFormSubmit}>
@@ -214,7 +201,7 @@ const JobModal = ({ mode, onClose, selectedJob }: Props) => {
               <input
                 id="title"
                 type="text"
-                placeholder="Job Title"
+                placeholder="Location"
                 onChange={handleNewJobFormChange}
               />
             </div>
@@ -241,26 +228,61 @@ const JobModal = ({ mode, onClose, selectedJob }: Props) => {
               />
             </div>
             <div className="col-span-3 flex flex-col">
-              <label className="font-semibold" htmlFor="title">
-                Compensation
-              </label>
+              <label className="font-semibold">Compensation</label>
               <input
                 id="title"
                 type="text"
-                placeholder="Job Title"
+                placeholder="Compensation"
                 onChange={handleNewJobFormChange}
               />
             </div>
             <div className="col-span-12 flex flex-col">
-              <label className="font-semibold" htmlFor="description">
-                Description
-              </label>
+              <label className="font-semibold">Description</label>
               <textarea
                 id="description"
                 placeholder="Description"
                 onChange={() => {}}
               />
             </div>
+            <div className="col-span-12 flex flex-col">
+              <label className="font-semibold">Requirements</label>
+              <TextArea
+                bullets={false}
+                placeholder="Requirements"
+                value=""
+                onChange={() => handleNewJobFormChange}
+              />
+            </div>
+            <div className="col-span-12 flex flex-col">
+              <label className="font-semibold">Qualifications</label>
+              <TextArea
+                bullets={false}
+                placeholder="Qualifications"
+                value=""
+                onChange={() => handleNewJobFormChange}
+              />
+            </div>
+            <div className="col-span-12 flex flex-col">
+              <label className="font-semibold">Benefits</label>
+              <TextArea
+                bullets={false}
+                placeholder="Benefits"
+                value=""
+                onChange={() => handleNewJobFormChange}
+              />
+            </div>
+            <div className="col-span-12 flex flex-col">
+              <label className="font-semibold">Schedule</label>
+              <TextArea
+                bullets={false}
+                placeholder="Schedule"
+                value=""
+                onChange={() => handleNewJobFormChange}
+              />
+            </div>
+          </div>
+          <div className="mt-4 flex justify-end">
+            <Button text="Submit" type="button" />
           </div>
         </form>
       )}

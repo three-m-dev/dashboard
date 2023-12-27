@@ -144,41 +144,6 @@ const Output = ({ dateRange }: Props) => {
             <div className="h-96">
               <Line data={chartData} options={options} />
             </div>
-
-            {/* <div className="grid grid-cols-12 gap-4 bg-white">
-              <div className="col-span-3">
-                <div className="rounded border px-6 py-4">
-                  <p className="text-xs text-gray-500">
-                    This week's expected output
-                  </p>
-                  <h3 className="text-3xl font-bold">$245,000</h3>
-                </div>
-              </div>
-              <div className="col-span-3">
-                <div className="rounded border px-6 py-4">
-                  <p className="text-xs text-gray-500">
-                    This week's actual output
-                  </p>
-                  <h3 className="text-3xl font-bold">$190,000</h3>
-                </div>
-              </div>
-              <div className="col-span-3">
-                <div className="rounded border px-6 py-4">
-                  <p className="text-xs text-gray-500">
-                    Last week's expected output
-                  </p>
-                  <h3 className="text-3xl font-bold">$220,000</h3>
-                </div>
-              </div>
-              <div className="col-span-3">
-                <div className="rounded border px-6 py-4">
-                  <p className="text-xs text-gray-500">
-                    Last week's actual output
-                  </p>
-                  <h3 className="text-3xl font-bold">$205,000</h3>
-                </div>
-              </div>
-            </div> */}
           </div>
         </div>
       </div>

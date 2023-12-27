@@ -234,7 +234,7 @@ const Downtime = ({ dateRange }: Props) => {
   return (
     <section>
       <div className="mx-auto">
-        <div className="rounded bg-white">
+        <div className="rounded bg-white shadow">
           <div className="flex items-center justify-between p-4">
             <h3 className="text-lg font-semibold text-gray-800">
               Unscheduled Downtime

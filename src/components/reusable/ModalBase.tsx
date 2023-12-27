@@ -14,7 +14,7 @@ const ModalBase = ({ children, title, onClose }: ModalBaseProps) => {
           <h2 className="text-2xl font-semibold">{title}</h2>
           <button
             onClick={onClose}
-            className="flex h-[36px] w-[36px] items-center justify-center rounded-md border text-gray-600 hover:text-gray-900 hover:bg-gray-200"
+            className="flex h-[40px] w-[40px] items-center justify-center rounded-md border text-gray-600 hover:bg-gray-200 hover:text-gray-900"
           >
             <XIcon />
           </button>

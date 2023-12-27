@@ -19,17 +19,13 @@ import useGetProductionLogs from "../hooks/production/useGetProductionLogs";
 const Production = () => {
   const {
     productionLogData,
+    setFilter,
     setSort,
     setPage,
     loading,
     error,
     refreshProductionLogs,
   } = useGetProductionLogs();
-
-  useEffect(() => {
-    setPage(1);
-    setSort("weekOf,DESC");
-  }, [setPage, setSort]);
 
   console.log(productionLogData);
 
@@ -182,7 +178,7 @@ const Production = () => {
       case "overview":
         return (
           <div className="flex flex-col gap-4">
-            <Output dateRange={dateRange} />
+            <Output outputData={productionLogData?.productionLogs || []} />
             <div className="flex h-96 w-full gap-4">
               <div className="flex-1 rounded bg-white p-4 shadow">
                 <QuotedHours />
@@ -207,6 +203,24 @@ const Production = () => {
         return <></>;
     }
   };
+
+  useEffect(() => {
+    const formattedStart = dateRange.start
+      ? dateRange.start.split("-").join("/")
+      : "";
+    const formattedEnd = dateRange.end
+      ? dateRange.end.split("-").join("/")
+      : "";
+    const jsonString =
+      `{"dateRange":{"start":"${formattedStart}","end":"${formattedEnd}"}}`.replace(
+        /\n/g,
+        "",
+      );
+
+    setFilter(jsonString);
+    setPage(1);
+    setSort("weekOf,DESC");
+  }, [dateRange, setFilter, setPage, setSort]);
 
   useEffect(() => {
     handleDropdownSelect({ label: "This Week", value: "This Week" });

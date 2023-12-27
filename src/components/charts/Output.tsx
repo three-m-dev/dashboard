@@ -10,6 +10,8 @@ import {
   Legend,
   Filler,
 } from "chart.js";
+import { IProductionLog } from "../../shared/interfaces";
+import { formatCurrency, formatDate } from "../../utils/formatter";
 
 ChartJS.register(
   CategoryScale,
@@ -23,20 +25,10 @@ ChartJS.register(
 );
 
 type Props = {
-  dateRange: {
-    start: string | null;
-    end: string | null;
-  };
+  outputData: IProductionLog[];
 };
 
-const Output = ({ dateRange }: Props) => {
-  const sampleData = [
-    { weekOf: "12-3-2023", projected: 286547, actual: 31555, goal: 106000 },
-    { weekOf: "12-10-2023", projected: 119305, actual: 93572, goal: 106000 },
-    { weekOf: "12-17-2023", projected: 176670, actual: 157340, goal: 106000 },
-    { weekOf: "12-24-2023", projected: 106748, actual: 0, goal: 106000 },
-  ];
-
+const Output = ({ outputData }: Props) => {
   const options = {
     maintainAspectRatio: false,
     responsive: true,
@@ -72,6 +64,11 @@ const Output = ({ dateRange }: Props) => {
             const title = context[0].label;
             return getMonday(title) + " - " + title;
           },
+          label: function (context: any) {
+            const label = context.dataset.label || "";
+            const value = formatCurrency(context.parsed.y);
+            return `${label}: ${value}`;
+          },
         },
       },
     },
@@ -83,11 +80,11 @@ const Output = ({ dateRange }: Props) => {
   };
 
   const chartData = {
-    labels: sampleData.map((data) => data.weekOf),
+    labels: outputData.map((data) => formatDate(data.weekOf)),
     datasets: [
       {
         label: "Goal",
-        data: sampleData.map((data) => data.goal),
+        data: outputData.map((data) => data.outputGoal),
         borderColor: "#000000",
         backgroundColor: "#e5e7eb",
         borderDash: [5, 5],
@@ -99,7 +96,7 @@ const Output = ({ dateRange }: Props) => {
       },
       {
         label: "Actual",
-        data: sampleData.map((data) => data.actual),
+        data: outputData.map((data) => data.actualOutput),
         borderColor: "#3b82f6",
         backgroundColor: "#93c5fd",
         tension: 0.4,
@@ -110,7 +107,7 @@ const Output = ({ dateRange }: Props) => {
       },
       {
         label: "Projected",
-        data: sampleData.map((data) => data.projected),
+        data: outputData.map((data) => data.projectedOutput),
         borderColor: "#9ca3af",
         backgroundColor: "#e5e7eb",
         tension: 0.4,

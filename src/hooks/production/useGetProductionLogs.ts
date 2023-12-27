@@ -10,6 +10,7 @@ const useGetProductionLogs = () => {
     pages: number;
   } | null>(null);
 
+  const [filter, setFilter] = useState<string | undefined>(undefined);
   const [sort, setSort] = useState<string | undefined>(undefined);
   const [page, setPage] = useState<number | undefined>(undefined);
 
@@ -26,6 +27,7 @@ const useGetProductionLogs = () => {
       try {
         const response = await axios.get(`${baseUrl}/production/logs`, {
           params: {
+            filter: filter ? JSON.stringify(filter) : undefined,
             sort,
             page,
           },
@@ -53,7 +55,7 @@ const useGetProductionLogs = () => {
     if (page !== undefined) {
       getProductionLogs();
     }
-  }, [sort, page, refreshToggle]);
+  }, [filter, sort, page, refreshToggle]);
 
   const refreshProductionLogs = () => {
     setRefreshToggle((prev) => !prev);
@@ -61,6 +63,7 @@ const useGetProductionLogs = () => {
 
   return {
     productionLogData,
+    setFilter,
     setSort,
     setPage,
     loading,

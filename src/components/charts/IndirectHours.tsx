@@ -9,6 +9,7 @@ import {
   Legend,
 } from "chart.js";
 import { IProductionLog } from "../../shared/interfaces";
+import { formatDate } from "../../utils/formatter";
 
 ChartJS.register(
   CategoryScale,
@@ -23,20 +24,20 @@ type Props = {
   indirectData: IProductionLog[];
 };
 
-const IndirectHours = (props: Props) => {
+const IndirectHours = ({ indirectData }: Props) => {
   const data = {
-    labels: ["12-3-2023", "12-10-2023", "12-17-2023", "12-24-2023"],
+    labels: indirectData.map((data) => formatDate(data.weekOf)),
     datasets: [
       {
         label: "Indirect Hours",
-        data: [424, 500, 398, 0],
+        data: indirectData.map((data) => data.indirectHours),
         borderColor: "#9ca3af",
         backgroundColor: "#e5e7eb",
         borderWidth: 2,
       },
       {
         label: "Total Hours",
-        data: [1063.5, 1073.25, 1043.25, 0],
+        data: indirectData.map((data) => data.actualHours),
         borderColor: "#3b82f6",
         backgroundColor: "#93c5fd",
         borderWidth: 2,

@@ -183,7 +183,9 @@ const Production = () => {
                 <QuotedHours />
               </div>
               <div className="flex-1 rounded bg-white p-4 shadow">
-                <IndirectHours />
+                <IndirectHours
+                  indirectData={productionLogData?.productionLogs || []}
+                />
               </div>
             </div>
             <Downtime dateRange={dateRange} />

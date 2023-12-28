@@ -263,9 +263,11 @@ const JobModal = ({ mode, onClose, selectedJob }: Props) => {
             </div>
             <div className="col-span-12 flex flex-col">
               <label className="font-semibold">Description</label>
-              <textarea
+              <TextArea
                 id="description"
+                bullets={false}
                 placeholder="Description"
+                value={jobFormData.description}
                 onChange={handleJobFormChange}
               />
             </div>
@@ -310,7 +312,7 @@ const JobModal = ({ mode, onClose, selectedJob }: Props) => {
               />
             </div>
           </div>
-          <div className="mt-4 flex justify-end">
+          <div className="flex justify-end">
             <Button text="Submit" type="button" />
           </div>
         </form>

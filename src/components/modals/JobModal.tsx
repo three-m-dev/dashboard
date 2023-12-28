@@ -44,7 +44,17 @@ const JobModal = ({ mode, onClose, selectedJob }: Props) => {
         .map((item: any) => item.replace(/^•\s*/, ""));
       setJobFormData({ ...jobFormData, [id]: arrayValues });
     } else {
-      setJobFormData({ ...jobFormData, [id]: value });
+      if (id === "compensationValue") {
+        const updatedFormData = { ...jobFormData };
+        if (compensationType === "salary") {
+          updatedFormData.salary = value;
+        } else if (compensationType === "wage") {
+          updatedFormData.wage = value;
+        }
+        setJobFormData(updatedFormData);
+      } else {
+        setJobFormData({ ...jobFormData, [id]: value });
+      }
     }
   };
 
@@ -170,6 +180,9 @@ const JobModal = ({ mode, onClose, selectedJob }: Props) => {
             ) : (
               <p>No schedule information available.</p>
             )}
+          </div>
+          <div className="col-span-12 mt-4 flex w-full justify-end">
+            <Button text="Edit" type="button" />
           </div>
         </div>
       ) : (
@@ -312,7 +325,7 @@ const JobModal = ({ mode, onClose, selectedJob }: Props) => {
               />
             </div>
           </div>
-          <div className="flex justify-end">
+          <div className="mt-4 flex justify-end">
             <Button text="Submit" type="button" />
           </div>
         </form>

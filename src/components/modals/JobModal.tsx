@@ -2,7 +2,7 @@ import { useState } from "react";
 import { IJob } from "../../shared/interfaces";
 import ModalBase from "../reusable/ModalBase";
 import { formatKebab } from "../../utils/formatter";
-import { Button, TextArea } from "..";
+import { Button, Dropdown, Input, TextArea } from "..";
 
 type Props = {
   mode: string;
@@ -28,6 +28,10 @@ const JobModal = ({ mode, onClose, selectedJob }: Props) => {
   });
 
   const [compensationType, setCompensationType] = useState("");
+
+  const handleSelect = (option: any) => {
+    setCompensationType(option.value);
+  };
 
   const handleJobFormChange = (e: any) => {
     const { id, value } = e.target;
@@ -173,60 +177,70 @@ const JobModal = ({ mode, onClose, selectedJob }: Props) => {
           <div className="grid grid-cols-12 gap-4">
             <div className="col-span-6 flex flex-col">
               <label className="font-semibold">Job Title</label>
-              <input
-                id="jobTitle"
+              <Input
                 type="text"
-                placeholder="Job Title"
+                name="jobTitle"
                 value={jobFormData.jobTitle}
                 onChange={handleJobFormChange}
               />
             </div>
             <div className="col-span-3 flex flex-col">
               <label className="font-semibold">Company</label>
-              <input
+              <Dropdown
                 id="company"
-                type="text"
-                placeholder="Company"
-                value={jobFormData.company}
-                onChange={handleJobFormChange}
+                text="Company"
+                options={[
+                  { value: "three-m", label: "Three M" },
+                  { value: "ultra-grip", label: "Ultra Grip" },
+                ]}
+                onSelect={handleSelect}
               />
             </div>
             <div className="col-span-3 flex flex-col">
               <label className="font-semibold">Department</label>
-              <input
+              <Dropdown
                 id="department"
-                type="text"
-                placeholder="Department"
-                value={jobFormData.department}
-                onChange={handleJobFormChange}
+                text="Department"
+                options={[
+                  { value: "sales", label: "Sales" },
+                  { value: "marketing", label: "Marketing" },
+                ]}
+                onSelect={handleSelect}
               />
             </div>
             <div className="col-span-3 flex flex-col">
               <label className="font-semibold">Location</label>
-              <input
+              <Dropdown
                 id="location"
-                type="text"
-                placeholder="Location"
-                value={jobFormData.location}
-                onChange={handleJobFormChange}
+                text="Location"
+                options={[
+                  { value: "on-site", label: "On Site" },
+                  { value: "remote", label: "Remote" },
+                  { value: "hybrid", label: "Hybrid" },
+                ]}
+                onSelect={handleSelect}
               />
             </div>
             <div className="col-span-3 flex flex-col">
               <label className="font-semibold">Type</label>
-              <input
+              <Dropdown
                 id="type"
-                type="text"
-                placeholder="Type"
-                value={jobFormData.type}
-                onChange={handleJobFormChange}
+                text="Type"
+                options={[
+                  { value: "full-time", label: "Full Time" },
+                  { value: "part-time", label: "Part Time" },
+                  { value: "contract", label: "Contract" },
+                  { value: "internship", label: "Internship" },
+                  { value: "temporary", label: "Temporary" },
+                ]}
+                onSelect={handleSelect}
               />
             </div>
             <div className="col-span-3 flex flex-col">
               <label className="font-semibold">Starting At</label>
-              <input
-                id={compensationType === "salary" ? "salary" : "wage"}
+              <Input
                 type="text"
-                placeholder="$0.00"
+                name={compensationType === "salary" ? "salary" : "wage"}
                 value={
                   compensationType === "salary"
                     ? jobFormData.salary
@@ -237,15 +251,15 @@ const JobModal = ({ mode, onClose, selectedJob }: Props) => {
             </div>
             <div className="col-span-3 flex flex-col">
               <label className="font-semibold">Compensation</label>
-              <select
+              <Dropdown
                 id="compensationType"
-                value={compensationType}
-                onChange={(e) => setCompensationType(e.target.value)}
-              >
-                <option value="">Select Pay Type</option>
-                <option value="salary">Salary</option>
-                <option value="wage">Wage</option>
-              </select>
+                text="Payment Type"
+                onSelect={handleSelect}
+                options={[
+                  { value: "salary", label: "Salary" },
+                  { value: "wage", label: "Wage" },
+                ]}
+              />
             </div>
             <div className="col-span-12 flex flex-col">
               <label className="font-semibold">Description</label>

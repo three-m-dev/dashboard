@@ -120,6 +120,7 @@ const DowntimeModal = ({ mode, onClose, triggerRefresh }: Props) => {
             Operator
           </label>
           <Dropdown
+            id="operator"
             text="Select Operator"
             options={operators}
             onSelect={(option) =>
@@ -132,6 +133,7 @@ const DowntimeModal = ({ mode, onClose, triggerRefresh }: Props) => {
             Reason
           </label>
           <Dropdown
+            id="reason"
             text="Select Reason"
             options={reasons}
             onSelect={(option) => setCurrentReason(option.value)}

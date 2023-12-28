@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Option } from "../../shared/types";
 
 type Props = {
+  id: string;
   text: string;
   options: Option[];
   onSelect: (option: Option) => void;
@@ -37,10 +38,14 @@ const Dropdown = (props: Props) => {
   };
 
   return (
-    <div ref={wrapperRef} className="relative z-50 inline-block text-left">
+    <div
+      id={props.id}
+      ref={wrapperRef}
+      className={`relative inline-block text-left ${isOpen ? "z-50" : ""}`}
+    >
       <button
         type="button"
-        className="inline-flex h-[40px] w-full justify-between rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        className="inline-flex h-[40px] w-full justify-between rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500"
         onClick={toggleDropdown}
       >
         {selectedOption ? selectedOption.label : props.text}

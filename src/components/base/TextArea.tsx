@@ -1,10 +1,11 @@
 import { useState } from "react";
 
 type Props = {
+  id: string;
   bullets: boolean;
   placeholder: string;
   value: string;
-  onChange: (value: string) => void;
+  onChange: (event: { target: { id: string; value: string } }) => void;
 };
 
 const TextArea = (props: Props) => {
@@ -44,7 +45,16 @@ const TextArea = (props: Props) => {
     }
 
     setValue(modifiedValue);
-    props.onChange(modifiedValue);
+
+    // Create a custom event object to mimic a regular input event
+    const customEvent = {
+      target: {
+        id: props.id, // Ensure 'id' prop is passed to TextArea
+        value: modifiedValue,
+      },
+    };
+
+    props.onChange(customEvent);
   };
 
   const addBulletsOnPaste = (text: string): string => {

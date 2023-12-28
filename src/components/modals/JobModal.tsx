@@ -13,13 +13,13 @@ type Props = {
 
 const JobModal = ({ mode, onClose, selectedJob }: Props) => {
   const [jobFormData, setJobFormData] = useState({
-    title: "",
+    jobTitle: "",
     company: 0,
-    departmentId: "",
+    department: "",
     location: 0,
     type: 0,
-    salary: null,
-    wage: null,
+    salary: 0,
+    wage: 0,
     description: "",
     requirements: [],
     qualifications: [],
@@ -27,14 +27,24 @@ const JobModal = ({ mode, onClose, selectedJob }: Props) => {
     schedule: [],
   });
 
-  const handleNewJobFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setJobFormData({
-      ...jobFormData,
-      [e.target.id]: e.target.value,
-    });
+  const [compensationType, setCompensationType] = useState("");
+
+  const handleJobFormChange = (e: any) => {
+    const { id, value } = e.target;
+
+    if (
+      ["requirements", "qualifications", "benefits", "schedule"].includes(id)
+    ) {
+      const arrayValues = value
+        .split("\n")
+        .map((item: any) => item.replace(/^•\s*/, ""));
+      setJobFormData({ ...jobFormData, [id]: arrayValues });
+    } else {
+      setJobFormData({ ...jobFormData, [id]: value });
+    }
   };
 
-  const handleNewJobFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleJobFormSubmit = (e: any) => {
     e.preventDefault();
     console.log(jobFormData);
   };
@@ -159,125 +169,130 @@ const JobModal = ({ mode, onClose, selectedJob }: Props) => {
           </div>
         </div>
       ) : (
-        <form onSubmit={handleNewJobFormSubmit}>
+        <form onSubmit={handleJobFormSubmit}>
           <div className="grid grid-cols-12 gap-4">
             <div className="col-span-6 flex flex-col">
-              <label className="font-semibold" htmlFor="title">
-                Job Title
-              </label>
+              <label className="font-semibold">Job Title</label>
               <input
-                id="title"
+                id="jobTitle"
                 type="text"
                 placeholder="Job Title"
-                onChange={handleNewJobFormChange}
+                value={jobFormData.jobTitle}
+                onChange={handleJobFormChange}
               />
             </div>
             <div className="col-span-3 flex flex-col">
-              <label className="font-semibold" htmlFor="title">
-                Company
-              </label>
+              <label className="font-semibold">Company</label>
               <input
-                id="title"
+                id="company"
                 type="text"
-                placeholder="Job Title"
-                onChange={handleNewJobFormChange}
+                placeholder="Company"
+                value={jobFormData.company}
+                onChange={handleJobFormChange}
               />
             </div>
             <div className="col-span-3 flex flex-col">
-              <label className="font-semibold" htmlFor="title">
-                Department
-              </label>
+              <label className="font-semibold">Department</label>
               <input
-                id="title"
+                id="department"
                 type="text"
-                placeholder="Job Title"
-                onChange={handleNewJobFormChange}
+                placeholder="Department"
+                value={jobFormData.department}
+                onChange={handleJobFormChange}
               />
             </div>
             <div className="col-span-3 flex flex-col">
-              <label className="font-semibold" htmlFor="title">
-                Location
-              </label>
+              <label className="font-semibold">Location</label>
               <input
-                id="title"
+                id="location"
                 type="text"
                 placeholder="Location"
-                onChange={handleNewJobFormChange}
+                value={jobFormData.location}
+                onChange={handleJobFormChange}
               />
             </div>
             <div className="col-span-3 flex flex-col">
-              <label className="font-semibold" htmlFor="title">
-                Type
-              </label>
+              <label className="font-semibold">Type</label>
               <input
-                id="title"
+                id="type"
                 type="text"
-                placeholder="Job Title"
-                onChange={handleNewJobFormChange}
+                placeholder="Type"
+                value={jobFormData.type}
+                onChange={handleJobFormChange}
               />
             </div>
             <div className="col-span-3 flex flex-col">
-              <label className="font-semibold" htmlFor="startingAt">
-                Starting At
-              </label>
+              <label className="font-semibold">Starting At</label>
               <input
-                id="title"
+                id={compensationType === "salary" ? "salary" : "wage"}
                 type="text"
                 placeholder="$0.00"
-                onChange={handleNewJobFormChange}
+                value={
+                  compensationType === "salary"
+                    ? jobFormData.salary
+                    : jobFormData.wage
+                }
+                onChange={handleJobFormChange}
               />
             </div>
             <div className="col-span-3 flex flex-col">
               <label className="font-semibold">Compensation</label>
-              <input
-                id="title"
-                type="text"
-                placeholder="Compensation"
-                onChange={handleNewJobFormChange}
-              />
+              <select
+                id="compensationType"
+                value={compensationType}
+                onChange={(e) => setCompensationType(e.target.value)}
+              >
+                <option value="">Select Pay Type</option>
+                <option value="salary">Salary</option>
+                <option value="wage">Wage</option>
+              </select>
             </div>
             <div className="col-span-12 flex flex-col">
               <label className="font-semibold">Description</label>
               <textarea
                 id="description"
                 placeholder="Description"
-                onChange={() => {}}
+                onChange={handleJobFormChange}
               />
             </div>
             <div className="col-span-12 flex flex-col">
               <label className="font-semibold">Requirements</label>
               <TextArea
-                bullets={false}
+                id="requirements"
+                bullets={true}
                 placeholder="Requirements"
-                value=""
-                onChange={() => handleNewJobFormChange}
+                value={jobFormData.requirements.join("\n")}
+                onChange={handleJobFormChange}
               />
             </div>
             <div className="col-span-12 flex flex-col">
               <label className="font-semibold">Qualifications</label>
               <TextArea
-                bullets={false}
+                id="qualifications"
+                bullets={true}
                 placeholder="Qualifications"
-                value=""
-                onChange={() => handleNewJobFormChange}
+                value={jobFormData.qualifications.join("\n")}
+                onChange={handleJobFormChange}
               />
             </div>
             <div className="col-span-12 flex flex-col">
               <label className="font-semibold">Benefits</label>
               <TextArea
-                bullets={false}
+                id="benefits"
+                bullets={true}
                 placeholder="Benefits"
-                value=""
-                onChange={() => handleNewJobFormChange}
+                value={jobFormData.benefits.join("\n")}
+                onChange={handleJobFormChange}
               />
             </div>
             <div className="col-span-12 flex flex-col">
               <label className="font-semibold">Schedule</label>
               <TextArea
-                bullets={false}
+                id="schedule"
+                bullets={true}
                 placeholder="Schedule"
-                value=""
-                onChange={() => handleNewJobFormChange}
+                value={jobFormData.schedule.join("\n")}
+                onChange={handleJobFormChange}
               />
             </div>
           </div>

@@ -1,4 +1,3 @@
-import React from "react";
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -9,6 +8,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { IProductionLog } from "../../shared/interfaces";
 
 ChartJS.register(
   CategoryScale,
@@ -19,7 +19,9 @@ ChartJS.register(
   Legend,
 );
 
-type Props = {};
+type Props = {
+  indirectData: IProductionLog[];
+};
 
 const IndirectHours = (props: Props) => {
   const data = {

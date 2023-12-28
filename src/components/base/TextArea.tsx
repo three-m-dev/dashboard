@@ -12,6 +12,16 @@ const TextArea = (props: Props) => {
   const [value, setValue] = useState(props.value);
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (props.bullets) {
+      handleBulletTextChange(event);
+    } else {
+      handleNormalTextChange(event);
+    }
+  };
+
+  const handleBulletTextChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
     const inputValue = event.target.value;
     let modifiedValue = inputValue;
 
@@ -45,16 +55,15 @@ const TextArea = (props: Props) => {
     }
 
     setValue(modifiedValue);
+    emitChangeEvent(modifiedValue);
+  };
 
-    // Create a custom event object to mimic a regular input event
-    const customEvent = {
-      target: {
-        id: props.id, // Ensure 'id' prop is passed to TextArea
-        value: modifiedValue,
-      },
-    };
-
-    props.onChange(customEvent);
+  const handleNormalTextChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
+    const modifiedValue = event.target.value;
+    setValue(modifiedValue);
+    emitChangeEvent(modifiedValue);
   };
 
   const addBulletsOnPaste = (text: string): string => {
@@ -64,10 +73,21 @@ const TextArea = (props: Props) => {
       .join("\n");
   };
 
+  const emitChangeEvent = (modifiedValue: string) => {
+    const customEvent = {
+      target: {
+        id: props.id,
+        value: modifiedValue,
+      },
+    };
+
+    props.onChange(customEvent);
+  };
+
   return (
     <div>
       <textarea
-        className="block w-full"
+        className="block w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500"
         rows={3}
         placeholder={props.placeholder}
         value={value}

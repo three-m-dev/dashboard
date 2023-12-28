@@ -69,7 +69,7 @@ const DowntimeModal = ({ mode, onClose, triggerRefresh }: Props) => {
 
     if (e.target.name === "date" && value) {
       const dateParts = value.split("-");
-      value = `${dateParts[1]}-${dateParts[2]}-${dateParts[0]}`;
+      value = `${dateParts[1]}/${dateParts[2]}/${dateParts[0]}`;
     }
 
     setDowntimeFormData({

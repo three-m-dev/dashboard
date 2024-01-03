@@ -1,4 +1,3 @@
-import React from "react";
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -9,6 +8,8 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { IProductionLog } from "../../shared/interfaces";
+import { formatDate } from "../../utils/formatter";
 
 ChartJS.register(
   CategoryScale,
@@ -19,32 +20,14 @@ ChartJS.register(
   Legend,
 );
 
-type Props = {};
+type Props = {
+  indirectData: IProductionLog[];
+};
 
-const IndirectHours = (props: Props) => {
-  const data = {
-    labels: ["12-3-2023", "12-10-2023", "12-17-2023", "12-24-2023"],
-    datasets: [
-      {
-        label: "Indirect Hours",
-        data: [424, 500, 398, 0],
-        borderColor: "#9ca3af",
-        backgroundColor: "#e5e7eb",
-        borderWidth: 2,
-      },
-      {
-        label: "Total Hours",
-        data: [1063.5, 1073.25, 1043.25, 0],
-        borderColor: "#3b82f6",
-        backgroundColor: "#93c5fd",
-        borderWidth: 2,
-      },
-    ],
-  };
-
-  const options = {
-    responsive: true,
+const IndirectHours = ({ indirectData }: Props) => {
+  const chartOptions = {
     maintainAspectRatio: false,
+    responsive: true,
     plugins: {
       legend: {
         display: true,
@@ -71,11 +54,31 @@ const IndirectHours = (props: Props) => {
     },
   };
 
+  const chartData = {
+    labels: indirectData.map((data) => formatDate(data.weekOf)),
+    datasets: [
+      {
+        label: "Indirect Hours",
+        data: indirectData.map((data) => data.indirectHours),
+        borderColor: "#9ca3af",
+        backgroundColor: "#e5e7eb",
+        borderWidth: 2,
+      },
+      {
+        label: "Total Hours",
+        data: indirectData.map((data) => data.actualHours),
+        borderColor: "#3b82f6",
+        backgroundColor: "#93c5fd",
+        borderWidth: 2,
+      },
+    ],
+  };
+
   return (
     <div className="flex h-full w-full flex-col">
       <h3 className="text-lg font-semibold text-gray-800">Indirect Hours</h3>
       <div className="flex-grow">
-        <Bar data={data} options={options} />
+        <Bar data={chartData} options={chartOptions} />
       </div>
     </div>
   );

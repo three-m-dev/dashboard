@@ -12,7 +12,7 @@ import {
 } from "chart.js";
 import useGenerateDowntimeReport from "../../hooks/downtime/useGenerateDowntimeReport";
 import { IChartData, IDowntimeReportData } from "../../shared/interfaces";
-import { formatMinutes } from "../../utils/formatter";
+import { formatDate, formatMinutes } from "../../utils/formatter";
 
 ChartJS.register(
   CategoryScale,
@@ -95,7 +95,7 @@ const Downtime = ({ dateRange }: Props) => {
         callbacks: {
           title: function (context: any) {
             const title = context[0].label;
-            return getMonday(title) + " - " + title;
+            return getMonday(title) + " - " + formatDate(title);
           },
         },
       },

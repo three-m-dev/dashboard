@@ -1,10 +1,17 @@
-export const formatDate = (dateStr: string): string => {
+export const formatDate = (dateStr: string, mode: string = "read"): string => {
   const date = new Date(dateStr);
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
   const year = date.getFullYear();
 
-  return `${month}/${day}/${year}`;
+  let dateString;
+
+  if (mode !== "read") {
+    dateString = `${year}-${month}-${day}`;
+  } else {
+    dateString = `${month}/${day}/${year}`;
+  }
+  return dateString;
 };
 
 export const formatPhoneNumber = (phone: string): string => {

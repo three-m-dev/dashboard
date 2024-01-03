@@ -8,6 +8,8 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { IProductionLog } from "../../shared/interfaces";
+import { formatDate } from "../../utils/formatter";
 
 ChartJS.register(
   CategoryScale,
@@ -18,30 +20,12 @@ ChartJS.register(
   Legend,
 );
 
-type Props = {};
+type Props = {
+  quotedData: IProductionLog[];
+};
 
-const QuotedHours = (props: Props) => {
-  const data = {
-    labels: ["12-3-2023", "12-10-2023", "12-17-2023", "12-24-2023"],
-    datasets: [
-      {
-        label: "Quoted Hours",
-        data: [15, 20, 25, 30],
-        borderColor: "#9ca3af",
-        backgroundColor: "#e5e7eb",
-        borderWidth: 2,
-      },
-      {
-        label: "Actual Hours",
-        data: [10, 18, 22, 28],
-        borderColor: "#3b82f6",
-        backgroundColor: "#93c5fd",
-        borderWidth: 2,
-      },
-    ],
-  };
-
-  const options = {
+const QuotedHours = ({ quotedData }: Props) => {
+  const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
@@ -70,11 +54,31 @@ const QuotedHours = (props: Props) => {
     },
   };
 
+  const chartData = {
+    labels: quotedData.map((data) => formatDate(data.weekOf)),
+    datasets: [
+      {
+        label: "Quoted Hours",
+        data: quotedData.map((data) => data.quotedHours),
+        borderColor: "#9ca3af",
+        backgroundColor: "#e5e7eb",
+        borderWidth: 2,
+      },
+      {
+        label: "Actual Hours",
+        data: quotedData.map((data) => data.actualHours),
+        borderColor: "#3b82f6",
+        backgroundColor: "#93c5fd",
+        borderWidth: 2,
+      },
+    ],
+  };
+
   return (
     <div className="flex h-full w-full flex-col">
       <h3 className="text-lg font-semibold text-gray-800">Quoted Hours</h3>
       <div className="flex-grow">
-        <Bar data={data} options={options} />
+        <Bar data={chartData} options={chartOptions} />
       </div>
     </div>
   );

@@ -29,7 +29,7 @@ type Props = {
 };
 
 const Output = ({ outputData }: Props) => {
-  const options = {
+  const chartOptions = {
     maintainAspectRatio: false,
     responsive: true,
     scales: {
@@ -139,7 +139,7 @@ const Output = ({ outputData }: Props) => {
               <h3 className="text-lg font-semibold text-gray-800">Output</h3>
             </div>
             <div className="h-96">
-              <Line data={chartData} options={options} />
+              <Line data={chartData} options={chartOptions} />
             </div>
           </div>
         </div>

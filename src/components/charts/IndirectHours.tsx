@@ -54,8 +54,20 @@ const IndirectHours = ({ indirectData }: Props) => {
     },
   };
 
+  const formatDateForChart = (dateString: string) => {
+    const date = new Date(dateString);
+    const utcDate = new Date(
+      date.getUTCFullYear(),
+      date.getUTCMonth(),
+      date.getUTCDate(),
+    );
+    return `${
+      utcDate.getMonth() + 1
+    }/${utcDate.getDate()}/${utcDate.getFullYear()}`;
+  };
+
   const chartData = {
-    labels: indirectData.map((data) => formatDate(data.weekOf)),
+    labels: indirectData.map((data) => formatDateForChart(data.weekOf)),
     datasets: [
       {
         label: "Indirect Hours",

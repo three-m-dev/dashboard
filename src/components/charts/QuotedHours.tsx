@@ -1,4 +1,4 @@
-import { Bar, Line } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -13,7 +13,6 @@ import {
 import { IProductionLog } from "../../shared/interfaces";
 import { formatDate } from "../../utils/formatter";
 
-// Registering components required for the chart
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -62,14 +61,24 @@ const QuotedHours = ({ quotedData }: Props) => {
     },
   };
 
+  const formatDateForChart = (dateString: string) => {
+    const date = new Date(dateString);
+    const utcDate = new Date(
+      date.getUTCFullYear(),
+      date.getUTCMonth(),
+      date.getUTCDate(),
+    );
+    return `${
+      utcDate.getMonth() + 1
+    }/${utcDate.getDate()}/${utcDate.getFullYear()}`;
+  };
+
   const yValues = quotedData.map(
     (data) => (data.actualHours ?? 0) / (data.quotedHours ?? 1),
   );
 
-  const targetLineData = new Array(quotedData.length).fill(1);
-
   const chartData = {
-    labels: quotedData.map((data) => formatDate(data.weekOf)),
+    labels: quotedData.map((data) => formatDateForChart(data.weekOf)),
     datasets: [
       {
         label: "Actual to Quoted Hours",
@@ -77,20 +86,7 @@ const QuotedHours = ({ quotedData }: Props) => {
         borderColor: "#3b82f6",
         backgroundColor: "#93c5fd",
         borderWidth: 2,
-        order: 2,
-      },
-      {
-        label: "Goal",
-        data: quotedData.map(() => targetLineData),
-        borderColor: "#000000",
-        backgroundColor: "#e5e7eb",
-        borderDash: [5, 5],
-        tension: 0.4,
-        pointBackgroundColor: "white",
-        pointBorderWidth: 2,
-        borderWidth: 2,
-        type: "line" as const,
-        fill: false,
+        type: "bar" as const,
       },
     ],
   };

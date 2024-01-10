@@ -11,7 +11,7 @@ import {
   Filler,
 } from "chart.js";
 import { IProductionLog } from "../../shared/interfaces";
-import { formatCurrency, formatDate } from "../../utils/formatter";
+import { formatCurrency } from "../../utils/formatter";
 
 ChartJS.register(
   CategoryScale,
@@ -95,6 +95,18 @@ const Output = ({ outputData }: Props) => {
     labels: outputData.map((data) => formatDateForChart(data.weekOf)),
     datasets: [
       {
+        label: "Trendline",
+        data: outputData.map((data) => data.actualOutput),
+        borderColor: "darkblue",
+        borderWidth: 2,
+        trendlineLinear: {
+          style: "darkblue",
+          lineStyle: "solid",
+          width: 2,
+        },
+        fill: false,
+      },
+      {
         label: "Goal",
         data: outputData.map((data) => data.outputGoal),
         borderColor: "#000000",
@@ -127,18 +139,6 @@ const Output = ({ outputData }: Props) => {
         pointBackgroundColor: "white",
         pointBorderWidth: 2,
         borderWidth: 2,
-      },
-      {
-        label: "Trendline",
-        data: outputData.map((data) => data.actualOutput),
-        borderColor: "darkblue",
-        borderWidth: 2,
-        trendlineLinear: {
-          style: "darkblue",
-          lineStyle: "solid",
-          width: 2,
-        },
-        fill: false,
       },
     ],
   };

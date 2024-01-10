@@ -15,6 +15,7 @@ import { Option, Tab } from "../shared/types";
 import PlusIcon from "../assets/icons/PlusIcon";
 import { formatDate } from "../utils/formatter";
 import useGetProductionLogs from "../hooks/production/useGetProductionLogs";
+import TvIcon from "../assets/icons/TvIcon";
 
 const Production = () => {
   // add load, error and refresh
@@ -33,6 +34,12 @@ const Production = () => {
   const [downtimeModalOpen, setDowntimeModalOpen] = useState(false);
   const [downtimeModalMode, setDowntimeModalMode] = useState("");
   const [refreshDowntime, setRefreshDowntime] = useState(false);
+
+  const [displayMode, setDisplayMode] = useState(false);
+
+  const toggleDisplayMode = () => {
+    setDisplayMode(!displayMode);
+  };
 
   const toggleProductionLogModal = (mode = "view") => {
     setProductionLogModalMode(mode);
@@ -100,7 +107,6 @@ const Production = () => {
         end = new Date();
     }
 
-    // Set end date to just before midnight
     end.setHours(23, 59, 59, 999);
 
     return {
@@ -118,6 +124,13 @@ const Production = () => {
     {
       value: "overview",
       buttons: [
+        {
+          text: "",
+          icon: <TvIcon />,
+          type: "button",
+          onClick: () => toggleDisplayMode(),
+          theme: "primary",
+        },
         {
           text: "Production Logs",
           type: "button",
@@ -214,6 +227,21 @@ const Production = () => {
   useEffect(() => {
     handleDropdownSelect({ label: "This Week", value: "This Week" });
   }, []);
+
+  if (displayMode === true) {
+    return (
+      <div className="grid h-screen grid-cols-2 grid-rows-2 gap-4 p-4">
+        <div className="col-span-1 row-span-1 bg-blue-200">{/* Chart 1 */}</div>
+        <div className="col-span-1 row-span-1 bg-green-200">
+          {/* Chart 2 */}
+        </div>
+        <div className="col-span-1 row-span-1 bg-red-200">{/* Chart 3 */}</div>
+        <div className="col-span-1 row-span-1 bg-yellow-200">
+          {/* Chart 4 */}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <Layout>

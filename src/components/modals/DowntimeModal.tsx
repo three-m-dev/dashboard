@@ -13,7 +13,8 @@ type Props = {
 };
 
 const DowntimeModal = ({ mode, onClose, triggerRefresh }: Props) => {
-  const { createDowntimeEntry, loading, error } = useCreateDowntimeEntry();
+  // add error handling
+  const { createDowntimeEntry, loading } = useCreateDowntimeEntry();
 
   const operators = [
     { label: "Jacob Reppuhn", value: "4f16d561-29de-44d9-a2bd-3771ef173a13" },

@@ -9,10 +9,12 @@ type Props = {
 };
 
 const DowntimeTable = ({ toggleDowntimeModal, refreshData }: Props) => {
-  const [actionDropdown, setActionDropdown] = useState(false);
+  // const [actionDropdown, setActionDropdown] = useState(false);
 
   const initialPageSize = 10;
-  const [localPage, setLocalPage] = useState<number>(1);
+
+  // add setLocalPage
+  const [localPage] = useState<number>(1);
   const [localSort, setLocalSort] = useState<string>("date,ASC");
 
   const {
@@ -34,10 +36,6 @@ const DowntimeTable = ({ toggleDowntimeModal, refreshData }: Props) => {
 
     setLocalSort(newSort);
     setSort(newSort);
-  };
-
-  const toggleActionDropdown = () => {
-    setActionDropdown(!actionDropdown);
   };
 
   useEffect(() => {

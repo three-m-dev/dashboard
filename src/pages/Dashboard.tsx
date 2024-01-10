@@ -59,10 +59,6 @@ const Dashboard = () => {
     }
   });
 
-  const handleClick = () => {
-    console.log("Button Clicked");
-  };
-
   const tabs: Tab[] = [
     {
       value: "overview",

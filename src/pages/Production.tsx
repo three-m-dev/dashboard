@@ -17,15 +17,8 @@ import { formatDate } from "../utils/formatter";
 import useGetProductionLogs from "../hooks/production/useGetProductionLogs";
 
 const Production = () => {
-  const {
-    productionLogData,
-    setFilter,
-    setSort,
-
-    loading,
-    error,
-    refreshProductionLogs,
-  } = useGetProductionLogs();
+  // add load, error and refresh
+  const { productionLogData, setFilter, setSort } = useGetProductionLogs();
 
   const [activeTab, setActiveTab] = useState("overview");
 

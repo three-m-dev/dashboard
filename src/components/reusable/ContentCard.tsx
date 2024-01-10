@@ -31,6 +31,7 @@ const ContentCard = ({
         {type === "blog" && (
           <>
             <div className="mb-8">
+              <p>{blogType}</p>
               <div className="mb-2 text-xl font-bold text-gray-900">
                 {title}
               </div>

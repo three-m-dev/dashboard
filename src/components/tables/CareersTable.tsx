@@ -47,10 +47,6 @@ const CareersTable = ({
     }
   };
 
-  const toggleActionDropdown = () => {
-    setActionDropdown(!actionDropdown);
-  };
-
   useEffect(() => {
     setPage(localPage);
     setPageSize(initialPageSize);

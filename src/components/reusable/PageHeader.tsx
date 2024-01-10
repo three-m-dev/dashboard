@@ -57,6 +57,7 @@ const PageHeader = ({ title, tabs, activeTab, setActiveTab }: Props) => {
             ))}
             {activeTabData?.dropdowns?.map((dropdown, index) => (
               <Dropdown
+                id={index.toString()}
                 key={index}
                 text={dropdown.text}
                 options={dropdown.options || []}

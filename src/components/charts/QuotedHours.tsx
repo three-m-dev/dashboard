@@ -11,7 +11,6 @@ import {
   PointElement,
 } from "chart.js";
 import { IProductionLog } from "../../shared/interfaces";
-import { formatDate } from "../../utils/formatter";
 
 ChartJS.register(
   CategoryScale,

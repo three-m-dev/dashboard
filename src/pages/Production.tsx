@@ -36,25 +36,16 @@ const Production = () => {
   const [refreshDowntime, setRefreshDowntime] = useState(false);
 
   const [displayMode, setDisplayMode] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
 
   const toggleDisplayMode = () => {
     setDisplayMode(!displayMode);
+
+    if (!displayMode) {
+      setShowMessage(true);
+      setTimeout(() => setShowMessage(false), 2500);
+    }
   };
-
-  // useEffect(() => {
-  //   const handleDoubleClick = (event: any) => {
-  //     if (event.button === 1) {
-  //       // Middle mouse button
-  //       toggleDisplayMode();
-  //     }
-  //   };
-
-  //   document.addEventListener("dblclick", handleDoubleClick);
-
-  //   return () => {
-  //     document.removeEventListener("dblclick", handleDoubleClick);
-  //   };
-  // }, []);
 
   const toggleProductionLogModal = (mode = "view") => {
     setProductionLogModalMode(mode);
@@ -219,7 +210,7 @@ const Production = () => {
                 />
               </div>
             </div>
-            <div className="bg-white rounded p-4">
+            <div className="rounded bg-white p-4">
               <Downtime display={false} dateRange={dateRange} />
             </div>
           </div>
@@ -249,26 +240,33 @@ const Production = () => {
 
   if (displayMode === true) {
     return (
-      <div
-        className="grid h-screen w-screen grid-cols-2 grid-rows-2 gap-4 bg-gray-50 p-4"
-        onDoubleClick={() => toggleDisplayMode()}
-      >
-        <div className="col-span-1 row-span-1 overflow-hidden bg-white p-4 shadow">
-          <Output outputData={productionLogData?.productionLogs || []} />
-        </div>
-        <div className="col-span-1 row-span-1 overflow-hidden bg-white p-4 shadow">
-          <Downtime display={true} dateRange={dateRange} />
-        </div>
-        <div className="col-span-1 row-span-1 overflow-hidden bg-white p-4 shadow">
-          <QuotedHours quotedData={productionLogData?.productionLogs || []} />
-        </div>
+      <>
+        {showMessage && (
+          <div className="fixed left-0 top-0 w-full bg-blue-100 py-4 text-center text-blue-800">
+            Double click anywhere on the screen to exit display mode
+          </div>
+        )}
+        <div
+          className="grid h-screen w-screen grid-cols-2 grid-rows-2 gap-4 bg-gray-50 p-4"
+          onDoubleClick={() => toggleDisplayMode()}
+        >
+          <div className="col-span-1 row-span-1 overflow-hidden bg-white p-4 shadow">
+            <Output outputData={productionLogData?.productionLogs || []} />
+          </div>
+          <div className="col-span-1 row-span-1 overflow-hidden bg-white p-4 shadow">
+            <Downtime display={true} dateRange={dateRange} />
+          </div>
+          <div className="col-span-1 row-span-1 overflow-hidden bg-white p-4 shadow">
+            <QuotedHours quotedData={productionLogData?.productionLogs || []} />
+          </div>
 
-        <div className="col-span-1 row-span-1 overflow-hidden bg-white p-4 shadow">
-          <IndirectHours
-            indirectData={productionLogData?.productionLogs || []}
-          />
+          <div className="col-span-1 row-span-1 overflow-hidden bg-white p-4 shadow">
+            <IndirectHours
+              indirectData={productionLogData?.productionLogs || []}
+            />
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 

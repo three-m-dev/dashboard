@@ -38,7 +38,7 @@ const Output = ({ outputData }: Props) => {
           display: false,
         },
         ticks: {
-          color: "black",
+          color: "#808080",
         },
       },
       y: {
@@ -47,14 +47,16 @@ const Output = ({ outputData }: Props) => {
           display: false,
         },
         ticks: {
-          color: "black",
+          color: "#808080",
         },
       },
     },
     plugins: {
       legend: {
+        display: true,
+        position: "top" as const,
         labels: {
-          color: "black",
+          color: "#808080",
         },
       },
       tooltip: {
@@ -73,8 +75,8 @@ const Output = ({ outputData }: Props) => {
       },
     },
     interaction: {
-      mode: "nearest" as const,
-      axis: "x" as const,
+      mode: "nearest" as "nearest",
+      axis: "x" as "x",
       intersect: false,
     },
   };

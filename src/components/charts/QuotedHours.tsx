@@ -29,12 +29,15 @@ type Props = {
 
 const QuotedHours = ({ quotedData }: Props) => {
   const chartOptions = {
-    responsive: true,
     maintainAspectRatio: false,
+    responsive: true,
     plugins: {
       legend: {
         display: true,
         position: "top" as const,
+        labels: {
+          color: "#808080",
+        },
       },
       tooltip: {
         mode: "index" as const,
@@ -46,12 +49,16 @@ const QuotedHours = ({ quotedData }: Props) => {
         grid: {
           display: false,
         },
+        ticks: {
+          color: "#808080",
+        },
       },
       y: {
         grid: {
           display: false,
         },
         ticks: {
+          color: "#808080",
           callback: function (value: any) {
             return value.toFixed(2);
           },

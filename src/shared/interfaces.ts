@@ -127,6 +127,7 @@ export interface IProductionLog {
   outputGoal: number;
   quotedHours?: number;
   actualHours?: number;
+  totalHours?: number;
   indirectHours?: number;
   notes?: string;
   createdBy: string;

@@ -66,7 +66,7 @@ const IndirectHours = ({ indirectData }: Props) => {
       },
       {
         label: "Total Hours",
-        data: indirectData.map((data) => data.actualHours),
+        data: indirectData.map((data) => data.totalHours),
         borderColor: "#3b82f6",
         backgroundColor: "#93c5fd",
         borderWidth: 2,

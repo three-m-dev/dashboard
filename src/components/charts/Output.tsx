@@ -79,8 +79,20 @@ const Output = ({ outputData }: Props) => {
     },
   };
 
+  const formatDateForChart = (dateString: string) => {
+    const date = new Date(dateString);
+    const utcDate = new Date(
+      date.getUTCFullYear(),
+      date.getUTCMonth(),
+      date.getUTCDate(),
+    );
+    return `${
+      utcDate.getMonth() + 1
+    }/${utcDate.getDate()}/${utcDate.getFullYear()}`;
+  };
+
   const chartData = {
-    labels: outputData.map((data) => formatDate(data.weekOf)),
+    labels: outputData.map((data) => formatDateForChart(data.weekOf)),
     datasets: [
       {
         label: "Goal",
@@ -115,6 +127,18 @@ const Output = ({ outputData }: Props) => {
         pointBackgroundColor: "white",
         pointBorderWidth: 2,
         borderWidth: 2,
+      },
+      {
+        label: "Trendline",
+        data: outputData.map((data) => data.actualOutput),
+        borderColor: "darkblue",
+        borderWidth: 2,
+        trendlineLinear: {
+          style: "darkblue",
+          lineStyle: "solid",
+          width: 2,
+        },
+        fill: false,
       },
     ],
   };

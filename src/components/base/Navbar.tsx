@@ -1,5 +1,5 @@
 import ListIcon from "../../assets/icons/ListIcon";
-import SearchIcon from "../../assets/icons/SearchIcon";
+// import SearchIcon from "../../assets/icons/SearchIcon";
 
 type NavbarProps = {
   onToggleSidebar: () => void;

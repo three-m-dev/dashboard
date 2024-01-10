@@ -41,6 +41,12 @@ const Production = () => {
     setDisplayMode(!displayMode);
   };
 
+  document.addEventListener("dblclick", function (event) {
+    if (event.button === 1) {
+      toggleDisplayMode();
+    }
+  });
+
   const toggleProductionLogModal = (mode = "view") => {
     setProductionLogModalMode(mode);
     setProductionLogModalOpen(!productionLogModalOpen);

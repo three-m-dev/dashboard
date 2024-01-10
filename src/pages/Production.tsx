@@ -41,11 +41,20 @@ const Production = () => {
     setDisplayMode(!displayMode);
   };
 
-  document.addEventListener("dblclick", function (event) {
-    if (event.button === 1) {
-      toggleDisplayMode();
-    }
-  });
+  // useEffect(() => {
+  //   const handleDoubleClick = (event: any) => {
+  //     if (event.button === 1) {
+  //       // Middle mouse button
+  //       toggleDisplayMode();
+  //     }
+  //   };
+
+  //   document.addEventListener("dblclick", handleDoubleClick);
+
+  //   return () => {
+  //     document.removeEventListener("dblclick", handleDoubleClick);
+  //   };
+  // }, []);
 
   const toggleProductionLogModal = (mode = "view") => {
     setProductionLogModalMode(mode);
@@ -195,7 +204,9 @@ const Production = () => {
       case "overview":
         return (
           <div className="flex flex-col gap-4">
-            <Output outputData={productionLogData?.productionLogs || []} />
+            <div className="h-96 w-full">
+              <Output outputData={productionLogData?.productionLogs || []} />
+            </div>
             <div className="flex h-96 w-full gap-4">
               <div className="flex-1 rounded bg-white p-4 shadow">
                 <QuotedHours
@@ -236,14 +247,24 @@ const Production = () => {
 
   if (displayMode === true) {
     return (
-      <div className="grid h-screen grid-cols-2 grid-rows-2 gap-4 p-4">
-        <div className="col-span-1 row-span-1 bg-blue-200">{/* Chart 1 */}</div>
-        <div className="col-span-1 row-span-1 bg-green-200">
-          {/* Chart 2 */}
+      <div
+        className="grid h-screen w-screen grid-cols-2 grid-rows-2 gap-4 bg-gray-50 p-4"
+        onDoubleClick={() => toggleDisplayMode()}
+      >
+        <div className="col-span-1 row-span-1 overflow-hidden bg-white p-4 shadow">
+          <Output outputData={productionLogData?.productionLogs || []} />
         </div>
-        <div className="col-span-1 row-span-1 bg-red-200">{/* Chart 3 */}</div>
-        <div className="col-span-1 row-span-1 bg-yellow-200">
-          {/* Chart 4 */}
+        <div className="col-span-1 row-span-1 overflow-hidden bg-white p-4 shadow">
+          <Downtime dateRange={dateRange} />
+        </div>
+        <div className="col-span-1 row-span-1 overflow-hidden bg-white p-4 shadow">
+          <QuotedHours quotedData={productionLogData?.productionLogs || []} />
+        </div>
+
+        <div className="col-span-1 row-span-1 overflow-hidden bg-white p-4 shadow">
+          <IndirectHours
+            indirectData={productionLogData?.productionLogs || []}
+          />
         </div>
       </div>
     );

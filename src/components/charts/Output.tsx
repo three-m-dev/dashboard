@@ -155,20 +155,9 @@ const Output = ({ outputData }: Props) => {
   };
 
   return (
-    <section>
-      <div className="mx-auto">
-        <div className="overflow-hidden rounded shadow">
-          <div className="bg-white p-4">
-            <div className="flex justify-between">
-              <h3 className="text-lg font-semibold text-gray-800">Output</h3>
-            </div>
-            <div className="h-96">
-              <Line data={chartData} options={chartOptions} />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <div className="h-full w-full">
+      <Line data={chartData} options={chartOptions} />
+    </div>
   );
 };
 

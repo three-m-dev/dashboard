@@ -232,69 +232,52 @@ const Downtime = ({ dateRange }: Props) => {
   }, [downtimeReportData, selectedReasons]);
 
   return (
-    <section>
-      <div className="mx-auto">
-        <div className="rounded bg-white shadow">
-          <div className="flex items-center justify-between p-4">
-            <h3 className="text-lg font-semibold text-gray-800">
-              Unscheduled Downtime
-            </h3>
-          </div>
-          <div className="grid grid-cols-12 gap-4 pb-4">
-            <div className="col-span-4">
-              {reasons.map((reason, index) => {
-                const total =
-                  reason === "Total"
-                    ? grandTotal
-                    : totals[reason.toLowerCase()] || 0;
-                const percentage =
-                  grandTotal > 0
-                    ? ((total / grandTotal) * 100).toFixed(2) + "%"
-                    : "0%";
+    <div className="grid h-full grid-cols-12">
+      <h3 className="col-span-12 text-lg font-semibold text-gray-800">
+        Unscheduled Downtime & Changeover (Setup/Teardown)
+      </h3>
 
-                return (
-                  <div
-                    key={index}
-                    className={
-                      `border-b border-blue-50 ` +
-                      (selectedReasons.includes(reason)
-                        ? "bg-blue-100"
-                        : "bg-white")
-                    }
-                  >
-                    <button
-                      onClick={() => handleReasonChange(`${reason}`)}
-                      className="h-full w-full p-3"
-                    >
-                      <div className="flex w-full justify-between gap-2">
-                        <div className="flex items-center px-2">
-                          <p className="whitespace-nowrap text-xs font-medium">
-                            {reason}
-                          </p>
-                        </div>
-                        <div>
-                          <div className="flex items-center gap-1">
-                            <p className="whitespace-nowrap text-xs font-medium text-blue-500">
-                              {reason !== "Total" ? percentage : ""}
-                            </p>
-                            <p className="whitespace-nowrap text-xs font-medium text-gray-500">
-                              {formatMinutes(total)}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </button>
+      <div className="col-span-4 flex flex-col">
+        {reasons.map((reason, index) => {
+          const total =
+            reason === "Total" ? grandTotal : totals[reason.toLowerCase()] || 0;
+          const percentage =
+            grandTotal > 0
+              ? ((total / grandTotal) * 100).toFixed(2) + "%"
+              : "0%";
+
+          return (
+            <div
+              key={index}
+              className={`flex flex-1 border-b border-blue-50 ${
+                selectedReasons.includes(reason) ? "bg-blue-100" : "bg-white"
+              }`}
+            >
+              <button
+                onClick={() => handleReasonChange(`${reason}`)}
+                className="w-full"
+              >
+                <div className="flex justify-between gap-2 px-2 py-1">
+                  <p className="text-xs font-medium">{reason}</p>
+                  <div className="flex items-center gap-1">
+                    <p className="text-xs font-medium text-blue-500">
+                      {reason !== "Total" ? percentage : ""}
+                    </p>
+                    <p className="text-xs font-medium text-gray-500">
+                      {formatMinutes(total)}
+                    </p>
                   </div>
-                );
-              })}
+                </div>
+              </button>
             </div>
-            <div className="col-span-8">
-              <Line data={chartData} options={options} />
-            </div>
-          </div>
-        </div>
+          );
+        })}
       </div>
-    </section>
+
+      <div className="col-span-8">
+        <Line data={chartData} options={options} />
+      </div>
+    </div>
   );
 };
 

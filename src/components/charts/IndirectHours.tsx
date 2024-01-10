@@ -87,7 +87,9 @@ const IndirectHours = ({ indirectData }: Props) => {
 
   return (
     <div className="flex h-full w-full flex-col">
-      <h3 className="text-lg font-semibold text-gray-800">Indirect Hours</h3>
+      <h3 className="text-lg font-semibold text-gray-800">
+        Indirect : Total (Hours)
+      </h3>
       <div className="flex-grow">
         <Bar data={chartData} options={chartOptions} />
       </div>

@@ -93,7 +93,7 @@ const QuotedHours = ({ quotedData }: Props) => {
   return (
     <div className="flex h-full w-full flex-col">
       <h3 className="text-lg font-semibold text-gray-800">
-        Actual to Quoted Hours
+        Actual : Quoted (Hours)
       </h3>
       <div className="flex-grow">
         <Bar data={chartData} options={chartOptions} />

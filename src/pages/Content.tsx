@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { BlogBuilder, Layout, PageHeader } from "../components";
-import ContentCard from "../components/reusable/ContentCard";
+import { Layout, PageHeader } from "../components";
+
 import PlusIcon from "../assets/icons/PlusIcon";
 import { Tab } from "../shared/types";
 
@@ -12,6 +12,9 @@ const Content = () => {
 
   const [newsletterModalOpen, setNewsletterModalOpen] = useState(false);
   const [newsletterModalMode, setNewsletterModalMode] = useState("");
+
+  console.log(bulletinModalMode);
+  console.log(newsletterModalMode);
 
   const tabs: Tab[] = [
     {

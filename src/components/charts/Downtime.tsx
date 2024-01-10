@@ -34,8 +34,8 @@ type Props = {
 const Downtime = ({ dateRange }: Props) => {
   const [selectedReasons, setSelectedReasons] = useState<string[]>(["Total"]);
 
-  const { downtimeReportData, setFilter, loading, error } =
-    useGenerateDowntimeReport();
+  // add load and error handling
+  const { downtimeReportData, setFilter } = useGenerateDowntimeReport();
 
   const [chartData, setChartData] = useState<IChartData>({
     labels: [],

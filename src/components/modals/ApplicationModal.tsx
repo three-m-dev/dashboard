@@ -1,4 +1,3 @@
-import { useState } from "react";
 import ModalBase from "../reusable/ModalBase";
 import { IApplication } from "../../shared/interfaces";
 
@@ -9,18 +8,7 @@ type Props = {
   triggerRefresh: () => void;
 };
 
-const ApplicationModal = ({
-  mode,
-  onClose,
-  selectedApplication,
-  triggerRefresh,
-}: Props) => {
-  const [applicationFormData, setApplicationFormData] = useState({});
-
-  const handleApplicationFormChange = {};
-
-  const handleApplicationFormSubmit = {};
-
+const ApplicationModal = ({ mode, onClose, selectedApplication }: Props) => {
   return (
     <ModalBase
       title={mode === "view" ? "Application Details" : "Add Application"}

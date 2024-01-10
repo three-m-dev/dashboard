@@ -1,1 +1,1 @@
-export const baseUrl = "http://api.setup123.com/api/v1";
+export const baseUrl = "https://api.setup123.com/api/v1";

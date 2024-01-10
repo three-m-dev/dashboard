@@ -204,7 +204,7 @@ const Production = () => {
       case "overview":
         return (
           <div className="flex flex-col gap-4">
-            <div className="h-96 w-full">
+            <div className="h-96 w-full rounded bg-white p-4 shadow">
               <Output outputData={productionLogData?.productionLogs || []} />
             </div>
             <div className="flex h-96 w-full gap-4">
@@ -219,7 +219,9 @@ const Production = () => {
                 />
               </div>
             </div>
-            <Downtime dateRange={dateRange} />
+            <div className="bg-white rounded p-4">
+              <Downtime display={false} dateRange={dateRange} />
+            </div>
           </div>
         );
       case "downtime":
@@ -255,7 +257,7 @@ const Production = () => {
           <Output outputData={productionLogData?.productionLogs || []} />
         </div>
         <div className="col-span-1 row-span-1 overflow-hidden bg-white p-4 shadow">
-          <Downtime dateRange={dateRange} />
+          <Downtime display={true} dateRange={dateRange} />
         </div>
         <div className="col-span-1 row-span-1 overflow-hidden bg-white p-4 shadow">
           <QuotedHours quotedData={productionLogData?.productionLogs || []} />

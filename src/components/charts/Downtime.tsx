@@ -29,9 +29,10 @@ type Props = {
     start: string | null;
     end: string | null;
   };
+  display: boolean;
 };
 
-const Downtime = ({ dateRange }: Props) => {
+const Downtime = ({ dateRange, display }: Props) => {
   const [selectedReasons, setSelectedReasons] = useState<string[]>(["Total"]);
 
   // add load and error handling
@@ -232,12 +233,12 @@ const Downtime = ({ dateRange }: Props) => {
   }, [downtimeReportData, selectedReasons]);
 
   return (
-    <div className="grid h-full grid-cols-12">
+    <div className={`grid ${display ? "h-full" : ""} grid-cols-12`}>
       <h3 className="col-span-12 text-lg font-semibold text-gray-800">
         Unscheduled Downtime & Changeover (Setup/Teardown)
       </h3>
 
-      <div className="col-span-4 flex flex-col">
+      <div className={`col-span-4 ${display ? "flex flex-col" : ""}`}>
         {reasons.map((reason, index) => {
           const total =
             reason === "Total" ? grandTotal : totals[reason.toLowerCase()] || 0;
@@ -255,7 +256,7 @@ const Downtime = ({ dateRange }: Props) => {
             >
               <button
                 onClick={() => handleReasonChange(`${reason}`)}
-                className="w-full"
+                className={`w-full ${display ? "p-0" : "p-2"}`}
               >
                 <div className="flex justify-between gap-2 px-2 py-1">
                   <p className="text-xs font-medium">{reason}</p>

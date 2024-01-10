@@ -155,8 +155,13 @@ const Output = ({ outputData }: Props) => {
   };
 
   return (
-    <div className="h-full w-full">
-      <Line data={chartData} options={chartOptions} />
+    <div className="flex h-full w-full flex-col">
+      <h3 className="col-span-12 text-lg font-semibold text-gray-800">
+        Output
+      </h3>
+      <div className="flex-grow">
+        <Line data={chartData} options={chartOptions} />
+      </div>
     </div>
   );
 };

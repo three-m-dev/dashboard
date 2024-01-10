@@ -13,7 +13,7 @@ const CareersTable = ({
   toggleCareerModal,
   refreshData,
 }: CareersTableProps) => {
-  const [actionDropdown, setActionDropdown] = useState(false);
+  // const [actionDropdown, setActionDropdown] = useState(false);
 
   const initialPageSize = 10;
   const [localPage, setLocalPage] = useState<number>(1);

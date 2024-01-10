@@ -94,18 +94,18 @@ const Output = ({ outputData }: Props) => {
   const chartData = {
     labels: outputData.map((data) => formatDateForChart(data.weekOf)),
     datasets: [
-      {
-        label: "Trendline",
-        data: outputData.map((data) => data.actualOutput),
-        borderColor: "darkblue",
-        borderWidth: 2,
-        trendlineLinear: {
-          style: "darkblue",
-          lineStyle: "solid",
-          width: 2,
-        },
-        fill: false,
-      },
+      // {
+      //   label: "Trendline",
+      //   data: outputData.map((data) => data.actualOutput),
+      //   borderColor: "darkblue",
+      //   borderWidth: 2,
+      //   trendlineLinear: {
+      //     style: "darkblue",
+      //     lineStyle: "solid",
+      //     width: 2,
+      //   },
+      //   fill: false,
+      // },
       {
         label: "Goal",
         data: outputData.map((data) => data.outputGoal),

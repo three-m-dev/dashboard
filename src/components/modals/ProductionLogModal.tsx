@@ -1,5 +1,4 @@
 import { IProductionLog } from "../../shared/interfaces";
-import { formatDate } from "../../utils/formatter";
 import ModalBase from "../reusable/ModalBase";
 
 type Props = {
@@ -10,6 +9,18 @@ type Props = {
 
 const ProductionLogModal = ({ mode, onClose, productionLogData }: Props) => {
   console.log(mode);
+
+  const formatDateForChart = (dateString: string) => {
+    const date = new Date(dateString);
+    const utcDate = new Date(
+      date.getUTCFullYear(),
+      date.getUTCMonth(),
+      date.getUTCDate(),
+    );
+    return `${
+      utcDate.getMonth() + 1
+    }/${utcDate.getDate()}/${utcDate.getFullYear()}`;
+  };
 
   return (
     <ModalBase
@@ -41,7 +52,9 @@ const ProductionLogModal = ({ mode, onClose, productionLogData }: Props) => {
                     index % 2 === 0 ? "bg-gray-100" : "bg-white"
                   }`}
                 >
-                  <td className="py-2">{formatDate(productionLog.weekOf)}</td>
+                  <td className="py-2">
+                    {formatDateForChart(productionLog.weekOf)}
+                  </td>
                   <td>${productionLog.projectedOutput}</td>
                   <td>${productionLog.actualOutput}</td>
                   <td>{productionLog.quotedHours || 0}</td>

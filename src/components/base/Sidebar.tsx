@@ -5,7 +5,7 @@ import GaugeIcon from "../../assets/icons/GaugeIcon";
 import FactoryIcon from "../../assets/icons/FactoryIcon";
 import TeamIcon from "../../assets/icons/TeamIcon";
 import BriefcaseIcon from "../../assets/icons/BriefcaseIcon";
-import NewspaperIcon from "../../assets/icons/NewspaperIcon";
+// import NewspaperIcon from "../../assets/icons/NewspaperIcon";
 
 type Props = {
   isOpen: boolean;
@@ -39,12 +39,12 @@ const Sidebar = (props: Props) => {
       match: useMatch("/production/*"),
       icon: <FactoryIcon />,
     },
-    {
-      name: "Content",
-      to: "/content",
-      match: useMatch("/content/*"),
-      icon: <NewspaperIcon />,
-    },
+    // {
+    //   name: "Content",
+    //   to: "/content",
+    //   match: useMatch("/content/*"),
+    //   icon: <NewspaperIcon />,
+    // },
     {
       name: "Careers",
       to: "/careers",

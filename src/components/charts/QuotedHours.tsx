@@ -50,7 +50,7 @@ const QuotedHours = ({ quotedData }: Props) => {
         },
         ticks: {
           callback: function (value: any) {
-            return `${value * 100}%`;
+            return value.toFixed(2);
           },
         },
       },

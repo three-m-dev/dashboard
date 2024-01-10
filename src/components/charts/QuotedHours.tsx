@@ -43,13 +43,16 @@ const QuotedHours = ({ quotedData }: Props) => {
         grid: {
           display: false,
         },
-        stacked: false,
       },
       y: {
         grid: {
           display: false,
         },
-        stacked: false,
+        ticks: {
+          callback: function (value: any) {
+            return `${value * 100}%`;
+          },
+        },
       },
     },
   };
@@ -58,15 +61,12 @@ const QuotedHours = ({ quotedData }: Props) => {
     labels: quotedData.map((data) => formatDate(data.weekOf)),
     datasets: [
       {
-        label: "Quoted Hours",
-        data: quotedData.map((data) => data.quotedHours),
-        borderColor: "#9ca3af",
-        backgroundColor: "#e5e7eb",
-        borderWidth: 2,
-      },
-      {
-        label: "Actual Hours",
-        data: quotedData.map((data) => data.actualHours),
+        label: "Ratio of Actual to Quoted Hours",
+        data: quotedData.map((data) => {
+          const actualHours = data.actualHours ?? 0;
+          const quotedHours = data.quotedHours ?? 1;
+          return actualHours / quotedHours;
+        }),
         borderColor: "#3b82f6",
         backgroundColor: "#93c5fd",
         borderWidth: 2,
@@ -76,7 +76,9 @@ const QuotedHours = ({ quotedData }: Props) => {
 
   return (
     <div className="flex h-full w-full flex-col">
-      <h3 className="text-lg font-semibold text-gray-800">Quoted Hours</h3>
+      <h3 className="text-lg font-semibold text-gray-800">
+        Ratio of Actual to Quoted Hours
+      </h3>
       <div className="flex-grow">
         <Bar data={chartData} options={chartOptions} />
       </div>

@@ -1,3 +1,4 @@
+import { Input } from "..";
 import { IEmployee } from "../../shared/interfaces";
 import { formatDate, formatKebab } from "../../utils/formatter";
 import ModalBase from "../reusable/ModalBase";
@@ -54,7 +55,38 @@ const EmployeeModal = ({ mode, onClose, selectedEmployee }: Props) => {
           </div>
         </div>
       ) : (
-        <></>
+        <div className="grid grid-cols-12 gap-4">
+          <div className="col-span-3 flex flex-col">
+            <label className="font-semibold">First Name</label>
+            <Input
+              type="text"
+              name="firstName"
+              value={""}
+              onChange={() => {}}
+            />
+          </div>
+          <div className="col-span-3 flex flex-col">
+            <label className="font-semibold">Last Name</label>
+            <Input type="text" name="lastName" value={""} onChange={() => {}} />
+          </div>
+          <div className="col-span-6 flex flex-col">
+            <label className="font-semibold">Email</label>
+            <Input type="text" name="email" value={""} onChange={() => {}} />
+          </div>
+          <div className="col-span-3 flex flex-col">
+            <label className="font-semibold">Company</label>
+            <Input type="text" name="company" value={""} onChange={() => {}} />
+          </div>
+          <div className="col-span-3 flex flex-col">
+            <label className="font-semibold">Department</label>
+            <Input
+              type="text"
+              name="department"
+              value={""}
+              onChange={() => {}}
+            />
+          </div>
+        </div>
       )}
     </ModalBase>
   );

@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { SortButton } from "..";
 import useGetDowntimeEntries from "../../hooks/downtime/useGetDowntimeEntries";
 import { formatDate, formatMinutes } from "../../utils/formatter";
+import RightArrowIcon from "../../assets/icons/RightArrowIcon";
+import LeftArrowIcon from "../../assets/icons/LeftArrowIcon";
 
 type Props = {
   toggleDowntimeModal: (mode: string, downtimeEntryData?: any) => void;
@@ -13,8 +15,7 @@ const DowntimeTable = ({ toggleDowntimeModal, refreshData }: Props) => {
 
   const initialPageSize = 10;
 
-  // add setLocalPage
-  const [localPage] = useState<number>(1);
+  const [localPage, setLocalPage] = useState<number>(1);
   const [localSort, setLocalSort] = useState<string>("date,ASC");
 
   const {
@@ -133,6 +134,57 @@ const DowntimeTable = ({ toggleDowntimeModal, refreshData }: Props) => {
             ))}
           </tbody>
         </table>
+      </div>
+      <div className="-m-2 flex flex-wrap items-center justify-between">
+        <div className="w-auto p-2">
+          <div className="-m-0.5 flex flex-wrap">
+            <div className="w-auto p-0.5">
+              <button
+                className={`flex h-9 w-9 items-center justify-center rounded-sm border-2 ${
+                  localPage === 1 ? "text-gray-400" : "hover:border-neutral-300"
+                }`}
+                onClick={() => setLocalPage(Math.max(1, localPage - 1))}
+                disabled={localPage === 1}
+              >
+                <LeftArrowIcon />
+              </button>
+            </div>
+
+            {[...Array(downtimeEntryData?.pages).keys()].map((index) => (
+              <div key={index} className="w-auto p-0.5">
+                <button
+                  className={`flex h-9 w-9 items-center justify-center rounded border-2 ${
+                    localPage === index + 1
+                      ? "border-blue-500 bg-white text-blue-500"
+                      : "hover:border-neutral-300"
+                  }`}
+                  onClick={() => setLocalPage(index + 1)}
+                >
+                  <span className="text-sm font-semibold">{index + 1}</span>
+                </button>
+              </div>
+            ))}
+
+            <div className="w-auto p-0.5">
+              <button
+                className={`flex h-9 w-9 items-center justify-center rounded-sm border-2 ${
+                  localPage === downtimeEntryData?.pages
+                    ? "text-gray-400"
+                    : "hover:border-neutral-300"
+                }`}
+                onClick={() => setLocalPage(localPage + 1)}
+                disabled={localPage === downtimeEntryData?.pages}
+              >
+                <RightArrowIcon />
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="w-auto p-2">
+          <p className="text text-neutral-400">
+            Showing page {localPage} of {downtimeEntryData?.pages}
+          </p>
+        </div>
       </div>
     </section>
   );

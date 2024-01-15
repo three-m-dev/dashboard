@@ -1,9 +1,7 @@
 import { useRef, useState } from "react";
 import { Calendar, Layout, PageHeader } from "../components";
-import Improvements from "../components/displays/Improvements";
 import { Tab } from "../shared/types";
 import FullScreenIcon from "../assets/icons/FullScreenIcon";
-import CameraDisplay from "../components/CameraDisplay";
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("overview");
@@ -25,10 +23,6 @@ const Dashboard = () => {
         );
       case "calendar":
         return <Calendar />;
-      case "improvements":
-        return <Improvements />;
-      case "security":
-        return <CameraDisplay viewSize="small" />;
       default:
         return <div>Overview</div>;
     }
@@ -90,24 +84,6 @@ const Dashboard = () => {
         },
       ],
     },
-    {
-      value: "security",
-    },
-    // {
-    //   value: "improvements",
-    //   buttons: [
-    //     {
-    //       text: "Fullscreen",
-    //       type: "button",
-    //       onClick: () => toggleFullScreen(),
-    //       theme: "primary",
-    //       icon: <FullScreenIcon />,
-    //       destination: null,
-    //       isLoading: false,
-    //       isDisabled: false,
-    //     },
-    //   ],
-    // },
   ];
 
   return (

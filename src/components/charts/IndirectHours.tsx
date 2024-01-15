@@ -31,6 +31,9 @@ const IndirectHours = ({ indirectData }: Props) => {
       legend: {
         display: true,
         position: "top" as const,
+        labels: {
+          color: "#808080",
+        },
       },
       tooltip: {
         mode: "index" as const,
@@ -42,13 +45,20 @@ const IndirectHours = ({ indirectData }: Props) => {
         grid: {
           display: false,
         },
-        stacked: false,
+        ticks: {
+          color: "#808080",
+        },
       },
       y: {
         grid: {
           display: false,
         },
-        stacked: false,
+        ticks: {
+          color: "#808080",
+          callback: function (value: any) {
+            return value.toFixed(2);
+          },
+        },
       },
     },
   };
@@ -65,22 +75,20 @@ const IndirectHours = ({ indirectData }: Props) => {
     }/${utcDate.getDate()}/${utcDate.getFullYear()}`;
   };
 
+  const yValues = indirectData.map(
+    (data) => (data.indirectHours ?? 0) / (data.totalHours ?? 1),
+  );
+
   const chartData = {
     labels: indirectData.map((data) => formatDateForChart(data.weekOf)),
     datasets: [
       {
-        label: "Indirect Hours",
-        data: indirectData.map((data) => data.indirectHours),
-        borderColor: "#9ca3af",
-        backgroundColor: "#e5e7eb",
-        borderWidth: 2,
-      },
-      {
-        label: "Total Hours",
-        data: indirectData.map((data) => data.totalHours),
+        label: "Indirect to Total Hours",
+        data: yValues,
         borderColor: "#3b82f6",
         backgroundColor: "#93c5fd",
         borderWidth: 2,
+        type: "bar" as const,
       },
     ],
   };

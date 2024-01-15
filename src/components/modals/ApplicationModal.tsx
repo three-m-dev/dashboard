@@ -1,5 +1,6 @@
 import ModalBase from "../reusable/ModalBase";
 import { IApplication } from "../../shared/interfaces";
+import { Input } from "..";
 
 type Props = {
   mode: string;
@@ -37,7 +38,24 @@ const ApplicationModal = ({ mode, onClose, selectedApplication }: Props) => {
         </div>
       ) : (
         <div className="grid grid-cols-12 gap-4">
-          <div></div>
+          <div className="col-span-3 flex flex-col">
+            <label className="font-semibold" htmlFor="title">
+              First Name
+            </label>
+            <Input type="text" name="firstName"  />
+          </div>
+          <div className="col-span-3 flex flex-col">
+            <label className="font-semibold" htmlFor="title">
+              Last Name
+            </label>
+            <Input />
+          </div>
+          <div className="col-span-6 flex flex-col">
+            <label className="font-semibold" htmlFor="title">
+              Email
+            </label>
+            <Input />
+          </div>
         </div>
       )}
     </ModalBase>

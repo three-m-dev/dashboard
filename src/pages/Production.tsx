@@ -29,7 +29,6 @@ const Production = () => {
   }>({ start: null, end: null });
 
   const [productionLogModalOpen, setProductionLogModalOpen] = useState(false);
-  const [productionLogModalMode, setProductionLogModalMode] = useState("");
 
   const [downtimeModalOpen, setDowntimeModalOpen] = useState(false);
   const [downtimeModalMode, setDowntimeModalMode] = useState("");
@@ -47,8 +46,7 @@ const Production = () => {
     }
   };
 
-  const toggleProductionLogModal = (mode = "view") => {
-    setProductionLogModalMode(mode);
+  const toggleProductionLogModal = () => {
     setProductionLogModalOpen(!productionLogModalOpen);
   };
 
@@ -140,7 +138,7 @@ const Production = () => {
         {
           text: "Production Logs",
           type: "button",
-          onClick: () => toggleProductionLogModal("view"),
+          onClick: () => toggleProductionLogModal(),
           theme: "primary",
         },
       ],
@@ -283,7 +281,6 @@ const Production = () => {
 
       {productionLogModalOpen && (
         <ProductionLogModal
-          mode={productionLogModalMode}
           onClose={toggleProductionLogModal}
           productionLogData={productionLogData?.productionLogs}
         />

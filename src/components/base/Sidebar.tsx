@@ -16,7 +16,6 @@ const Sidebar = (props: Props) => {
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
 
   const toggleLogoutModal = () => {
-    console.log("wtf");
     setLogoutModalOpen(!logoutModalOpen);
   };
 
@@ -122,7 +121,7 @@ const Sidebar = (props: Props) => {
           <div className="ml-64"></div>
         </div>
       )}
-      {logoutModalOpen && <LogoutModal onClose={() => toggleLogoutModal} />}
+      {logoutModalOpen && <LogoutModal onClose={toggleLogoutModal} />}
     </>
   );
 };

@@ -1,3 +1,4 @@
+import { useLogout } from "../../hooks/auth/useLogout";
 import ModalBase from "../reusable/ModalBase";
 
 type Props = {
@@ -5,6 +6,8 @@ type Props = {
 };
 
 const LogoutModal = ({ onClose }: Props) => {
+  const { logout } = useLogout();
+
   return (
     <ModalBase title="Logout" onClose={onClose}>
       <div className="text-center">
@@ -29,7 +32,7 @@ const LogoutModal = ({ onClose }: Props) => {
 
         <button
           type="button"
-          onClick={onClose}
+          onClick={logout}
           className="me-2 inline-flex items-center rounded-lg bg-red-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:focus:ring-red-800"
         >
           Yes, I'm sure

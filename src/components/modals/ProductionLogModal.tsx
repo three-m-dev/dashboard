@@ -1,15 +1,14 @@
+import { useState } from "react";
 import { IProductionLog } from "../../shared/interfaces";
 import ModalBase from "../reusable/ModalBase";
+import { Button } from "..";
 
 type Props = {
-  mode: string;
   onClose: () => void;
   productionLogData?: IProductionLog[];
 };
 
-const ProductionLogModal = ({ mode, onClose, productionLogData }: Props) => {
-  console.log(mode);
-
+const ProductionLogModal = ({ onClose, productionLogData }: Props) => {
   const formatDateForChart = (dateString: string) => {
     const date = new Date(dateString);
     const utcDate = new Date(
@@ -20,6 +19,12 @@ const ProductionLogModal = ({ mode, onClose, productionLogData }: Props) => {
     return `${
       utcDate.getMonth() + 1
     }/${utcDate.getDate()}/${utcDate.getFullYear()}`;
+  };
+
+  const [mode, setMode] = useState("view");
+
+  const toggleModalMode = () => {
+    setMode(mode === "view" ? "add" : "view");
   };
 
   return (
@@ -64,9 +69,122 @@ const ProductionLogModal = ({ mode, onClose, productionLogData }: Props) => {
               ))}
             </tbody>
           </table>
+          <div className="mt-4 flex justify-end">
+            <Button
+              text="Add"
+              type="button"
+              theme="primary"
+              onClick={toggleModalMode}
+            />
+          </div>
         </>
       ) : (
-        <></>
+        <>
+          <form className="w-full">
+            <div className="mb-4 flex flex-col">
+              <label className="mb-2 font-medium" htmlFor="weekOf">
+                Week Of
+              </label>
+              <input
+                className="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-600"
+                type="date"
+                name="weekOf"
+                id="weekOf"
+              />
+            </div>
+            <div className="mb-4 flex flex-col">
+              <label className="mb-2 font-medium" htmlFor="projectedOutput">
+                Projected Output
+              </label>
+              <input
+                className="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-600"
+                type="number"
+                name="projectedOutput"
+                id="projectedOutput"
+              />
+            </div>
+            <div className="mb-4 flex flex-col">
+              <label className="mb-2 font-medium" htmlFor="actualOutput">
+                Actual Output
+              </label>
+              <input
+                className="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-600"
+                type="number"
+                name="actualOutput"
+                id="actualOutput"
+              />
+            </div>
+            <div className="mb-4 flex flex-col">
+              <label className="mb-2 font-medium" htmlFor="quotedHours">
+                Quoted Hours
+              </label>
+              <input
+                className="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-600"
+                type="number"
+                name="quotedHours"
+                id="quotedHours"
+              />
+            </div>
+            <div className="mb-4 flex flex-col">
+              <label className="mb-2 font-medium" htmlFor="actualHours">
+                Actual Hours
+              </label>
+              <input
+                className="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-600"
+                type="number"
+                name="actualHours"
+                id="actualHours"
+              />
+            </div>
+            <div className="mb-4 flex flex-col">
+              <label className="mb-2 font-medium" htmlFor="indirectHours">
+                Indirect Hours
+              </label>
+              <input
+                className="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-600"
+                type="number"
+                name="indirectHours"
+                id="indirectHours"
+              />
+            </div>
+
+            <div className="mb-4 flex flex-col">
+              <label className="mb-2 font-medium" htmlFor="notes">
+                Notes
+              </label>
+              <textarea
+                className="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-600"
+                name="notes"
+                id="notes"
+                cols={30}
+                rows={10}
+              ></textarea>
+            </div>
+
+            <div className="mb-4 flex flex-col">
+              <label className="mb-2 font-medium" htmlFor="attachments">
+                Attachments
+              </label>
+              <input
+                className="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-600"
+                type="file"
+                name="attachments"
+                id="attachments"
+              />
+            </div>
+          </form>
+          <div className="mt-4 flex justify-end">
+            <div className="flex gap-4">
+              <Button
+                text="Cancel"
+                type="button"
+                theme="secondary"
+                onClick={toggleModalMode}
+              />
+              <Button text="Save" type="button" theme="primary" />
+            </div>
+          </div>
+        </>
       )}
     </ModalBase>
   );

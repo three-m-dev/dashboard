@@ -1,6 +1,7 @@
 import ModalBase from "../reusable/ModalBase";
 import { IApplication } from "../../shared/interfaces";
 import { Input } from "..";
+import { useState } from "react";
 
 type Props = {
   mode: string;
@@ -10,6 +11,18 @@ type Props = {
 };
 
 const ApplicationModal = ({ mode, onClose, selectedApplication }: Props) => {
+  const [applicationData, setApplicationData] = useState({
+    applicant: {
+      firstName: "",
+      lastName: "",
+      email: "",
+    },
+  });
+
+  const handleApplicationFormChange = (e: any) => {
+    console.log(e.target.value);
+  };
+
   return (
     <ModalBase
       title={mode === "view" ? "Application Details" : "Add Application"}
@@ -42,19 +55,34 @@ const ApplicationModal = ({ mode, onClose, selectedApplication }: Props) => {
             <label className="font-semibold" htmlFor="title">
               First Name
             </label>
-            <Input type="text" name="firstName"  />
+            <Input
+              type="text"
+              name="firstName"
+              value={applicationData.applicant.firstName}
+              onChange={handleApplicationFormChange}
+            />
           </div>
           <div className="col-span-3 flex flex-col">
             <label className="font-semibold" htmlFor="title">
               Last Name
             </label>
-            <Input />
+            <Input
+              type="text"
+              name="lastName"
+              value={applicationData.applicant.lastName}
+              onChange={handleApplicationFormChange}
+            />
           </div>
           <div className="col-span-6 flex flex-col">
             <label className="font-semibold" htmlFor="title">
               Email
             </label>
-            <Input />
+            <Input
+              type="text"
+              name="email"
+              value={applicationData.applicant.email}
+              onChange={handleApplicationFormChange}
+            />
           </div>
         </div>
       )}

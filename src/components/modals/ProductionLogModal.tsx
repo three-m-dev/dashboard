@@ -2,6 +2,7 @@ import { useState } from "react";
 import { IProductionLog } from "../../shared/interfaces";
 import ModalBase from "../reusable/ModalBase";
 import { Button } from "..";
+import { useUpdateProductionLog } from "../../hooks/production/useUpdateProductionLog";
 
 type Props = {
   onClose: () => void;
@@ -9,6 +10,12 @@ type Props = {
 };
 
 const ProductionLogModal = ({ onClose, productionLogData }: Props) => {
+  const [mode, setMode] = useState("view");
+  const [selectedProductionLog, setSelectedProductionLog] =
+    useState<IProductionLog | null>(null);
+
+  const [error, setError] = useState<string | null>(null);
+
   const formatDateForChart = (dateString: string) => {
     const date = new Date(dateString);
     const utcDate = new Date(
@@ -21,22 +28,63 @@ const ProductionLogModal = ({ onClose, productionLogData }: Props) => {
     }/${utcDate.getDate()}/${utcDate.getFullYear()}`;
   };
 
-  const [mode, setMode] = useState("view");
+  const toggleModalMode = (
+    modeValue: string,
+    productionLog?: IProductionLog,
+  ) => {
+    if (modeValue === "edit" && productionLog) {
+      setSelectedProductionLog(productionLog);
+    }
 
-  const toggleModalMode = () => {
-    setMode(mode === "view" ? "add" : "view");
+    setMode(modeValue);
+  };
+
+  const getModalTitle = (mode: string) => {
+    let modalTitle;
+
+    switch (mode) {
+      case "view":
+        modalTitle = "Production Logs";
+        break;
+      case "add":
+        modalTitle = "Add Production Log";
+        break;
+      case "edit":
+        modalTitle = "Edit Production Log";
+        break;
+      default:
+        modalTitle = "Production Logs";
+        break;
+    }
+
+    return modalTitle;
+  };
+
+  const handleEditSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const { updateProductionLog } = useUpdateProductionLog(
+      selectedProductionLog!.id,
+    );
+
+    let changes = selectedProductionLog;
+
+    if (changes === selectedProductionLog) {
+      setError("No changes have been made");
+    } else {
+      try {
+        await updateProductionLog(changes);
+
+        toggleModalMode("view");
+      } catch (err) {
+        console.error("Error editing production log", err);
+      }
+    }
   };
 
   return (
-    <ModalBase
-      title={
-        mode === "view" && productionLogData
-          ? "Production Logs"
-          : "Add Production Log"
-      }
-      onClose={onClose}
-    >
-      {mode === "view" ? (
+    <ModalBase title={getModalTitle(mode)} onClose={onClose}>
+      {/* View Form */}
+      {mode === "view" && (
         <>
           <table className="w-full table-auto text-center">
             <thead>
@@ -44,9 +92,10 @@ const ProductionLogModal = ({ onClose, productionLogData }: Props) => {
                 <th className="pb-2 font-medium">Week Of</th>
                 <th className="pb-2 font-medium">Projected Output</th>
                 <th className="pb-2 font-medium">Actual Output</th>
-                <th className="pb-2 font-medium">Quoted Hrs</th>
                 <th className="pb-2 font-medium">Actual Hrs</th>
+                <th className="pb-2 font-medium">Quoted Hrs</th>
                 <th className="pb-2 font-medium">Indirect Hrs</th>
+                <th className="pb-2 font-medium">Total Hrs</th>
               </tr>
             </thead>
             <tbody>
@@ -58,13 +107,19 @@ const ProductionLogModal = ({ onClose, productionLogData }: Props) => {
                   }`}
                 >
                   <td className="py-2">
-                    {formatDateForChart(productionLog.weekOf)}
+                    <button
+                      className="hover:underline"
+                      onClick={() => toggleModalMode("edit", productionLog)}
+                    >
+                      {formatDateForChart(productionLog.weekOf)}
+                    </button>
                   </td>
                   <td>${productionLog.projectedOutput}</td>
                   <td>${productionLog.actualOutput}</td>
-                  <td>{productionLog.quotedHours || 0}</td>
                   <td>{productionLog.actualHours || 0}</td>
+                  <td>{productionLog.quotedHours || 0}</td>
                   <td>{productionLog.indirectHours || 0}</td>
+                  <td>{productionLog.totalHours || 0}</td>
                 </tr>
               ))}
             </tbody>
@@ -74,11 +129,14 @@ const ProductionLogModal = ({ onClose, productionLogData }: Props) => {
               text="Add"
               type="button"
               theme="primary"
-              onClick={toggleModalMode}
+              onClick={() => toggleModalMode("add")}
             />
           </div>
         </>
-      ) : (
+      )}
+
+      {/* Add Form */}
+      {mode === "add" && (
         <>
           <form className="grid grid-cols-12 gap-4">
             <div className="col-span-3 mb-4 flex flex-col">
@@ -189,11 +247,39 @@ const ProductionLogModal = ({ onClose, productionLogData }: Props) => {
                 text="Cancel"
                 type="button"
                 theme="secondary"
-                onClick={toggleModalMode}
+                onClick={() => toggleModalMode("view")}
               />
               <Button text="Save" type="button" theme="primary" />
             </div>
           </div>
+        </>
+      )}
+
+      {/* Edit Form */}
+      {mode === "edit" && (
+        <>
+          <form>
+            <div>
+              Week Of {formatDateForChart(selectedProductionLog!.weekOf)}
+            </div>
+            <div className="mt-4 flex">
+              {error !== null && <span>{error}</span>}
+              <div className="flex w-full justify-end gap-4">
+                <Button
+                  text="Cancel"
+                  type="button"
+                  theme="secondary"
+                  onClick={() => toggleModalMode("view")}
+                />
+                <Button
+                  text="Save"
+                  type="button"
+                  theme="primary"
+                  onClick={() => handleEditSubmit}
+                />
+              </div>
+            </div>
+          </form>
         </>
       )}
     </ModalBase>

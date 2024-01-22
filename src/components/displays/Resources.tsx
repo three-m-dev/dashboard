@@ -132,13 +132,13 @@ const Resources = () => {
         const statusClass = getStatusClass(resource.status);
         const oeeClass = getOeeClass(resource.oee);
         return (
-          <Link
-            to={`/production/resource/${resource.id}`}
+          <button
+            onClick={() => {}}
             key={index}
             className="flex flex-col overflow-clip rounded bg-white shadow"
           >
             <div
-              className={`flex flex-col items-center justify-center p-2 text-white ${statusClass}`}
+              className={`flex w-full flex-col items-center justify-center p-2 text-white ${statusClass}`}
             >
               <h1 className="font-bold">{resource.name}</h1>
               <div className="flex gap-1 text-sm">
@@ -152,7 +152,7 @@ const Resources = () => {
               </div>
             </div>
             <div
-              className={`flex h-full items-center justify-center py-4 ${oeeClass.bg} relative`}
+              className={`flex h-full w-full items-center justify-center py-4 ${oeeClass.bg} relative`}
             >
               <svg
                 className="h-32 w-32 -rotate-90 transform"
@@ -186,7 +186,7 @@ const Resources = () => {
                 </span>
               </div>
             </div>
-          </Link>
+          </button>
         );
       })}
     </div>

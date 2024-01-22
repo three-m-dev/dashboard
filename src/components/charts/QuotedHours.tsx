@@ -1,4 +1,3 @@
-import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,6 +9,7 @@ import {
   LineElement,
   PointElement,
 } from "chart.js";
+import { Chart } from "react-chartjs-2";
 import { IProductionLog } from "../../shared/interfaces";
 
 ChartJS.register(
@@ -35,9 +35,6 @@ const QuotedHours = ({ quotedData }: Props) => {
       legend: {
         display: true,
         position: "top" as const,
-        labels: {
-          color: "#808080",
-        },
       },
       tooltip: {
         mode: "index" as const,
@@ -59,9 +56,6 @@ const QuotedHours = ({ quotedData }: Props) => {
         },
         ticks: {
           color: "#808080",
-          callback: function (value: any) {
-            return value.toFixed(2);
-          },
         },
       },
     },
@@ -89,8 +83,8 @@ const QuotedHours = ({ quotedData }: Props) => {
       {
         label: "Actual to Quoted Hours",
         data: yValues,
-        borderColor: "#3b82f6",
         backgroundColor: "#93c5fd",
+        borderColor: "#3b82f6",
         borderWidth: 2,
         type: "bar" as const,
       },
@@ -103,7 +97,7 @@ const QuotedHours = ({ quotedData }: Props) => {
         Actual : Quoted (Hours)
       </h3>
       <div className="flex-grow">
-        <Bar data={chartData} options={chartOptions} />
+        <Chart type="bar" data={chartData} options={chartOptions} />
       </div>
     </div>
   );

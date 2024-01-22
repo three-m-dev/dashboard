@@ -80,97 +80,107 @@ const ProductionLogModal = ({ onClose, productionLogData }: Props) => {
         </>
       ) : (
         <>
-          <form className="w-full">
-            <div className="mb-4 flex flex-col">
+          <form className="grid grid-cols-12 gap-4">
+            <div className="col-span-3 mb-4 flex flex-col">
               <label className="mb-2 font-medium" htmlFor="weekOf">
                 Week Of
               </label>
               <input
-                className="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-600"
+                className="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200"
                 type="date"
                 name="weekOf"
                 id="weekOf"
               />
             </div>
-            <div className="mb-4 flex flex-col">
+            <div className="col-span-3 mb-4 flex flex-col">
               <label className="mb-2 font-medium" htmlFor="projectedOutput">
                 Projected Output
               </label>
               <input
-                className="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-600"
+                className="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200"
                 type="number"
                 name="projectedOutput"
                 id="projectedOutput"
               />
             </div>
-            <div className="mb-4 flex flex-col">
+            <div className="col-span-3 mb-4 flex flex-col">
               <label className="mb-2 font-medium" htmlFor="actualOutput">
                 Actual Output
               </label>
               <input
-                className="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-600"
+                className="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200"
                 type="number"
                 name="actualOutput"
                 id="actualOutput"
               />
             </div>
-            <div className="mb-4 flex flex-col">
+            <div className="col-span-3 mb-4 flex flex-col">
               <label className="mb-2 font-medium" htmlFor="quotedHours">
                 Quoted Hours
               </label>
               <input
-                className="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-600"
+                className="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200"
                 type="number"
                 name="quotedHours"
                 id="quotedHours"
               />
             </div>
-            <div className="mb-4 flex flex-col">
+            <div className="col-span-3 mb-4 flex flex-col">
               <label className="mb-2 font-medium" htmlFor="actualHours">
                 Actual Hours
               </label>
               <input
-                className="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-600"
+                className="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200"
                 type="number"
                 name="actualHours"
                 id="actualHours"
               />
             </div>
-            <div className="mb-4 flex flex-col">
+            <div className="col-span-3 mb-4 flex flex-col">
+              <label className="mb-2 font-medium" htmlFor="actualHours">
+                Quoted Hours
+              </label>
+              <input
+                className="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200"
+                type="number"
+                name="actualHours"
+                id="actualHours"
+              />
+            </div>
+            <div className="col-span-3 mb-4 flex flex-col">
               <label className="mb-2 font-medium" htmlFor="indirectHours">
                 Indirect Hours
               </label>
               <input
-                className="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-600"
+                className="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200"
+                type="number"
+                name="indirectHours"
+                id="indirectHours"
+              />
+            </div>
+            <div className="col-span-3 mb-4 flex flex-col">
+              <label className="mb-2 font-medium" htmlFor="indirectHours">
+                Total Hours
+              </label>
+              <input
+                className="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200"
                 type="number"
                 name="indirectHours"
                 id="indirectHours"
               />
             </div>
 
-            <div className="mb-4 flex flex-col">
+            <div className="col-span-12 mb-4 flex flex-col">
               <label className="mb-2 font-medium" htmlFor="notes">
                 Notes
               </label>
               <textarea
-                className="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-600"
+                className="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200"
                 name="notes"
                 id="notes"
                 cols={30}
                 rows={10}
               ></textarea>
-            </div>
-
-            <div className="mb-4 flex flex-col">
-              <label className="mb-2 font-medium" htmlFor="attachments">
-                Attachments
-              </label>
-              <input
-                className="rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-600"
-                type="file"
-                name="attachments"
-                id="attachments"
-              />
             </div>
           </form>
           <div className="mt-4 flex justify-end">

@@ -21,6 +21,13 @@ const ApplicationModal = ({ mode, onClose, selectedApplication }: Props) => {
 
   const handleApplicationFormChange = (e: any) => {
     console.log(e.target.value);
+    setApplicationData({
+      applicant: {
+        firstName: "",
+        lastName: "",
+        email: "",
+      },
+    });
   };
 
   return (

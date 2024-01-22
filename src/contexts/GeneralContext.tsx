@@ -1,10 +1,18 @@
 import { createContext, useState, useEffect } from "react";
 
 interface GeneralState {
-  userFullName: string;
-  userTitle: string;
-  productionTab: string;
-  productionDateRange: string;
+  user: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    title: string;
+    department: string;
+  };
+  permissions: {};
+  application: {
+    productionTab: string;
+    productionDateRange: string;
+  };
 }
 
 export const GeneralContext = createContext<
@@ -21,21 +29,20 @@ export const GeneralProvider = ({
   children: JSX.Element | JSX.Element[];
 }) => {
   const [state, setState] = useState<GeneralState>({
-    userFullName: "",
-    userTitle: "",
-    productionTab: "",
-    productionDateRange: "",
+    user: { firstName: "", lastName: "", email: "", title: "", department: "" },
+    permissions: {},
+    application: { productionTab: "", productionDateRange: "" },
   });
 
   useEffect(() => {
-    const savedState = localStorage.getItem("generalContext");
+    const savedState = sessionStorage.getItem("generalContext");
     if (savedState) {
       setState(JSON.parse(savedState));
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("generalContext", JSON.stringify(state));
+    sessionStorage.setItem("generalContext", JSON.stringify(state));
   }, [state]);
 
   return (

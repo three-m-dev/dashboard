@@ -6,7 +6,6 @@ import { useGeneralContext } from "../useGeneral";
 
 export const useLogin = () => {
   const authContext = useContext(AuthContext);
-
   const { setState } = useGeneralContext();
 
   if (!authContext) {
@@ -25,13 +24,24 @@ export const useLogin = () => {
 
       setIsAuthenticated(true);
 
-      const userData = response.data.employee;
-      setState({
-        userFullName: userData.firstName + " " + userData.lastName,
-        userTitle: userData.title,
-        productionTab: "default",
-        productionDateRange: "default",
-      });
+      console.log(response.data);
+
+      const { firstName, lastName, email, title, department } =
+        response.data.employee;
+
+      setState((prevState) => ({
+        ...prevState,
+        user: {
+          firstName,
+          lastName,
+          email,
+          title,
+          department,
+        },
+
+        permissions: prevState.permissions,
+        application: prevState.application,
+      }));
     } catch (error) {
       console.error("Login failed:", error);
     }

@@ -1,133 +1,85 @@
-import { useState } from "react";
-import {
-  ApplicantsTable,
-  ApplicationModal,
-  CareersTable,
-  JobModal,
-  Layout,
-  PageHeader,
-} from "../components";
-import { Tab } from "../shared/types";
-import PlusIcon from "../assets/icons/PlusIcon";
+import { useState } from 'react';
+import { Layout, PageHeader } from '../components';
+import OpeningsContent from '../components/content/OpeningsContent';
+import ApplicantsContent from '../components/content/ApplicantsContent';
 
 const Careers = () => {
-  const [activeTab, setActiveTab] = useState("openings");
-
-  const [jobModalOpen, setJobModalOpen] = useState(false);
-  const [jobModalMode, setJobModalMode] = useState("");
-  const [selectedJob, setSelectedJob] = useState(null);
-
-  const [applicationModalOpen, setApplicationModalOpen] = useState(false);
-  const [applicationModalMode, setApplicationModalMode] = useState("");
-  const [selectedApplication, setSelectedApplication] = useState(null);
-
-  const [refreshJobs, setRefreshJobs] = useState(false);
-  const [refreshApplications, setRefreshApplications] = useState(false);
-
-  const triggerJobRefresh = () => {
-    setRefreshJobs((prev) => !prev);
-  };
-
-  const triggerApplicationRefresh = () => {
-    setRefreshApplications((prev) => !prev);
-  };
-
-  const toggleJobModal = (mode: string = "view", jobData = null) => {
-    setJobModalMode(mode);
-    setSelectedJob(jobData);
-    setJobModalOpen(!jobModalOpen);
-  };
-
-  const toggleApplicationModal = (
-    mode: string = "view",
-    applicationData = null,
-  ) => {
-    setApplicationModalMode(mode);
-    setSelectedApplication(applicationData);
-    setApplicationModalOpen(!applicationModalOpen);
-  };
-
-  const tabs: Tab[] = [
+  const tabs = [
     {
-      value: "openings",
+      name: 'openings',
       buttons: [
         {
-          text: "Add Opening",
-          type: "button",
-          onClick: () => toggleJobModal("create"),
-          theme: "primary",
-          icon: <PlusIcon />,
-          destination: null,
-          isLoading: false,
-          isDisabled: false,
+          label: 'Add Opening',
+          icon: (
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              fill='none'
+              viewBox='0 0 24 24'
+              strokeWidth={1.5}
+              stroke='currentColor'
+              className='w-6 h-6'>
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M12 4.5v15m7.5-7.5h-15'
+              />
+            </svg>
+          ),
+          onClick: () => {},
         },
       ],
     },
     {
-      value: "applications",
+      name: 'applicants',
       buttons: [
         {
-          text: "Add Application",
-          type: "button",
-          onClick: () => toggleApplicationModal("create"),
-          theme: "primary",
-          icon: <PlusIcon />,
-          destination: null,
-          isLoading: false,
-          isDisabled: false,
+          label: 'Add Applicant',
+          icon: (
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              fill='none'
+              viewBox='0 0 24 24'
+              strokeWidth={1.5}
+              stroke='currentColor'
+              className='w-6 h-6'>
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M12 4.5v15m7.5-7.5h-15'
+              />
+            </svg>
+          ),
+          onClick: () => {},
         },
       ],
     },
   ];
 
+  const [currentTab, setCurrentTab] = useState('openings');
+
+  const handleTabChange = (tabName: string) => {
+    setCurrentTab(tabName);
+  };
+
   const renderContent = () => {
-    switch (activeTab) {
-      case "openings":
-        return (
-          <CareersTable
-            toggleCareerModal={toggleJobModal}
-            refreshData={refreshJobs}
-          />
-        );
-      case "applications":
-        return (
-          <ApplicantsTable toggleApplicantModal={toggleApplicationModal} />
-        );
+    switch (currentTab) {
+      case 'openings':
+        return <OpeningsContent />;
+      case 'applicants':
+        return <ApplicantsContent />;
       default:
-        return (
-          <CareersTable
-            toggleCareerModal={toggleJobModal}
-            refreshData={refreshApplications}
-          />
-        );
+        return <div>Tab content not found</div>;
     }
   };
 
   return (
     <Layout>
       <PageHeader
-        title="Careers"
+        title='Careers'
         tabs={tabs}
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        onTabChange={handleTabChange}
       />
       {renderContent()}
-      {jobModalOpen && !applicationModalOpen && (
-        <JobModal
-          mode={jobModalMode}
-          onClose={toggleJobModal}
-          selectedJob={selectedJob}
-          triggerRefresh={triggerJobRefresh}
-        />
-      )}
-      {applicationModalOpen && !jobModalOpen && (
-        <ApplicationModal
-          mode={applicationModalMode}
-          onClose={toggleApplicationModal}
-          selectedApplication={selectedApplication}
-          triggerRefresh={triggerApplicationRefresh}
-        />
-      )}
     </Layout>
   );
 };

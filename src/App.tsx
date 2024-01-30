@@ -1,8 +1,9 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-import { ReactNode, useContext } from "react";
-import { AuthContext } from "./contexts/AuthContext";
-import { useSession } from "./hooks/auth/useSession";
-import { Careers, Content, Dashboard, Login, Production, Team } from "./pages";
+import { Routes, Route, Navigate } from 'react-router';
+import { Careers, Content, EmployeeProfile, Employees, FileWatch, Home, Login, NotFound, Production } from './pages';
+import { ReactNode, useContext } from 'react';
+import { AuthContext } from './contexts/AuthContext';
+import { useSession } from './hooks/useSession';
+import { Loading } from './components';
 
 type ProtectedRouteProps = {
   children: ReactNode;
@@ -12,11 +13,11 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const { isAuthenticated, loading } = useContext(AuthContext) ?? {};
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading size='large' />;
   }
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" />;
+    return <Navigate to='/login' />;
   }
 
   return <>{children}</>;
@@ -30,46 +31,78 @@ const App = () => {
   return (
     <Routes>
       <Route
-        path="/login"
-        element={isAuthenticated ? <Navigate to="/" /> : <Login />}
+        path='/login'
+        element={isAuthenticated ? <Navigate to='/' /> : <Login />}
       />
+
       <Route
-        path="/"
+        path='/'
         element={
           <ProtectedRoute>
-            <Dashboard />
+            <Home />
           </ProtectedRoute>
         }
       />
+
       <Route
-        path="/team"
+        path='/employees'
         element={
           <ProtectedRoute>
-            <Team />
+            <Employees />
           </ProtectedRoute>
         }
       />
+
       <Route
-        path="/production"
+        path='/careers'
         element={
           <ProtectedRoute>
-            <Production />
+            <Careers />
           </ProtectedRoute>
         }
       />
+
       <Route
-        path="/content"
+        path='/content'
         element={
           <ProtectedRoute>
             <Content />
           </ProtectedRoute>
         }
       />
+
       <Route
-        path="/careers"
+        path='/production'
         element={
           <ProtectedRoute>
-            <Careers />
+            <Production />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path='/profile/:employeeId'
+        element={
+          <ProtectedRoute>
+            <EmployeeProfile />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path='/file-watch'
+        element={
+          <ProtectedRoute>
+            <FileWatch />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path='*'
+        element={
+          <ProtectedRoute>
+            <NotFound />
           </ProtectedRoute>
         }
       />

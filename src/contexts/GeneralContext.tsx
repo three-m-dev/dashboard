@@ -1,18 +1,8 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect } from 'react';
 
 interface GeneralState {
-  user: {
-    firstName: string;
-    lastName: string;
-    email: string;
-    title: string;
-    department: string;
-  };
-  permissions: {};
-  application: {
-    productionTab: string;
-    productionDateRange: string;
-  };
+  employee: any | null;
+  displayMode: 'production-display' | 'general';
 }
 
 export const GeneralContext = createContext<
@@ -23,31 +13,22 @@ export const GeneralContext = createContext<
   | undefined
 >(undefined);
 
-export const GeneralProvider = ({
-  children,
-}: {
-  children: JSX.Element | JSX.Element[];
-}) => {
-  const [state, setState] = useState<GeneralState>({
-    user: { firstName: "", lastName: "", email: "", title: "", department: "" },
-    permissions: {},
-    application: { productionTab: "", productionDateRange: "" },
+export const GeneralProvider = ({ children }: { children: JSX.Element | JSX.Element[] }) => {
+  const [state, setState] = useState<GeneralState>(() => {
+    const savedState = localStorage.getItem('generalContext');
+    if (savedState) {
+      return JSON.parse(savedState);
+    } else {
+      return {
+        employee: null,
+        displayMode: 'general',
+      };
+    }
   });
 
   useEffect(() => {
-    const savedState = sessionStorage.getItem("generalContext");
-    if (savedState) {
-      setState(JSON.parse(savedState));
-    }
-  }, []);
-
-  useEffect(() => {
-    sessionStorage.setItem("generalContext", JSON.stringify(state));
+    localStorage.setItem('generalContext', JSON.stringify(state));
   }, [state]);
 
-  return (
-    <GeneralContext.Provider value={{ state, setState }}>
-      {children}
-    </GeneralContext.Provider>
-  );
+  return <GeneralContext.Provider value={{ state, setState }}>{children}</GeneralContext.Provider>;
 };

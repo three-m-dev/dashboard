@@ -1,298 +1,210 @@
-import { useEffect, useState } from "react";
-import {
-  Downtime,
-  DowntimeModal,
-  DowntimeTable,
-  IndirectHours,
-  Layout,
-  Output,
-  PageHeader,
-  ProductionLogModal,
-  QuotedHours,
-  Resources,
-} from "../components";
-import { Option, Tab } from "../shared/types";
-import PlusIcon from "../assets/icons/PlusIcon";
-import { formatDate } from "../utils/formatter";
-import useGetProductionLogs from "../hooks/production/useGetProductionLogs";
-import TvIcon from "../assets/icons/TvIcon";
+// Production.tsx
+import { useCallback, useEffect, useState } from 'react';
+import { DowntimeContent, Layout, Modal, ResourcesContent } from '../components';
+import PageHeader from '../components/general/PageHeader';
+import OverviewContent from '../components/content/OverviewContent';
+import Loading from '../components/general/Loading';
+import { useGeneralContext } from '../hooks/useGeneralContext';
 
 const Production = () => {
-  // add load, error and refresh
-  const { productionLogData, setFilter, setSort } = useGetProductionLogs();
+  const { state, setState } = useGeneralContext();
+  const [currentTab, setCurrentTab] = useState('overview');
 
-  const [activeTab, setActiveTab] = useState("overview");
+  const [logsModalOpen, setLogsModalOpen] = useState(false);
+  const [dateRangeDropdownOpen, setDateRangeDropdownOpen] = useState(false);
 
-  const [dateRange, setDateRange] = useState<{
-    start: string | null;
-    end: string | null;
-  }>({ start: null, end: null });
+  const toggleOverviewMode = useCallback(() => {
+    const newDisplayMode = state.displayMode === 'production-display' ? 'general' : 'production-display';
+    setState({
+      ...state,
+      displayMode: newDisplayMode,
+    });
+  }, [setState, state]);
 
-  const [productionLogModalOpen, setProductionLogModalOpen] = useState(false);
-
-  const [downtimeModalOpen, setDowntimeModalOpen] = useState(false);
-  const [downtimeModalMode, setDowntimeModalMode] = useState("");
-  const [refreshDowntime, setRefreshDowntime] = useState(false);
-
-  const [displayMode, setDisplayMode] = useState(false);
-  const [showMessage, setShowMessage] = useState(false);
-
-  const toggleDisplayMode = () => {
-    setDisplayMode(!displayMode);
-
-    if (!displayMode) {
-      setShowMessage(true);
-      setTimeout(() => setShowMessage(false), 2500);
-    }
-  };
-
-  const toggleProductionLogModal = () => {
-    setProductionLogModalOpen(!productionLogModalOpen);
-  };
-
-  const toggleDownTimeModal = (mode = "view") => {
-    setDowntimeModalMode(mode);
-    setDowntimeModalOpen(!downtimeModalOpen);
-  };
-
-  const handleClick = () => {
-    console.log("Button Clicked");
-  };
-
-  const getDateRange = (period: any) => {
-    let start, end;
-    const today = new Date();
-    const dayOfWeek = today.getDay();
-    const mondayOffset = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
-
-    switch (period) {
-      case "This Week":
-        start = new Date(today);
-        start.setDate(start.getDate() + mondayOffset - 7);
-        end = new Date(start);
-        end.setDate(start.getDate() + 13);
-        break;
-      case "4 Weeks":
-        start = new Date(today);
-        start.setDate(start.getDate() + mondayOffset - 28);
-        end = new Date(start);
-        end.setDate(start.getDate() + 27);
-        break;
-      case "8 Weeks":
-        start = new Date(today);
-        start.setDate(start.getDate() + mondayOffset - 56);
-        end = new Date(start);
-        end.setDate(start.getDate() + 55);
-        break;
-      case "12 Weeks":
-        start = new Date(today);
-        start.setDate(start.getDate() + mondayOffset - 84);
-        end = new Date(start);
-        end.setDate(start.getDate() + 83);
-        break;
-      case "26 Weeks":
-        start = new Date(today);
-        start.setDate(start.getDate() + mondayOffset - 182);
-        end = new Date(start);
-        end.setDate(start.getDate() + 181);
-        break;
-      case "52 Weeks":
-        start = new Date(today);
-        start.setDate(start.getDate() + mondayOffset - 364);
-        end = new Date(start);
-        end.setDate(start.getDate() + 363);
-        break;
-      case "All Time":
-        start = new Date(2000, 0, 1);
-        end = new Date();
-        break;
-      default:
-        start = new Date();
-        end = new Date();
-    }
-
-    end.setHours(23, 59, 59, 999);
-
-    return {
-      start: formatDate(start.toString(), "write"),
-      end: formatDate(end.toString(), "write"),
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if ((event.key === 'D' || event.key === 'd') && state.displayMode === 'general') {
+        console.log('Open');
+        toggleOverviewMode();
+      }
     };
+
+    window.addEventListener('keydown', handleEscape);
+
+    return () => {
+      window.removeEventListener('keydown', handleEscape);
+    };
+  }, [state.displayMode, toggleOverviewMode]);
+
+  const loading = false;
+
+  if (loading) {
+    return (
+      <div className='flex h-screen w-full justify-center items-center'>
+        <Loading size='large' />
+      </div>
+    );
+  }
+
+  const toggleLogsModal = () => {
+    setLogsModalOpen(!logsModalOpen);
   };
 
-  const handleDropdownSelect = (option: Option) => {
-    const range = getDateRange(option.value);
-    setDateRange(range);
+  const toggleDateRangeDropdown = () => {
+    setDateRangeDropdownOpen(!dateRangeDropdownOpen);
   };
 
-  const tabs: Tab[] = [
+  const tabs = [
     {
-      value: "overview",
+      name: 'overview',
       buttons: [
         {
-          text: "",
-          icon: <TvIcon />,
-          type: "button",
-          onClick: () => toggleDisplayMode(),
-          theme: "primary",
+          label: 'Display',
+          icon: (
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              fill='none'
+              viewBox='0 0 24 24'
+              strokeWidth={1.5}
+              stroke='currentColor'
+              className='w-6 h-6'>
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M6 20.25h12m-7.5-3v3m3-3v3m-10.125-3h17.25c.621 0 1.125-.504 1.125-1.125V4.875c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125Z'
+              />
+            </svg>
+          ),
+          onClick: () => toggleOverviewMode(),
         },
         {
-          text: "Production Logs",
-          type: "button",
-          onClick: () => toggleProductionLogModal(),
-          theme: "primary",
+          label: 'Logs',
+          icon: (
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              fill='none'
+              viewBox='0 0 24 24'
+              strokeWidth={1.5}
+              stroke='currentColor'
+              className='w-6 h-6'>
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z'
+              />
+            </svg>
+          ),
+          onClick: () => toggleLogsModal(),
         },
-      ],
-      dropdowns: [
         {
-          text: "Date Range",
-          onSelect: handleDropdownSelect,
-          options: [
-            { label: "This Week", value: "This Week" },
-            { label: "Last 4 Weeks", value: "4 Weeks" },
-            { label: "Last 8 Weeks", value: "8 Weeks" },
-            { label: "Last 12 Weeks", value: "12 Weeks" },
-            { label: "Last 26 Weeks", value: "26 Weeks" },
-            { label: "Last 52 Weeks", value: "52 Weeks" },
-            { label: "All Time", value: "All Time" },
-          ],
+          label: 'Date Range',
+          icon: (
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              fill='none'
+              viewBox='0 0 24 24'
+              strokeWidth={1.5}
+              stroke='currentColor'
+              className='w-6 h-6'>
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z'
+              />
+            </svg>
+          ),
+          onClick: () => toggleDateRangeDropdown(),
         },
       ],
     },
     {
-      value: "downtime",
+      name: 'Downtime',
       buttons: [
         {
-          text: "Add Downtime",
-          type: "button",
-          onClick: () => toggleDownTimeModal("add"),
-          theme: "primary",
-          icon: <PlusIcon />,
+          label: 'Add Downtime',
+          icon: (
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              fill='none'
+              viewBox='0 0 24 24'
+              strokeWidth={1.5}
+              stroke='currentColor'
+              className='w-6 h-6'>
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M12 4.5v15m7.5-7.5h-15'
+              />
+            </svg>
+          ),
+          onClick: () => console.log('Action 2 in Downtime'),
         },
       ],
     },
     {
-      value: "resources",
+      name: 'Resources',
       buttons: [
         {
-          text: "Add Resource",
-          type: "button",
-          onClick: handleClick,
-          theme: "primary",
-          icon: <PlusIcon />,
+          label: 'Add Resource',
+          icon: (
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              fill='none'
+              viewBox='0 0 24 24'
+              strokeWidth={1.5}
+              stroke='currentColor'
+              className='w-6 h-6'>
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M12 4.5v15m7.5-7.5h-15'
+              />
+            </svg>
+          ),
+          onClick: () => console.log('Action 2 in Downtime'),
         },
       ],
     },
   ];
 
-  const triggerDowntimeRefresh = () => {
-    setRefreshDowntime((prev) => !prev);
+  const handleTabChange = (tabName: string) => {
+    setCurrentTab(tabName);
   };
 
   const renderContent = () => {
-    switch (activeTab) {
-      case "overview":
+    switch (currentTab) {
+      case 'overview':
         return (
-          <div className="flex flex-col gap-4">
-            <div className="h-96 w-full rounded bg-white p-4 shadow">
-              <Output outputData={productionLogData?.productionLogs || []} />
-            </div>
-            <div className="flex h-96 w-full gap-4">
-              <div className="flex-1 rounded bg-white p-4 shadow">
-                <QuotedHours
-                  quotedData={productionLogData?.productionLogs || []}
-                />
-              </div>
-              <div className="flex-1 rounded bg-white p-4 shadow">
-                <IndirectHours
-                  indirectData={productionLogData?.productionLogs || []}
-                />
-              </div>
-            </div>
-            <div className="rounded bg-white p-4">
-              <Downtime display={false} dateRange={dateRange} />
-            </div>
-          </div>
-        );
-      case "downtime":
-        return (
-          <DowntimeTable
-            toggleDowntimeModal={toggleDownTimeModal}
-            refreshData={refreshDowntime}
+          <OverviewContent
+            mode={state.displayMode}
+            toggleOverviewMode={toggleOverviewMode}
+            logsModalOpen={logsModalOpen}
           />
         );
-      case "resources":
-        return <Resources />;
+      case 'Downtime':
+        return <DowntimeContent />;
+      case 'Resources':
+        return <ResourcesContent />;
       default:
-        return <></>;
+        return <div>Content not found</div>;
     }
   };
-
-  useEffect(() => {
-    setFilter({ dateRange });
-    setSort("weekOf,ASC");
-  }, [dateRange, setFilter, setSort]);
-
-  useEffect(() => {
-    handleDropdownSelect({ label: "This Week", value: "This Week" });
-  }, []);
-
-  if (displayMode === true) {
-    return (
-      <>
-        {showMessage && (
-          <div className="fixed left-0 top-0 w-full bg-blue-100 py-4 text-center text-blue-800">
-            Double click anywhere on the screen to exit display mode
-          </div>
-        )}
-        <div
-          className="grid h-screen w-screen grid-cols-2 grid-rows-2 gap-4 bg-gray-50 p-4"
-          onDoubleClick={() => toggleDisplayMode()}
-        >
-          <div className="col-span-1 row-span-1 overflow-hidden bg-white p-4 shadow">
-            <Output outputData={productionLogData?.productionLogs || []} />
-          </div>
-          <div className="col-span-1 row-span-1 overflow-hidden bg-white p-4 shadow">
-            <Downtime display={true} dateRange={dateRange} />
-          </div>
-          <div className="col-span-1 row-span-1 overflow-hidden bg-white p-4 shadow">
-            <QuotedHours quotedData={productionLogData?.productionLogs || []} />
-          </div>
-
-          <div className="col-span-1 row-span-1 overflow-hidden bg-white p-4 shadow">
-            <IndirectHours
-              indirectData={productionLogData?.productionLogs || []}
-            />
-          </div>
-        </div>
-      </>
-    );
-  }
 
   return (
     <Layout>
       <PageHeader
-        title="Production"
+        title='Production'
         tabs={tabs}
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        onTabChange={handleTabChange}
       />
-
+      {logsModalOpen && (
+        <Modal
+          isOpen={logsModalOpen}
+          onClose={toggleLogsModal}>
+          <div>123</div>
+        </Modal>
+      )}
       {renderContent()}
-
-      {productionLogModalOpen && (
-        <ProductionLogModal
-          onClose={toggleProductionLogModal}
-          productionLogData={productionLogData?.productionLogs}
-        />
-      )}
-
-      {downtimeModalOpen && (
-        <DowntimeModal
-          mode={downtimeModalMode}
-          onClose={toggleDownTimeModal}
-          triggerRefresh={triggerDowntimeRefresh}
-        />
-      )}
     </Layout>
   );
 };

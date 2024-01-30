@@ -1,4 +1,5 @@
 /* eslint-disable */
+
 import {
   Chart as ChartJS,
   ChartOptions,
@@ -9,9 +10,11 @@ import {
   PointElement,
   Tooltip,
   Legend,
+  registerables,
 } from 'chart.js';
 import { Chart } from 'react-chartjs-2';
 
+ChartJS.register(...registerables);
 ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointElement, Tooltip, Legend);
 
 type ComboChartProps = {

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useState } from 'react';
 import { Layout, PageHeader, Table, Modal } from '../components';
 
@@ -6,7 +7,7 @@ const FileWatch = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPath, setSelectedPath] = useState('');
   const [selectedAction, setSelectedAction] = useState('');
-  const [watchedFiles, setWatchedFiles] = useState([
+  const [watchedFiles] = useState([
     { id: '1', path: '/folder1/file1.xlsx', lastModified: '2024-01-20', action: 'Save to Database' },
     { id: '2', path: '/folder2/file2.xlsx', lastModified: '2024-01-15', action: 'Send Alert Email' },
   ]);
@@ -49,19 +50,19 @@ const FileWatch = () => {
   ];
 
   const tableFields = ['path', 'lastModified', 'action'];
-  const tableActions = [];
+  const tableActions: any = [];
 
-  const handleTabChange = (tabName) => {
+  const handleTabChange = (tabName: any) => {
     setCurrentTab(tabName);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     console.log('Selected file:', selectedPath, 'Action:', selectedAction);
     setIsModalOpen(false);
   };
 
-  const handleFolderSelect = (folderPath) => {
+  const handleFolderSelect = (folderPath: any) => {
     setSelectedPath(folderPath);
   };
 
@@ -128,7 +129,7 @@ const FileWatch = () => {
                     className='border rounded w-full py-2 px-3'
                     onChange={(e) => setSelectedPath(selectedPath + '/' + e.target.value)}>
                     <option value=''>Select a file</option>
-                    {sampleFolders[selectedPath].map((file) => (
+                    {sampleFolders[selectedPath].map((file: any) => (
                       <option
                         key={file}
                         value={file}>

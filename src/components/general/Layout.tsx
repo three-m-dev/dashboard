@@ -17,7 +17,7 @@ const Layout = ({ children }: LayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 
-  const { state, setState } = useGeneralContext();
+  const { state } = useGeneralContext();
 
   const { logout } = useLogout();
 

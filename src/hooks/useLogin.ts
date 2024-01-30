@@ -3,7 +3,7 @@ import axios from 'axios';
 import { AuthContext } from '../contexts/AuthContext';
 import { useGeneralContext } from './useGeneralContext';
 
-const devUrl = 'http://localhost:8080/api/v1';
+// const devUrl = 'http://localhost:8080/api/v1';
 
 const baseUrl = 'https://api.setup123.com/api/v1';
 

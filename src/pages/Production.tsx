@@ -178,7 +178,6 @@ const Production = () => {
           <OverviewContent
             mode={state.displayMode}
             toggleOverviewMode={toggleOverviewMode}
-            logsModalOpen={logsModalOpen}
           />
         );
       case 'Downtime':

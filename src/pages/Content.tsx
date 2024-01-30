@@ -35,12 +35,12 @@ const Content = () => {
     setCurrentTab(tabName);
   };
 
-  const [blogPosts, setBlogPosts] = useState([
+  const [blogPosts] = useState([
     { title: 'Blog Post 1', imageUrl: 'path/to/image1.jpg' },
     { title: 'Blog Post 2', imageUrl: 'path/to/image2.jpg' },
   ]);
 
-  const handleNewBlogPost = () => {};
+  // const handleNewBlogPost = () => {};
 
   const renderContent = () => {
     switch (currentTab) {

@@ -168,7 +168,7 @@ const OverviewContent = ({ mode, toggleOverviewMode }: Props) => {
       datasets: [
         {
           type: 'line',
-          label: 'Total (Hours)',
+          label: 'Total',
           data: downtimeData,
           backgroundColor: '#93c5fd',
           borderColor: '#3b82f6',
@@ -207,7 +207,7 @@ const OverviewContent = ({ mode, toggleOverviewMode }: Props) => {
       </div>
       <div className='bg-white rounded-lg p-4 h-[500px] shadow-md'>
         <ComboChart
-          title='Unscheduled Downtime'
+          title='Unscheduled Downtime (Hours)'
           data={dataSets.downtime}
           options={options}
         />
@@ -241,7 +241,7 @@ const OverviewContent = ({ mode, toggleOverviewMode }: Props) => {
         </div>
         <div className='flex-1 bg-white rounded-lg p-4 shadow-md'>
           <ComboChart
-            title='Unscheduled Downtime'
+            title='Unscheduled Downtime (Hours)'
             data={dataSets.downtime}
             options={options}
           />

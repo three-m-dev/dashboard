@@ -198,28 +198,28 @@ const OverviewContent = ({ mode, toggleOverviewMode }: Props) => {
 
   const renderOverview = () => (
     <div className='flex flex-col gap-4'>
-      <div className='bg-white rounded-lg p-4 h-[500px]'>
+      <div className='bg-white rounded-lg p-4 h-[500px] shadow-md'>
         <LineChart
           title='Weekly Output'
           data={dataSets.output}
           options={options}
         />
       </div>
-      <div className='bg-white rounded-lg p-4 h-[500px]'>
+      <div className='bg-white rounded-lg p-4 h-[500px] shadow-md'>
         <ComboChart
           title='Unscheduled Downtime'
           data={dataSets.downtime}
           options={options}
         />
       </div>
-      <div className='bg-white rounded-lg p-4 h-[500px]'>
+      <div className='bg-white rounded-lg p-4 h-[500px] shadow-md'>
         <ComboChart
           title='Actual : Quoted (Hours)'
           data={dataSets.quotedHours}
           options={options}
         />
       </div>
-      <div className='bg-white rounded-lg p-4 h-[500px]'>
+      <div className='bg-white rounded-lg p-4 h-[500px] shadow-md'>
         <ComboChart
           title='Indirect : Total (Hours)'
           data={dataSets.indirectHours}
@@ -232,14 +232,14 @@ const OverviewContent = ({ mode, toggleOverviewMode }: Props) => {
   const renderDisplay = () => (
     <div className='fixed inset-0 z-50 flex flex-col gap-4 h-screen w-full p-4 bg-gray-100'>
       <div className='flex gap-4 h-1/2'>
-        <div className='flex-1 bg-white rounded-lg p-4'>
+        <div className='flex-1 bg-white rounded-lg p-4 shadow-md'>
           <ComboChart
             title='Weekly Output'
             data={dataSets.output}
             options={options}
           />
         </div>
-        <div className='flex-1 bg-white rounded-lg p-4'>
+        <div className='flex-1 bg-white rounded-lg p-4 shadow-md'>
           <ComboChart
             title='Unscheduled Downtime'
             data={dataSets.downtime}
@@ -248,14 +248,14 @@ const OverviewContent = ({ mode, toggleOverviewMode }: Props) => {
         </div>
       </div>
       <div className='flex gap-4 h-1/2'>
-        <div className='flex-1 bg-white rounded-lg p-4'>
+        <div className='flex-1 bg-white rounded-lg p-4 shadow-md'>
           <ComboChart
             title='Actual : Quoted (Hours)'
             data={dataSets.quotedHours}
             options={options}
           />
         </div>
-        <div className='flex-1 bg-white rounded-lg p-4'>
+        <div className='flex-1 bg-white rounded-lg p-4 shadow-md'>
           <ComboChart
             title='Indirect : Total (Hours)'
             data={dataSets.indirectHours}

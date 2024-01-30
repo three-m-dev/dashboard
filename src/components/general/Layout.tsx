@@ -145,10 +145,10 @@ const Layout = ({ children }: LayoutProps) => {
   ];
 
   return (
-    <div className='flex h-screen bg-gray-50'>
+    <div className='flex h-screen bg-white'>
       <div
         style={{ display: sidebarOpen ? 'block' : 'none' }}
-        className='bg-gray-50 p-4 w-56 shadow-lg'>
+        className='bg-white p-4 w-56 shadow-lg'>
         <div className='mb-4'>
           <h1 className='text-center text-2xl h-[32px] font-bold tracking-wider '>M Portal</h1>
         </div>
@@ -214,7 +214,7 @@ const Layout = ({ children }: LayoutProps) => {
             )}
           </div>
         </header>
-        <main className='flex-1 overflow-x-hidden overflow-y-auto bg-gray-200 p-4'>{children}</main>
+        <main className='flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-4'>{children}</main>
       </div>
     </div>
   );

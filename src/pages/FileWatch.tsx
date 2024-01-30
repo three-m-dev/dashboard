@@ -129,13 +129,13 @@ const FileWatch = () => {
                     className='border rounded w-full py-2 px-3'
                     onChange={(e) => setSelectedPath(selectedPath + '/' + e.target.value)}>
                     <option value=''>Select a file</option>
-                    {sampleFolders[selectedPath].map((file: any) => (
+                    {/* {sampleFolders[selectedPath].map((file: any) => (
                       <option
                         key={file}
                         value={file}>
                         {file}
                       </option>
-                    ))}
+                    ))} */}
                   </select>
                 </div>
               )}

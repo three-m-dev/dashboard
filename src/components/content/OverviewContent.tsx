@@ -67,22 +67,26 @@ const OverviewContent = ({ mode, toggleOverviewMode }: Props) => {
     return `${formattedMonth}/${formattedDay}/${year}`;
   };
 
-  const actualToQuoted = productionLogData?.productionLogs.map(
-    (log) => (log.actualHours || 0) / (log.quotedHours || 1)
-  );
+  // Modify the code to display only the last 4 weeks for production logs
+  const lastFourWeeksProductionLogs = productionLogData?.productionLogs
+    ?.slice(-5, -1) // Exclude the last week
+    .map((log) => ({
+      ...log,
+      weekOf: convertToUSFormat(log.weekOf),
+    }));
 
-  const indirectToTotal = productionLogData?.productionLogs.map(
-    (log) => (log.indirectHours || 0) / (log.totalHours || 1)
-  );
+  const actualToQuoted = lastFourWeeksProductionLogs?.map((log) => (log.actualHours || 0) / (log.quotedHours || 1));
+
+  const indirectToTotal = lastFourWeeksProductionLogs?.map((log) => (log.indirectHours || 0) / (log.totalHours || 1));
 
   const dataSets = {
     output: {
-      labels: productionLogData?.productionLogs.map((log) => convertToUSFormat(log.weekOf)) || [],
+      labels: lastFourWeeksProductionLogs?.map((log) => log.weekOf) || [],
       datasets: [
         {
           type: 'line',
           label: 'Goal',
-          data: productionLogData?.productionLogs.map((log) => log.outputGoal) || [],
+          data: lastFourWeeksProductionLogs?.map((log) => log.outputGoal) || [],
           backgroundColor: 'transparent',
           borderColor: '#000000',
           borderWidth: 2,
@@ -95,7 +99,7 @@ const OverviewContent = ({ mode, toggleOverviewMode }: Props) => {
         {
           type: 'line',
           label: 'Actual',
-          data: productionLogData?.productionLogs.map((log) => log.actualOutput) || [],
+          data: lastFourWeeksProductionLogs?.map((log) => log.actualOutput) || [],
           backgroundColor: '#93c5fd',
           borderColor: '#3b82f6',
           borderWidth: 2,
@@ -107,7 +111,7 @@ const OverviewContent = ({ mode, toggleOverviewMode }: Props) => {
         {
           type: 'line',
           label: 'Projected',
-          data: productionLogData?.productionLogs.map((log) => log.projectedOutput) || [],
+          data: lastFourWeeksProductionLogs?.map((log) => log.projectedOutput) || [],
           backgroundColor: '#e5e7eb',
           borderColor: '#9ca3af',
           borderWidth: 2,
@@ -119,12 +123,12 @@ const OverviewContent = ({ mode, toggleOverviewMode }: Props) => {
       ],
     },
     quotedHours: {
-      labels: productionLogData?.productionLogs.map((log) => convertToUSFormat(log.weekOf)) || [],
+      labels: lastFourWeeksProductionLogs?.map((log) => log.weekOf) || [],
       datasets: [
         {
           type: 'line',
           label: 'Goal',
-          data: productionLogData?.productionLogs.map(() => 1) || [],
+          data: lastFourWeeksProductionLogs?.map(() => 1) || [],
           backgroundColor: '#e5e7eb',
           borderColor: '#000000',
           borderWidth: 2,
@@ -145,7 +149,7 @@ const OverviewContent = ({ mode, toggleOverviewMode }: Props) => {
       ],
     },
     indirectHours: {
-      labels: productionLogData?.productionLogs.map((log) => convertToUSFormat(log.weekOf)) || [],
+      labels: lastFourWeeksProductionLogs?.map((log) => log.weekOf) || [],
       datasets: [
         {
           type: 'bar',

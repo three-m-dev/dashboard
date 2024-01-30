@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useMatch } from 'react-router-dom';
-import { useGeneralContext } from '../../hooks/useGeneralContext';
+// import { useGeneralContext } from '../../hooks/useGeneralContext';
 import { useLogout } from '../../hooks/useLogout';
 
 type LayoutProps = {
@@ -17,7 +17,7 @@ const Layout = ({ children }: LayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 
-  const { state } = useGeneralContext();
+  // const { state } = useGeneralContext();
 
   const { logout } = useLogout();
 
@@ -192,10 +192,10 @@ const Layout = ({ children }: LayoutProps) => {
             <button
               onClick={() => setUserDropdownOpen(!userDropdownOpen)}
               className='flex items-center cursor-pointer gap-2'>
-              <div className='h-8 w-8 rounded-full bg-blue-500 flex justify-center items-center text-white'>
+              {/* <div className='h-8 w-8 rounded-full bg-blue-500 flex justify-center items-center text-white'>
                 {state.employee.firstName[0]}
                 {state.employee.lastName[0]}
-              </div>
+              </div> */}
             </button>
 
             {userDropdownOpen && (

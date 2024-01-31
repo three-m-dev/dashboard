@@ -145,10 +145,10 @@ const Layout = ({ children }: LayoutProps) => {
   ];
 
   return (
-    <div className='flex h-screen bg-gray-50'>
+    <div className='flex h-screen bg-white'>
       <div
         style={{ display: sidebarOpen ? 'block' : 'none' }}
-        className='bg-gray-50 p-4 w-56 shadow-lg'>
+        className='bg-white p-4 w-56 shadow-lg'>
         <div className='mb-4'>
           <h1 className='text-center text-2xl h-[32px] font-bold tracking-wider '>M Portal</h1>
         </div>
@@ -175,27 +175,38 @@ const Layout = ({ children }: LayoutProps) => {
         <header className='flex justify-between items-center p-4 shadow-md'>
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className='rounded-md bg-blue-50 px-2 py-3 hover:bg-blue-100 focus:outline-none'>
+            className='rounded-md bg-blue-50 p-2 hover:bg-blue-100 focus:outline-none text-blue-800'>
             <svg
-              className='text-blue-500'
-              width='18'
-              height='10'
-              viewBox='0 0 18 10'
+              xmlns='http://www.w3.org/2000/svg'
               fill='none'
-              xmlns='http://www.w3.org/2000/svg'>
+              viewBox='0 0 24 24'
+              strokeWidth={1.5}
+              stroke='currentColor'
+              className='w-6 h-6'>
               <path
-                d='M1.50002 1.66667H16.5C16.721 1.66667 16.933 1.57887 17.0893 1.42259C17.2456 1.26631 17.3334 1.05435 17.3334 0.833333C17.3334 0.61232 17.2456 0.400358 17.0893 0.244078C16.933 0.0877975 16.721 0 16.5 0H1.50002C1.27901 0 1.06704 0.0877975 0.910765 0.244078C0.754484 0.400358 0.666687 0.61232 0.666687 0.833333C0.666687 1.05435 0.754484 1.26631 0.910765 1.42259C1.06704 1.57887 1.27901 1.66667 1.50002 1.66667V1.66667ZM16.5 8.33333H1.50002C1.27901 8.33333 1.06704 8.42113 0.910765 8.57741C0.754484 8.73369 0.666687 8.94565 0.666687 9.16667C0.666687 9.38768 0.754484 9.59964 0.910765 9.75592C1.06704 9.9122 1.27901 10 1.50002 10H16.5C16.721 10 16.933 9.9122 17.0893 9.75592C17.2456 9.59964 17.3334 9.38768 17.3334 9.16667C17.3334 8.94565 17.2456 8.73369 17.0893 8.57741C16.933 8.42113 16.721 8.33333 16.5 8.33333ZM16.5 4.16667H1.50002C1.27901 4.16667 1.06704 4.25446 0.910765 4.41074C0.754484 4.56702 0.666687 4.77899 0.666687 5C0.666687 5.22101 0.754484 5.43298 0.910765 5.58926C1.06704 5.74554 1.27901 5.83333 1.50002 5.83333H16.5C16.721 5.83333 16.933 5.74554 17.0893 5.58926C17.2456 5.43298 17.3334 5.22101 17.3334 5C17.3334 4.77899 17.2456 4.56702 17.0893 4.41074C16.933 4.25446 16.721 4.16667 16.5 4.16667Z'
-                fill='currentColor'></path>
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5'
+              />
             </svg>
           </button>
           <div className='relative'>
             <button
               onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-              className='flex items-center cursor-pointer gap-2'>
-              {/* <div className='h-8 w-8 rounded-full bg-blue-500 flex justify-center items-center text-white'>
-                {state.employee.firstName[0]}
-                {state.employee.lastName[0]}
-              </div> */}
+              className='rounded-md bg-blue-50 p-2 hover:bg-blue-100 focus:outline-none text-blue-800'>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                fill='none'
+                viewBox='0 0 24 24'
+                strokeWidth={1.5}
+                stroke='currentColor'
+                className='w-6 h-6'>
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  d='M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z'
+                />
+              </svg>
             </button>
 
             {userDropdownOpen && (
@@ -214,7 +225,7 @@ const Layout = ({ children }: LayoutProps) => {
             )}
           </div>
         </header>
-        <main className='flex-1 overflow-x-hidden overflow-y-auto bg-gray-200 p-4'>{children}</main>
+        <main className='flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-4'>{children}</main>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useMatch } from 'react-router-dom';
-import { useGeneralContext } from '../../hooks/useGeneralContext';
+// import { useGeneralContext } from '../../hooks/useGeneralContext';
 import { useLogout } from '../../hooks/useLogout';
 
 type LayoutProps = {
@@ -17,7 +17,7 @@ const Layout = ({ children }: LayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 
-  const { state } = useGeneralContext();
+  // const { state } = useGeneralContext();
 
   const { logout } = useLogout();
 

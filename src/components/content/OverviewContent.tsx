@@ -3,12 +3,13 @@ import { useEffect, useState } from 'react';
 import ComboChart from '../charts/ComboChart';
 import { LineChart } from '..';
 import { useGeneralContext } from '../../hooks/useGeneralContext';
-import useGetProductionLogs from '../../hooks/useGetProductionLogs';
 import { parseCSVToJson, totalByWeek } from '../../utils/parser';
+import { IProductionLog } from '../../interfaces';
 
 type Props = {
   mode: string;
   toggleOverviewMode: () => void;
+  productionLogs: IProductionLog[];
 };
 
 interface WeeklyTotal {
@@ -31,10 +32,8 @@ const options = {
   },
 };
 
-const OverviewContent = ({ mode, toggleOverviewMode }: Props) => {
+const OverviewContent = ({ mode, toggleOverviewMode, productionLogs }: Props) => {
   const { state } = useGeneralContext();
-
-  const { productionLogData } = useGetProductionLogs();
 
   const [downtimeData, setDowntimeData] = useState<number[]>([]);
   const [downtimeLabels, setDowntimeLabels] = useState<string[]>([]);
@@ -66,7 +65,7 @@ const OverviewContent = ({ mode, toggleOverviewMode }: Props) => {
     return `${formattedMonth}/${formattedDay}/${year}`;
   };
 
-  const lastFourWeeksProductionLogs = productionLogData?.productionLogs?.slice(-5, -1).map((log) => ({
+  const lastFourWeeksProductionLogs = productionLogs?.slice(-5, -1).map((log) => ({
     ...log,
     weekOf: convertToUSFormat(log.weekOf),
   }));

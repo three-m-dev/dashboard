@@ -5,6 +5,7 @@ import PageHeader from '../components/general/PageHeader';
 import OverviewContent from '../components/content/OverviewContent';
 import Loading from '../components/general/Loading';
 import { useGeneralContext } from '../hooks/useGeneralContext';
+import useGetProductionLogs from '../hooks/useGetProductionLogs';
 
 const Production = () => {
   const { state, setState } = useGeneralContext();
@@ -12,6 +13,8 @@ const Production = () => {
 
   const [logsModalOpen, setLogsModalOpen] = useState(false);
   const [dateRangeDropdownOpen, setDateRangeDropdownOpen] = useState(false);
+
+  const { productionLogData } = useGetProductionLogs();
 
   const toggleOverviewMode = useCallback(() => {
     const newDisplayMode = state.displayMode === 'production-display' ? 'general' : 'production-display';
@@ -178,6 +181,7 @@ const Production = () => {
           <OverviewContent
             mode={state.displayMode}
             toggleOverviewMode={toggleOverviewMode}
+            productionLogs={productionLogData?.productionLogs!}
           />
         );
       case 'Downtime':
@@ -200,7 +204,13 @@ const Production = () => {
         <Modal
           isOpen={logsModalOpen}
           onClose={toggleLogsModal}>
-          <div>123</div>
+          <div className='flex flex-col'>
+            {productionLogData?.productionLogs.map((log) => (
+              <div>
+                {log.company} {log.weekOf}
+              </div>
+            ))}
+          </div>
         </Modal>
       )}
       {renderContent()}

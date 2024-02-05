@@ -6,6 +6,7 @@ import OverviewContent from '../components/content/OverviewContent';
 import Loading from '../components/general/Loading';
 import { useGeneralContext } from '../hooks/useGeneralContext';
 import useGetProductionLogs from '../hooks/useGetProductionLogs';
+import { formatKebabCaseToCapital } from '../utils/formatter';
 
 const Production = () => {
   const { state, setState } = useGeneralContext();
@@ -14,7 +15,11 @@ const Production = () => {
   const [logsModalOpen, setLogsModalOpen] = useState(false);
   const [dateRangeDropdownOpen, setDateRangeDropdownOpen] = useState(false);
 
+  const [logsModalMode, setLogsModalMode] = useState('view');
+
   const { productionLogData } = useGetProductionLogs();
+
+  const [errors, setErrors] = useState();
 
   const toggleOverviewMode = useCallback(() => {
     const newDisplayMode = state.displayMode === 'production-display' ? 'general' : 'production-display';
@@ -50,6 +55,7 @@ const Production = () => {
   }
 
   const toggleLogsModal = () => {
+    setLogsModalMode('view');
     setLogsModalOpen(!logsModalOpen);
   };
 
@@ -193,6 +199,10 @@ const Production = () => {
     }
   };
 
+  const handleProductionLogCreation = () => {};
+
+  const handleProductionLogUpdate = () => {};
+
   return (
     <Layout>
       <PageHeader
@@ -202,15 +212,157 @@ const Production = () => {
       />
       {logsModalOpen && (
         <Modal
+          title='Production Log Modal'
           isOpen={logsModalOpen}
           onClose={toggleLogsModal}>
-          <div className='flex flex-col'>
-            {productionLogData?.productionLogs.map((log) => (
-              <div>
-                {log.company} {log.weekOf}
+          {logsModalMode === 'view' && (
+            <div className='flex flex-col mt-4'>
+              <table className='min-w-full divide-y divide-gray-200 shadow overflow-hidden border-b border-gray-200 sm:rounded-lg'>
+                <thead className='bg-gray-50'>
+                  <tr>
+                    <th
+                      scope='col'
+                      className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                      Company
+                    </th>
+                    <th
+                      scope='col'
+                      className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                      Week Of
+                    </th>
+                    <th
+                      scope='col'
+                      className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                      Projected Output
+                    </th>
+                    <th
+                      scope='col'
+                      className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                      Actual Output
+                    </th>
+                    <th
+                      scope='col'
+                      className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                      On Time Delivery
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className='bg-white divide-y divide-gray-200'>
+                  {productionLogData?.productionLogs.map((log, index) => (
+                    <tr key={index}>
+                      <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900'>
+                        {formatKebabCaseToCapital(log.company)}
+                      </td>
+                      <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{log.weekOf}</td>
+                      <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
+                        {log.properties.projectedOutput}
+                      </td>
+                      <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
+                        {log.properties.actualOutput}
+                      </td>
+                      <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
+                        {log.properties.onTimeDeliveryRate}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+
+              <div className='flex justify-end mt-4'>
+                <button
+                  onClick={() => {
+                    setLogsModalMode('add');
+                  }}
+                  className='flex gap-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none'>
+                  New Log
+                </button>
               </div>
-            ))}
-          </div>
+            </div>
+          )}
+
+          {logsModalMode === 'add' && (
+            <div className='mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
+              <div className='col-span-2'>
+                <label className='block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap'>Company</label>
+                <select className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500'>
+                  <option>Select Company</option>
+                  <option value='three-m'>Three M</option>
+                  <option value='ultra-grip'>Ultra Grip</option>
+                </select>
+              </div>
+
+              <div className='col-span-2'>
+                <label className='block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap'>Week Of</label>
+                <input
+                  type='date'
+                  className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
+                />
+              </div>
+
+              <div>
+                <label className='block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap'>Shipment Goal</label>
+                <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' />
+              </div>
+
+              <div>
+                <label className='block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap'>
+                  Projected Shipments
+                </label>
+                <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' />
+              </div>
+
+              <div>
+                <label className='block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap'>
+                  Actual Shipments
+                </label>
+                <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' />
+              </div>
+
+              <div>
+                <label className='block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap'>
+                  On Time Delivery
+                </label>
+                <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' />
+              </div>
+
+              <div>
+                <label className='block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap'>Quoted Hours</label>
+                <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' />
+              </div>
+
+              <div>
+                <label className='block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap'>Actual Hours</label>
+                <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' />
+              </div>
+
+              <div>
+                <label className='block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap'>Indirect Hours</label>
+                <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' />
+              </div>
+
+              <div>
+                <label className='block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap'>Total Hours</label>
+                <input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5' />
+              </div>
+
+              <div className='col-span-1 md:col-span-2 lg:col-span-4 flex gap-2 justify-end'>
+                <button
+                  onClick={() => {
+                    setLogsModalMode('view');
+                  }}
+                  className='flex gap-2 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 focus:outline-none'>
+                  Cancel
+                </button>
+                <button
+                  onClick={() => {
+                    setLogsModalMode('view');
+                  }}
+                  className='flex gap-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none'>
+                  Save
+                </button>
+              </div>
+            </div>
+          )}
         </Modal>
       )}
       {renderContent()}

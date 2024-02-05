@@ -54,7 +54,8 @@ const PageHeader = ({ title, tabs, onTabChange }: PageHeaderProps) => {
               key={index}
               onClick={button.onClick}
               className='ml-2 flex gap-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none'>
-              {button.icon} {button.label}
+              {button.icon && button.icon}
+              {button.label}
             </button>
           ))}
       </div>

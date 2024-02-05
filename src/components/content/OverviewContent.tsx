@@ -71,9 +71,13 @@ const OverviewContent = ({ mode, toggleOverviewMode }: Props) => {
     weekOf: convertToUSFormat(log.weekOf),
   }));
 
-  const actualToQuoted = lastFourWeeksProductionLogs?.map((log) => (log.actualHours || 0) / (log.quotedHours || 1));
+  const actualToQuoted = lastFourWeeksProductionLogs?.map(
+    (log) => (log.properties.actualHours || 0) / (log.properties.quotedHours || 1)
+  );
 
-  const indirectToTotal = lastFourWeeksProductionLogs?.map((log) => (log.indirectHours || 0) / (log.totalHours || 1));
+  const indirectToTotal = lastFourWeeksProductionLogs?.map(
+    (log) => (log.properties.indirectHours || 0) / (log.properties.totalHours || 1)
+  );
 
   const dataSets = {
     output: {
@@ -82,7 +86,7 @@ const OverviewContent = ({ mode, toggleOverviewMode }: Props) => {
         {
           type: 'line',
           label: 'Goal',
-          data: lastFourWeeksProductionLogs?.map((log) => log.outputGoal) || [],
+          data: lastFourWeeksProductionLogs?.map((log) => log.properties.outputGoal) || [],
           backgroundColor: 'transparent',
           borderColor: '#000000',
           borderWidth: 2,
@@ -95,7 +99,7 @@ const OverviewContent = ({ mode, toggleOverviewMode }: Props) => {
         {
           type: 'bar',
           label: 'Projected',
-          data: lastFourWeeksProductionLogs?.map((log) => log.projectedOutput) || [],
+          data: lastFourWeeksProductionLogs?.map((log) => log.properties.projectedOutput) || [],
           backgroundColor: '#e5e7eb',
           borderColor: '#9ca3af',
           borderWidth: 2,
@@ -107,7 +111,7 @@ const OverviewContent = ({ mode, toggleOverviewMode }: Props) => {
         {
           type: 'bar',
           label: 'Actual',
-          data: lastFourWeeksProductionLogs?.map((log) => log.actualOutput) || [],
+          data: lastFourWeeksProductionLogs?.map((log) => log.properties.actualOutput) || [],
           backgroundColor: '#93c5fd',
           borderColor: '#3b82f6',
           borderWidth: 2,

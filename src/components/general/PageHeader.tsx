@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { formatKebabCaseToCapital } from '../../utils/formatter';
+import { formatKebab } from '../../utils/formatter';
 
 type Button = {
   label?: string;
@@ -40,7 +40,7 @@ const PageHeader = ({ title, tabs, onTabChange }: PageHeaderProps) => {
                   ? 'border-blue-500 text-blue-500'
                   : 'border-transparent text-gray-400 hover:border-gray-200'
               }`}>
-              {formatKebabCaseToCapital(tab.name)}
+              {formatKebab(tab.name)}
             </button>
           ))}
         </div>

@@ -4,6 +4,7 @@ import ComboChart from '../charts/ComboChart';
 import { LineChart } from '..';
 import { useGeneralContext } from '../../hooks/useGeneralContext';
 import { IProductionLog } from '../../interfaces';
+import { formatISO } from '../../utils/formatter';
 
 type Props = {
   mode: string;
@@ -45,7 +46,7 @@ const OverviewContent = ({ mode, toggleOverviewMode, productionLogData }: Props)
   const dataSets = {
     threeM: {
       output: {
-        labels: getLastFourWeeks(productionLogData?.threeM.productionLogs).map((log) => log.weekOf) || [],
+        labels: getLastFourWeeks(productionLogData?.threeM.productionLogs).map((log) => formatISO(log.weekOf)) || [],
         datasets: [
           {
             type: 'line',
@@ -92,7 +93,7 @@ const OverviewContent = ({ mode, toggleOverviewMode, productionLogData }: Props)
         ],
       },
       quotedHours: {
-        labels: getLastFourWeeks(productionLogData?.threeM.productionLogs).map((log) => log.weekOf) || [],
+        labels: getLastFourWeeks(productionLogData?.threeM.productionLogs).map((log) => formatISO(log.weekOf)) || [],
         datasets: [
           {
             type: 'line',
@@ -118,7 +119,7 @@ const OverviewContent = ({ mode, toggleOverviewMode, productionLogData }: Props)
         ],
       },
       indirectHours: {
-        labels: getLastFourWeeks(productionLogData?.threeM.productionLogs).map((log) => log.weekOf) || [],
+        labels: getLastFourWeeks(productionLogData?.threeM.productionLogs).map((log) => formatISO(log.weekOf)) || [],
         datasets: [
           {
             type: 'bar',
@@ -133,7 +134,7 @@ const OverviewContent = ({ mode, toggleOverviewMode, productionLogData }: Props)
         ],
       },
       onTimeDelivery: {
-        labels: getLastFourWeeks(productionLogData?.threeM.productionLogs).map((log) => log.weekOf) || [],
+        labels: getLastFourWeeks(productionLogData?.threeM.productionLogs).map((log) => formatISO(log.weekOf)) || [],
         datasets: [
           {
             type: 'line',
@@ -161,7 +162,7 @@ const OverviewContent = ({ mode, toggleOverviewMode, productionLogData }: Props)
     },
     ultraGrip: {
       output: {
-        labels: getLastFourWeeks(productionLogData?.ultraGrip.productionLogs).map((log) => log.weekOf) || [],
+        labels: getLastFourWeeks(productionLogData?.ultraGrip.productionLogs).map((log) => formatISO(log.weekOf)) || [],
         datasets: [
           {
             type: 'line',
@@ -210,7 +211,7 @@ const OverviewContent = ({ mode, toggleOverviewMode, productionLogData }: Props)
         ],
       },
       quotedHours: {
-        labels: getLastFourWeeks(productionLogData?.ultraGrip.productionLogs).map((log) => log.weekOf) || [],
+        labels: getLastFourWeeks(productionLogData?.ultraGrip.productionLogs).map((log) => formatISO(log.weekOf)) || [],
         datasets: [
           {
             type: 'line',
@@ -236,7 +237,7 @@ const OverviewContent = ({ mode, toggleOverviewMode, productionLogData }: Props)
         ],
       },
       indirectHours: {
-        labels: getLastFourWeeks(productionLogData?.ultraGrip.productionLogs).map((log) => log.weekOf) || [],
+        labels: getLastFourWeeks(productionLogData?.ultraGrip.productionLogs).map((log) => formatISO(log.weekOf)) || [],
         datasets: [
           {
             type: 'bar',
@@ -251,7 +252,7 @@ const OverviewContent = ({ mode, toggleOverviewMode, productionLogData }: Props)
         ],
       },
       onTimeDelivery: {
-        labels: getLastFourWeeks(productionLogData?.ultraGrip.productionLogs).map((log) => log.weekOf) || [],
+        labels: getLastFourWeeks(productionLogData?.ultraGrip.productionLogs).map((log) => formatISO(log.weekOf)) || [],
         datasets: [
           {
             type: 'line',

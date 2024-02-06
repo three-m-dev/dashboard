@@ -5,7 +5,8 @@ import OverviewContent from '../components/content/OverviewContent';
 import Loading from '../components/general/Loading';
 import { useGeneralContext } from '../hooks/useGeneralContext';
 import useGetProductionLogs from '../hooks/useGetProductionLogs';
-import { formatKebabCaseToCapital } from '../utils/formatter';
+import { formatISO, formatKebab } from '../utils/formatter';
+import { IProductionLog } from '../interfaces';
 
 const Production = () => {
   const { state, setState } = useGeneralContext();
@@ -14,9 +15,8 @@ const Production = () => {
   const [logsModalOpen, setLogsModalOpen] = useState(false);
   const [dateRangeDropdownOpen, setDateRangeDropdownOpen] = useState(false);
 
-  const [logsModalMode, setLogsModalMode] = useState('view');
-
-  const [logsModalTab, setLogsModalTab] = useState('three-m');
+  const [logsModalMode, setLogsModalMode] = useState('list');
+  const [selectedLog, setSelectedLog] = useState<IProductionLog | null>(null);
 
   const { productionLogData } = useGetProductionLogs();
 
@@ -31,7 +31,7 @@ const Production = () => {
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
       if ((event.key === 'D' || event.key === 'd') && state.displayMode === 'general') {
-        console.log('Open');
+        setLogsModalOpen(false);
         toggleOverviewMode();
       }
     };
@@ -54,7 +54,7 @@ const Production = () => {
   }
 
   const toggleLogsModal = () => {
-    setLogsModalMode('view');
+    setLogsModalMode('list');
     setLogsModalOpen(!logsModalOpen);
   };
 
@@ -179,6 +179,25 @@ const Production = () => {
     setCurrentTab(tabName);
   };
 
+  const handleModalModeChange = (modalMode: string, log?: any) => {
+    switch (modalMode) {
+      case 'list':
+        setLogsModalMode(modalMode);
+        setSelectedLog(null);
+        break;
+      case 'add':
+        setLogsModalMode(modalMode);
+        break;
+      case 'view':
+        setLogsModalMode(modalMode);
+        setSelectedLog(log);
+        break;
+      case 'edit':
+        setLogsModalMode(modalMode);
+        break;
+    }
+  };
+
   const renderContent = () => {
     switch (currentTab) {
       case 'overview':
@@ -218,7 +237,7 @@ const Production = () => {
           title='Production Log Modal'
           isOpen={logsModalOpen}
           onClose={toggleLogsModal}>
-          {logsModalMode === 'view' && (
+          {logsModalMode === 'list' && (
             <div className='flex flex-col mt-4'>
               <table className='min-w-full divide-y divide-gray-200 shadow overflow-hidden border-b border-gray-200 sm:rounded-lg'>
                 <thead className='bg-gray-50'>
@@ -252,11 +271,14 @@ const Production = () => {
                 </thead>
                 <tbody className='bg-white divide-y divide-gray-200'>
                   {productionLogData.threeM.productionLogs.map((log: any, index: number) => (
-                    <tr key={index}>
+                    <tr
+                      key={index}
+                      onClick={() => handleModalModeChange('view', log)}
+                      className='hover:bg-gray-50 hover:cursor-pointer'>
                       <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900'>
-                        {formatKebabCaseToCapital(log.company)}
+                        {formatKebab(log.company)}
                       </td>
-                      <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{log.weekOf}</td>
+                      <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{formatISO(log.weekOf)}</td>
                       <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
                         {log.properties.projectedOutput}
                       </td>
@@ -369,14 +391,14 @@ const Production = () => {
               <div className='col-span-1 md:col-span-2 lg:col-span-4 flex gap-2 justify-end'>
                 <button
                   onClick={() => {
-                    setLogsModalMode('view');
+                    setLogsModalMode('list');
                   }}
                   className='flex gap-2 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 focus:outline-none'>
                   Cancel
                 </button>
                 <button
                   onClick={() => {
-                    setLogsModalMode('view');
+                    setLogsModalMode('list');
                   }}
                   className='flex gap-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none'>
                   Save
@@ -384,6 +406,26 @@ const Production = () => {
               </div>
             </div>
           )}
+
+          {logsModalMode === 'view' && selectedLog !== null && (
+            <>
+              <div>{selectedLog.weekOf}</div>
+              <div className='col-span-1 md:col-span-2 lg:col-span-4 flex gap-2 justify-end'>
+                <button
+                  onClick={() => handleModalModeChange('list')}
+                  className='text-gray-400 font-semibold hover:text-gray-500'>
+                  Go Back
+                </button>
+                <button
+                  onClick={() => handleModalModeChange('edit')}
+                  className='flex gap-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none'>
+                  Edit
+                </button>
+              </div>
+            </>
+          )}
+
+          {logsModalMode === 'edit' && <></>}
         </Modal>
       )}
       {renderContent()}

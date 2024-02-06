@@ -1,4 +1,4 @@
-export const formatKebabCaseToCapital = (str: string) => {
+export const formatKebab = (str: string) => {
 	return str
 		.split('-')
 		.map((word) => {
@@ -7,7 +7,7 @@ export const formatKebabCaseToCapital = (str: string) => {
 		.join(' ');
 };
 
-export const formatDateToUSFormat = (date: string) => {
+export const formatISO = (date: string) => {
 	const [year, month, day] = date.split('-').map(Number);
 
 	const formattedMonth = month < 10 ? `0${month}` : month.toString();

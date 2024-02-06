@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 const PermissionsContent = () => {
 	const [permissions, setPermissions] = useState([
-		{ name: 'Access Dashboard', enabled: false },
 		{ name: 'Edit Profile', enabled: false },
 	]);
 

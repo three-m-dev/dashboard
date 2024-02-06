@@ -6,3 +6,12 @@ export const formatKebabCaseToCapital = (str: string) => {
 		})
 		.join(' ');
 };
+
+export const formatDateToUSFormat = (date: string) => {
+	const [year, month, day] = date.split('-').map(Number);
+
+	const formattedMonth = month < 10 ? `0${month}` : month.toString();
+	const formattedDay = day < 10 ? `0${day}` : day.toString();
+
+	return `${formattedMonth}/${formattedDay}/${year}`;
+};

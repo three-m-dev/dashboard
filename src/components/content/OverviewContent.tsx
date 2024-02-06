@@ -34,6 +34,7 @@ const OverviewContent = ({ mode, toggleOverviewMode, productionLogData }: Props)
     scales: {
       y: {
         beginAtZero: true,
+        suggestedMax: 1,
       },
     },
     interaction: {
@@ -294,13 +295,13 @@ const OverviewContent = ({ mode, toggleOverviewMode, productionLogData }: Props)
     };
   }, [mode, toggleOverviewMode]);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveSection((prevActiveSection) => (prevActiveSection === 1 ? 2 : 1));
-    }, 10000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setActiveSection((prevActiveSection) => (prevActiveSection === 1 ? 2 : 1));
+  //   }, 10000);
 
-    return () => clearInterval(interval);
-  }, []);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   const renderOverview = () => (
     <div className='flex flex-col gap-4'>

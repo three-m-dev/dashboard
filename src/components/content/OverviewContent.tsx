@@ -29,18 +29,120 @@ const OverviewContent = ({ mode, toggleOverviewMode, productionLogData }: Props)
   };
 
   const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-    scales: {
-      y: {
-        beginAtZero: true,
-        suggestedMax: 1,
+    general: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          beginAtZero: true,
+          suggestedMax: 1,
+        },
+      },
+      interaction: {
+        mode: 'nearest' as const,
+        axis: 'x' as const,
+        intersect: false,
       },
     },
-    interaction: {
-      mode: 'nearest' as const,
-      axis: 'x' as const,
-      intersect: false,
+    output: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          beginAtZero: true,
+          suggestedMax: 1,
+          title: {
+            display: true,
+            text: 'USD',
+          },
+        },
+        x: {
+          title: {
+            display: true,
+            text: 'Week Of',
+          },
+        },
+      },
+      interaction: {
+        mode: 'nearest' as const,
+        axis: 'x' as const,
+        intersect: false,
+      },
+    },
+    onTimeDelivery: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          beginAtZero: true,
+          suggestedMax: 100,
+          title: {
+            display: true,
+            text: 'Percentage',
+          },
+        },
+        x: {
+          title: {
+            display: true,
+            text: 'Week Of',
+          },
+        },
+      },
+      interaction: {
+        mode: 'nearest' as const,
+        axis: 'x' as const,
+        intersect: false,
+      },
+    },
+    actualHours: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          beginAtZero: true,
+          suggestedMax: 1,
+          title: {
+            display: true,
+            text: 'Ratio',
+          },
+        },
+        x: {
+          title: {
+            display: true,
+            text: 'Week Of',
+          },
+        },
+      },
+      interaction: {
+        mode: 'nearest' as const,
+        axis: 'x' as const,
+        intersect: false,
+      },
+    },
+    quotedHours: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          beginAtZero: true,
+          suggestedMax: 1,
+          title: {
+            display: true,
+            text: 'Ratio',
+          },
+        },
+        x: {
+          title: {
+            display: true,
+            text: 'Week Of',
+          },
+        },
+      },
+      interaction: {
+        mode: 'nearest' as const,
+        axis: 'x' as const,
+        intersect: false,
+      },
     },
   };
 
@@ -93,6 +195,35 @@ const OverviewContent = ({ mode, toggleOverviewMode, productionLogData }: Props)
           },
         ],
       },
+      onTimeDelivery: {
+        labels: getLastFourWeeks(productionLogData?.threeM.productionLogs).map((log) => formatISO(log.weekOf)) || [],
+        datasets: [
+          {
+            type: 'line',
+            label: 'Goal',
+            data: getLastFourWeeks(productionLogData?.threeM.productionLogs).map(() => 70) || [],
+            backgroundColor: 'transparent',
+            borderColor: '#000000',
+            borderWidth: 2,
+            borderDash: [5, 5],
+            spanGaps: true,
+            fill: false,
+          },
+          {
+            type: 'bar',
+            label: 'OTD %',
+            data:
+              getLastFourWeeks(productionLogData?.threeM.productionLogs).map(
+                (log) => log.properties.onTimeDeliveryRate * 100
+              ) || [],
+            backgroundColor: '#93c5fd',
+            borderColor: '#3b82f6',
+            borderWidth: 2,
+            tension: 0.4,
+            fill: false,
+          },
+        ],
+      },
       quotedHours: {
         labels: getLastFourWeeks(productionLogData?.threeM.productionLogs).map((log) => formatISO(log.weekOf)) || [],
         datasets: [
@@ -109,7 +240,7 @@ const OverviewContent = ({ mode, toggleOverviewMode, productionLogData }: Props)
           },
           {
             type: 'bar',
-            label: 'Actual : Quoted',
+            label: 'Actual to Quoted',
             data: getActualToQuoted(getLastFourWeeks(productionLogData?.threeM.productionLogs)) || [],
             backgroundColor: '#93c5fd',
             borderColor: '#3b82f6',
@@ -124,33 +255,7 @@ const OverviewContent = ({ mode, toggleOverviewMode, productionLogData }: Props)
         datasets: [
           {
             type: 'bar',
-            label: 'Indirect : Total',
-            data: getIndirectToTotal(getLastFourWeeks(productionLogData?.threeM.productionLogs)) || [],
-            backgroundColor: '#93c5fd',
-            borderColor: '#3b82f6',
-            borderWidth: 2,
-            tension: 0.4,
-            fill: false,
-          },
-        ],
-      },
-      onTimeDelivery: {
-        labels: getLastFourWeeks(productionLogData?.threeM.productionLogs).map((log) => formatISO(log.weekOf)) || [],
-        datasets: [
-          {
-            type: 'line',
-            label: 'Goal',
-            data: getLastFourWeeks(productionLogData?.threeM.productionLogs).map(() => 0.7) || [],
-            backgroundColor: 'transparent',
-            borderColor: '#000000',
-            borderWidth: 2,
-            borderDash: [5, 5],
-            spanGaps: true,
-            fill: false,
-          },
-          {
-            type: 'bar',
-            label: 'OTD %',
+            label: 'Indirect to Total',
             data: getIndirectToTotal(getLastFourWeeks(productionLogData?.threeM.productionLogs)) || [],
             backgroundColor: '#93c5fd',
             borderColor: '#3b82f6',
@@ -211,47 +316,6 @@ const OverviewContent = ({ mode, toggleOverviewMode, productionLogData }: Props)
           },
         ],
       },
-      quotedHours: {
-        labels: getLastFourWeeks(productionLogData?.ultraGrip.productionLogs).map((log) => formatISO(log.weekOf)) || [],
-        datasets: [
-          {
-            type: 'line',
-            label: 'Goal',
-            data: getLastFourWeeks(productionLogData?.ultraGrip.productionLogs).map(() => 1) || [],
-            backgroundColor: 'transparent',
-            borderColor: '#000000',
-            borderWidth: 2,
-            borderDash: [5, 5],
-            spanGaps: true,
-            fill: false,
-          },
-          {
-            type: 'bar',
-            label: 'Actual : Quoted',
-            data: getActualToQuoted(getLastFourWeeks(productionLogData?.ultraGrip.productionLogs)) || [],
-            backgroundColor: '#fca5a5',
-            borderColor: '#ef4444',
-            borderWidth: 2,
-            tension: 0.4,
-            fill: false,
-          },
-        ],
-      },
-      indirectHours: {
-        labels: getLastFourWeeks(productionLogData?.ultraGrip.productionLogs).map((log) => formatISO(log.weekOf)) || [],
-        datasets: [
-          {
-            type: 'bar',
-            label: 'Indirect : Total',
-            data: getIndirectToTotal(getLastFourWeeks(productionLogData?.ultraGrip.productionLogs)) || [],
-            backgroundColor: '#fca5a5',
-            borderColor: '#ef4444',
-            borderWidth: 2,
-            tension: 0.4,
-            fill: false,
-          },
-        ],
-      },
       onTimeDelivery: {
         labels: getLastFourWeeks(productionLogData?.ultraGrip.productionLogs).map((log) => formatISO(log.weekOf)) || [],
         datasets: [
@@ -269,6 +333,47 @@ const OverviewContent = ({ mode, toggleOverviewMode, productionLogData }: Props)
           {
             type: 'bar',
             label: 'OTD %',
+            data: getIndirectToTotal(getLastFourWeeks(productionLogData?.ultraGrip.productionLogs)) || [],
+            backgroundColor: '#fca5a5',
+            borderColor: '#ef4444',
+            borderWidth: 2,
+            tension: 0.4,
+            fill: false,
+          },
+        ],
+      },
+      quotedHours: {
+        labels: getLastFourWeeks(productionLogData?.ultraGrip.productionLogs).map((log) => formatISO(log.weekOf)) || [],
+        datasets: [
+          {
+            type: 'line',
+            label: 'Goal',
+            data: getLastFourWeeks(productionLogData?.ultraGrip.productionLogs).map(() => 1) || [],
+            backgroundColor: 'transparent',
+            borderColor: '#000000',
+            borderWidth: 2,
+            borderDash: [5, 5],
+            spanGaps: true,
+            fill: false,
+          },
+          {
+            type: 'bar',
+            label: 'Actual to Quoted',
+            data: getActualToQuoted(getLastFourWeeks(productionLogData?.ultraGrip.productionLogs)) || [],
+            backgroundColor: '#fca5a5',
+            borderColor: '#ef4444',
+            borderWidth: 2,
+            tension: 0.4,
+            fill: false,
+          },
+        ],
+      },
+      indirectHours: {
+        labels: getLastFourWeeks(productionLogData?.ultraGrip.productionLogs).map((log) => formatISO(log.weekOf)) || [],
+        datasets: [
+          {
+            type: 'bar',
+            label: 'Indirect to Total',
             data: getIndirectToTotal(getLastFourWeeks(productionLogData?.ultraGrip.productionLogs)) || [],
             backgroundColor: '#fca5a5',
             borderColor: '#ef4444',
@@ -307,30 +412,30 @@ const OverviewContent = ({ mode, toggleOverviewMode, productionLogData }: Props)
     <div className='flex flex-col gap-4'>
       <div className='bg-white rounded-lg p-4 h-[500px] shadow-md'>
         <LineChart
-          title='Weekly Shipments'
+          title='Weekly Shipments (USD)'
           data={dataSets.threeM.output}
-          options={options}
+          options={options.output}
         />
       </div>
       <div className='bg-white rounded-lg p-4 h-[500px] shadow-md'>
         <ComboChart
-          title='On Time Delivery'
+          title='On Time Delivery Rate'
           data={dataSets.threeM.onTimeDelivery}
-          options={options}
+          options={options.onTimeDelivery}
         />
       </div>
       <div className='bg-white rounded-lg p-4 h-[500px] shadow-md'>
         <ComboChart
-          title='Actual : Quoted (Hours)'
+          title='Actual to Quoted Ratio (Hours)'
           data={dataSets.threeM.quotedHours}
-          options={options}
+          options={options.quotedHours}
         />
       </div>
       <div className='bg-white rounded-lg p-4 h-[500px] shadow-md'>
         <ComboChart
-          title='Indirect : Total (Hours)'
+          title='Indirect to Total Ratio (Hours)'
           data={dataSets.threeM.indirectHours}
-          options={options}
+          options={options.actualHours}
         />
       </div>
     </div>
@@ -344,32 +449,32 @@ const OverviewContent = ({ mode, toggleOverviewMode, productionLogData }: Props)
           <div className='flex gap-4 h-1/2'>
             <div className='flex-1 bg-white rounded-lg p-4 shadow-md'>
               <ComboChart
-                title='Weekly Shipments'
+                title='Weekly Shipments (USD)'
                 data={dataSets.threeM.output}
-                options={options}
+                options={options.output}
               />
             </div>
             <div className='flex-1 bg-white rounded-lg p-4 shadow-md'>
               <ComboChart
-                title='On Time Delivery'
+                title='On Time Delivery Rate'
                 data={dataSets.threeM.onTimeDelivery}
-                options={options}
+                options={options.onTimeDelivery}
               />
             </div>
           </div>
           <div className='flex gap-4 h-1/2'>
             <div className='flex-1 bg-white rounded-lg p-4 shadow-md'>
               <ComboChart
-                title='Actual : Quoted (Hours)'
+                title='Actual to Quoted Ratio (Hours)'
                 data={dataSets.threeM.quotedHours}
-                options={options}
+                options={options.quotedHours}
               />
             </div>
             <div className='flex-1 bg-white rounded-lg p-4 shadow-md'>
               <ComboChart
-                title='Indirect : Total (Hours)'
+                title='Indirect to Total Ratio (Hours)'
                 data={dataSets.threeM.indirectHours}
-                options={options}
+                options={options.actualHours}
               />
             </div>
           </div>
@@ -384,14 +489,14 @@ const OverviewContent = ({ mode, toggleOverviewMode, productionLogData }: Props)
               <ComboChart
                 title='Weekly Shipments'
                 data={dataSets.ultraGrip.output}
-                options={options}
+                options={options.general}
               />
             </div>
             <div className='flex-1 bg-white rounded-lg p-4 shadow-md'>
               <ComboChart
                 title='On Time Delivery'
                 data={dataSets.ultraGrip.onTimeDelivery}
-                options={options}
+                options={options.general}
               />
             </div>
           </div>
@@ -400,14 +505,14 @@ const OverviewContent = ({ mode, toggleOverviewMode, productionLogData }: Props)
               <ComboChart
                 title='Actual : Quoted (Hours)'
                 data={dataSets.ultraGrip.quotedHours}
-                options={options}
+                options={options.general}
               />
             </div>
             <div className='flex-1 bg-white rounded-lg p-4 shadow-md'>
               <ComboChart
                 title='Indirect : Total (Hours)'
                 data={dataSets.ultraGrip.indirectHours}
-                options={options}
+                options={options.general}
               />
             </div>
           </div>

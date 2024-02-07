@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import ComboChart from '../charts/ComboChart';
 import { LineChart } from '..';
 import { useGeneralContext } from '../../hooks/useGeneralContext';
@@ -14,7 +14,7 @@ type Props = {
 
 const OverviewContent = ({ mode, toggleOverviewMode, productionLogData }: Props) => {
   const { state } = useGeneralContext();
-  const [activeSection, setActiveSection] = useState(1);
+  // const [activeSection, setActiveSection] = useState(1);
 
   const getLastFourWeeks = (logs: IProductionLog[]) => {
     return logs.slice(-5, -1);
@@ -443,45 +443,43 @@ const OverviewContent = ({ mode, toggleOverviewMode, productionLogData }: Props)
 
   const renderDisplay = () => (
     <div className='fixed inset-0 z-50 flex flex-col gap-4 h-screen w-full p-4 bg-gray-100'>
-      {activeSection === 1 && (
-        <>
-          <h1 className='text-center font-semibold text-2xl'>Three M Tool & Machine</h1>
-          <div className='flex gap-4 h-1/2'>
-            <div className='flex-1 bg-white rounded-lg p-4 shadow-md'>
-              <ComboChart
-                title='Weekly Shipments (USD)'
-                data={dataSets.threeM.output}
-                options={options.output}
-              />
-            </div>
-            <div className='flex-1 bg-white rounded-lg p-4 shadow-md'>
-              <ComboChart
-                title='On Time Delivery Rate'
-                data={dataSets.threeM.onTimeDelivery}
-                options={options.onTimeDelivery}
-              />
-            </div>
+      <>
+        <h1 className='text-center font-semibold text-2xl'>Three M Tool & Machine</h1>
+        <div className='flex gap-4 h-1/2'>
+          <div className='flex-1 bg-white rounded-lg p-4 shadow-md'>
+            <ComboChart
+              title='Weekly Shipments (USD)'
+              data={dataSets.threeM.output}
+              options={options.output}
+            />
           </div>
-          <div className='flex gap-4 h-1/2'>
-            <div className='flex-1 bg-white rounded-lg p-4 shadow-md'>
-              <ComboChart
-                title='Actual to Quoted Ratio (Hours)'
-                data={dataSets.threeM.quotedHours}
-                options={options.quotedHours}
-              />
-            </div>
-            <div className='flex-1 bg-white rounded-lg p-4 shadow-md'>
-              <ComboChart
-                title='Indirect to Total Ratio (Hours)'
-                data={dataSets.threeM.indirectHours}
-                options={options.actualHours}
-              />
-            </div>
+          <div className='flex-1 bg-white rounded-lg p-4 shadow-md'>
+            <ComboChart
+              title='On Time Delivery Rate'
+              data={dataSets.threeM.onTimeDelivery}
+              options={options.onTimeDelivery}
+            />
           </div>
-        </>
-      )}
+        </div>
+        <div className='flex gap-4 h-1/2'>
+          <div className='flex-1 bg-white rounded-lg p-4 shadow-md'>
+            <ComboChart
+              title='Actual to Quoted Ratio (Hours)'
+              data={dataSets.threeM.quotedHours}
+              options={options.quotedHours}
+            />
+          </div>
+          <div className='flex-1 bg-white rounded-lg p-4 shadow-md'>
+            <ComboChart
+              title='Indirect to Total Ratio (Hours)'
+              data={dataSets.threeM.indirectHours}
+              options={options.actualHours}
+            />
+          </div>
+        </div>
+      </>
 
-      {activeSection === 2 && (
+      {/* {activeSection === 2 && (
         <>
           <h1 className='text-center font-semibold text-2xl'>Ultra Grip International</h1>
           <div className='flex gap-4 h-1/2'>
@@ -517,7 +515,7 @@ const OverviewContent = ({ mode, toggleOverviewMode, productionLogData }: Props)
             </div>
           </div>
         </>
-      )}
+      )} */}
     </div>
   );
 

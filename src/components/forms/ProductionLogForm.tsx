@@ -6,7 +6,7 @@ type FormProps = {
 };
 
 const ProductionLogForm = ({ onClose }: FormProps) => {
-  const { createProductionLog, loading, error } = useCreateProductionLog();
+  const { loading, error } = useCreateProductionLog();
   const [formData, setFormData] = useState({
     company: '',
     weekOf: '',
@@ -23,7 +23,7 @@ const ProductionLogForm = ({ onClose }: FormProps) => {
     notes: '',
   });
   const [submitError, setSubmitError] = useState('');
-  const [attemptedSubmit, setAttemptedSubmit] = useState(false);
+  const [attemptedSubmit] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value, type } = e.target;
@@ -49,31 +49,24 @@ const ProductionLogForm = ({ onClose }: FormProps) => {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!formData.company || !formData.weekOf) {
-      setAttemptedSubmit(true);
-      validateForm();
-      return;
-    }
-    try {
-      const newLog = await createProductionLog(formData);
-
-      if (newLog) {
-        console.log('NEW');
-        setSubmitError('');
-        setAttemptedSubmit(false);
-      }
-
-      if (!error) {
-        console.log('NEW');
-        setSubmitError('');
-        setAttemptedSubmit(false);
-      }
-    } catch (e: unknown) {
-      console.log('ERROR', e.message);
-      setSubmitError(e.message || 'An error occurred while saving the production log.');
-    }
+  const handleSubmit = async () => {
+    // e.preventDefault();
+    // if (!formData.company || !formData.weekOf) {
+    //   setAttemptedSubmit(true);
+    //   validateForm();
+    //   return;
+    // }
+    // try {
+    //   const newLog = await createProductionLog(formData);
+    //   if (!error) {
+    //     console.log('NEW');
+    //     setSubmitError('');
+    //     setAttemptedSubmit(false);
+    //   }
+    // } catch (e: unknown) {
+    //   console.log('ERROR', e.message);
+    //   setSubmitError(e.message || 'An error occurred while saving the production log.');
+    // }
   };
 
   useEffect(() => {

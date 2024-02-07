@@ -3,37 +3,39 @@ import axios from 'axios';
 import { AuthContext } from '../contexts/AuthContext';
 import { useGeneralContext } from './useGeneralContext';
 
-// const devUrl = 'http://localhost:8080/api/v1';
-
-const baseUrl = 'https://api.setup123.com/api/v1';
-
 export const useLogin = () => {
-	const authContext = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
 
-	const { setState } = useGeneralContext();
+  const { setState } = useGeneralContext();
 
-	if (!authContext) {
-		throw new Error('AuthContext not found');
-	}
+  if (!authContext) {
+    throw new Error('AuthContext not found');
+  }
 
-	const { setIsAuthenticated } = authContext;
+  console.log(import.meta.env.VITE_API_URL)
 
-	const login = async (username: string, password: string) => {
-		try {
-			const response = await axios.post(`${baseUrl}/users/login`, { username, password }, { withCredentials: true });
+  const { setIsAuthenticated } = authContext;
 
-			setIsAuthenticated(true);
+  const login = async (username: string, password: string) => {
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/accounts/login`,
+        { username, password },
+        { withCredentials: true }
+      );
 
-			console.log('Login successful:', response.data);
+      setIsAuthenticated(true);
 
-			setState({
-				employee: response.data.employee,
-				displayMode: 'general',
-			});
-		} catch (error) {
-			console.error('Login failed:', error);
-		}
-	};
+      console.log('Login successful:', response.data);
 
-	return { login };
+      setState({
+        employee: response.data.employee,
+        displayMode: 'general',
+      });
+    } catch (error) {
+      console.error('Login failed:', error);
+    }
+  };
+
+  return { login };
 };

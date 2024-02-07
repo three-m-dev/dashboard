@@ -1,57 +1,29 @@
-// Production.tsx
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DowntimeContent, Layout, Modal, ResourcesContent } from '../components';
 import PageHeader from '../components/general/PageHeader';
 import OverviewContent from '../components/content/OverviewContent';
 import Loading from '../components/general/Loading';
 import { useGeneralContext } from '../hooks/useGeneralContext';
+import useGetProductionLogs from '../hooks/useGetProductionLogs';
+import { formatISO, formatKebab } from '../utils/formatter';
+import { IProductionLog } from '../interfaces';
+import ProductionLogForm from '../components/forms/ProductionLogForm';
 
 const Production = () => {
-  const { state, setState } = useGeneralContext();
   const [currentTab, setCurrentTab] = useState('overview');
-
   const [logsModalOpen, setLogsModalOpen] = useState(false);
-  const [dateRangeDropdownOpen, setDateRangeDropdownOpen] = useState(false);
+  const [logsModalMode, setLogsModalMode] = useState('list');
+  const [selectedLog, setSelectedLog] = useState<IProductionLog | null>(null);
 
-  const toggleOverviewMode = useCallback(() => {
-    const newDisplayMode = state.displayMode === 'production-display' ? 'general' : 'production-display';
+  const { state, setState } = useGeneralContext();
+  const { productionLogData } = useGetProductionLogs();
+
+  const toggleDisplayMode = () => {
+    const displayMode = state.displayMode === 'production-display' ? 'general' : 'production-display';
     setState({
       ...state,
-      displayMode: newDisplayMode,
+      displayMode: displayMode,
     });
-  }, [setState, state]);
-
-  useEffect(() => {
-    const handleEscape = (event: KeyboardEvent) => {
-      if ((event.key === 'D' || event.key === 'd') && state.displayMode === 'general') {
-        console.log('Open');
-        toggleOverviewMode();
-      }
-    };
-
-    window.addEventListener('keydown', handleEscape);
-
-    return () => {
-      window.removeEventListener('keydown', handleEscape);
-    };
-  }, [state.displayMode, toggleOverviewMode]);
-
-  const loading = false;
-
-  if (loading) {
-    return (
-      <div className='flex h-screen w-full justify-center items-center'>
-        <Loading size='large' />
-      </div>
-    );
-  }
-
-  const toggleLogsModal = () => {
-    setLogsModalOpen(!logsModalOpen);
-  };
-
-  const toggleDateRangeDropdown = () => {
-    setDateRangeDropdownOpen(!dateRangeDropdownOpen);
   };
 
   const tabs = [
@@ -75,7 +47,7 @@ const Production = () => {
               />
             </svg>
           ),
-          onClick: () => toggleOverviewMode(),
+          onClick: () => toggleDisplayMode(),
         },
         {
           label: 'Logs',
@@ -95,25 +67,6 @@ const Production = () => {
             </svg>
           ),
           onClick: () => toggleLogsModal(),
-        },
-        {
-          label: 'Date Range',
-          icon: (
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              fill='none'
-              viewBox='0 0 24 24'
-              strokeWidth={1.5}
-              stroke='currentColor'
-              className='w-6 h-6'>
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                d='M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z'
-              />
-            </svg>
-          ),
-          onClick: () => toggleDateRangeDropdown(),
         },
       ],
     },
@@ -167,19 +120,20 @@ const Production = () => {
     },
   ];
 
-  const handleTabChange = (tabName: string) => {
-    setCurrentTab(tabName);
-  };
-
   const renderContent = () => {
     switch (currentTab) {
       case 'overview':
-        return (
-          <OverviewContent
-            mode={state.displayMode}
-            toggleOverviewMode={toggleOverviewMode}
-          />
-        );
+        if (productionLogData) {
+          return (
+            <OverviewContent
+              mode={state.displayMode}
+              toggleOverviewMode={toggleDisplayMode}
+              productionLogData={productionLogData}
+            />
+          );
+        } else {
+          return <Loading size='large' />;
+        }
       case 'Downtime':
         return <DowntimeContent />;
       case 'Resources':
@@ -189,6 +143,48 @@ const Production = () => {
     }
   };
 
+  const toggleLogsModal = () => {
+    setLogsModalOpen(!logsModalOpen);
+    setLogsModalMode('list');
+  };
+
+  const handleTabChange = (tabName: string) => {
+    setCurrentTab(tabName);
+  };
+
+  const handleModalModeChange = (modalMode: string, log?: any) => {
+    switch (modalMode) {
+      case 'list':
+        setLogsModalMode(modalMode);
+        setSelectedLog(null);
+        break;
+      case 'add':
+        setLogsModalMode(modalMode);
+        break;
+      case 'view':
+        setLogsModalMode(modalMode);
+        setSelectedLog(log);
+        break;
+      case 'edit':
+        setLogsModalMode(modalMode);
+        break;
+    }
+  };
+
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if ((event.key === 'D' || event.key === 'd') && state.displayMode === 'general' && !logsModalOpen) {
+        toggleDisplayMode();
+      }
+    };
+
+    window.addEventListener('keydown', handleEscape);
+
+    return () => {
+      window.removeEventListener('keydown', handleEscape);
+    };
+  }, [state.displayMode, toggleDisplayMode]);
+
   return (
     <Layout>
       <PageHeader
@@ -196,13 +192,139 @@ const Production = () => {
         tabs={tabs}
         onTabChange={handleTabChange}
       />
+
       {logsModalOpen && (
         <Modal
+          title='Production Log Modal'
           isOpen={logsModalOpen}
           onClose={toggleLogsModal}>
-          <div>123</div>
+          {logsModalMode === 'list' && (
+            <div className='flex flex-col mt-4'>
+              <table className='min-w-full divide-y divide-gray-200 shadow overflow-x-auto border-b border-gray-200 sm:rounded-lg'>
+                <thead className='bg-gray-50'>
+                  <tr>
+                    <th
+                      scope='col'
+                      className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                      Company
+                    </th>
+                    <th
+                      scope='col'
+                      className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                      Week Of
+                    </th>
+                    <th
+                      scope='col'
+                      className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                      Projected Output
+                    </th>
+                    <th
+                      scope='col'
+                      className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                      Actual Output
+                    </th>
+                    <th
+                      scope='col'
+                      className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                      On Time Delivery
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className='bg-white divide-y divide-gray-200'>
+                  {productionLogData.threeM.productionLogs.toReversed().map((log: any, index: number) => (
+                    <tr
+                      key={index}
+                      onClick={() => handleModalModeChange('view', log)}
+                      className='hover:bg-gray-50 hover:cursor-pointer'>
+                      <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900'>
+                        {formatKebab(log.company)}
+                      </td>
+                      <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>{formatISO(log.weekOf)}</td>
+                      <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
+                        {log.properties.projectedOutput}
+                      </td>
+                      <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
+                        {log.properties.actualOutput}
+                      </td>
+                      <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
+                        {log.properties.onTimeDeliveryRate}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+
+              <div className='flex justify-between mt-4 items-center'>
+                <div className='flex gap-2 items-center'>
+                  <button className='flex items-center bg-gray-300 text-gray-600 h-[40px] w-[40px] justify-center rounded hover:bg-blue-200 focus:outline-none transition-all ease-in-out border-2 border-gray-400 hover:border-blue-400 hover:text-blue-500'>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      strokeWidth={1.5}
+                      stroke='currentColor'
+                      className='w-5 h-5'>
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        d='M15.75 19.5 8.25 12l7.5-7.5'
+                      />
+                    </svg>
+                  </button>
+                  <span className='flex h-[40px] w-[40px] justify-center items-center bg-gray-300 text-gray-600 p-2 rounded font-semibold border-2 border-gray-400'>
+                    1
+                  </span>
+                  <button className='flex items-center bg-gray-300 text-gray-600 h-[40px] w-[40px] justify-center rounded hover:bg-blue-200 focus:outline-none transition-all ease-in-out border-2 border-gray-400 hover:border-blue-400 hover:text-blue-500'>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      strokeWidth={1.5}
+                      stroke='currentColor'
+                      className='w-5 h-5'>
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        d='m8.25 4.5 7.5 7.5-7.5 7.5'
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <button
+                  onClick={() => {
+                    setLogsModalMode('add');
+                  }}
+                  className='flex gap-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none'>
+                  New Log
+                </button>
+              </div>
+            </div>
+          )}
+
+          {logsModalMode === 'add' && <ProductionLogForm onClose={() => toggleLogsModal} />}
+
+          {logsModalMode === 'view' && selectedLog !== null && (
+            <>
+              <div>{selectedLog.weekOf}</div>
+              <div className='col-span-1 md:col-span-2 lg:col-span-4 flex gap-2 justify-end'>
+                <button
+                  onClick={() => handleModalModeChange('list')}
+                  className='text-gray-400 font-semibold hover:text-gray-500'>
+                  Go Back
+                </button>
+                <button
+                  onClick={() => handleModalModeChange('edit')}
+                  className='flex gap-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none'>
+                  Edit
+                </button>
+              </div>
+            </>
+          )}
+
+          {logsModalMode === 'edit' && <></>}
         </Modal>
       )}
+
       {renderContent()}
     </Layout>
   );

@@ -1,33 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-interface IProductionLog {
-  id: string;
-  weekOf: string;
-  projectedOutput: number;
-  actualOutput: number;
-  outputGoal: number;
-  quotedHours?: number;
-  actualHours?: number;
-  totalHours?: number;
-  indirectHours?: number;
-  notes?: string;
-  createdBy: string;
-  updatedBy?: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-// const devUrl = 'http://localhost:8080/api/v1';
-
-const baseUrl = 'https://api.setup123.com/api/v1';
-
 const useGetProductionLogs = () => {
-  const [productionLogData, setProductionLogData] = useState<{
-    productionLogs: IProductionLog[];
-    total: number;
-    pages: number;
-  } | null>(null);
+  const [productionLogData, setProductionLogData] = useState<any | null>(null);
 
   // const [filter, setFilter] = useState<FilterType>({ dateRange: null });
   // const [sort, setSort] = useState<string | undefined>(undefined);
@@ -44,7 +19,7 @@ const useGetProductionLogs = () => {
       setError(null);
 
       try {
-        const response = await axios.get(`${baseUrl}/production/logs`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/production/logs`, {
           params: {
             page,
           },
@@ -53,11 +28,7 @@ const useGetProductionLogs = () => {
 
         const data = response.data;
 
-        setProductionLogData({
-          productionLogs: data.productionLogs,
-          total: data.total,
-          pages: data.pages,
-        });
+        setProductionLogData(data);
       } catch (err) {
         if (axios.isAxiosError(err)) {
           setError(err.response?.data?.message || 'An error occurred');
